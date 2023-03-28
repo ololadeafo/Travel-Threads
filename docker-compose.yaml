@@ -8,7 +8,10 @@ services:
       dockerfile: Dockerfile.dev
     environment:
       DATABASE_URL: postgresql://travel_user:secret@db/travel_threads
+      SIGNING_KEY: ${SIGNING_KEY}
       WAIT_HOSTS: db:5432
+      WAIT_BEFORE: 5
+      WAIT_TIMEOUT: 60
       PORT: 8000
     ports:
       - "8000:8000"
