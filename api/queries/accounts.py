@@ -29,15 +29,6 @@ class AccountQueries:
                 account['id'] = str(id)
                 return AccountOutWithHashedPassword(**account)
 
-    #     info.username = info.username.lower()
-    #     account = info.dict()
-    #     del account['password']
-    #     account['hashed_password'] = hashed_password
-    #     if self.get(account['username']) is not None:
-    #         raise DuplicateAccountError
-    #     self.collection.insert_one(account)
-    #     account['id'] = str(account['_id'])
-    #     return AccountOutWithHashedPassword(**account)
 
     def get(self, email: str):
         with pool.connection() as conn:
@@ -60,10 +51,3 @@ class AccountQueries:
                 d['email'] = account[1]
                 d['hashed_password'] = account[2]
                 return AccountOutWithHashedPassword(**d)
-
-    # def get(self, username: str):
-    #     result = self.collection.find_one({"username": username.lower()})
-    #     if result is None:
-    #         return None
-    #     result['id'] = str(result['_id'])
-    #     return AccountOutWithHashedPassword(**result)
