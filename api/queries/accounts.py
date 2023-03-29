@@ -1,5 +1,4 @@
-# from bson.objectid import ObjectId
-# from queries.client import Queries
+
 from models import AccountIn, AccountOutWithHashedPassword
 from queries.pool import pool
 
