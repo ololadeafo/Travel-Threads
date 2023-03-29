@@ -8,14 +8,11 @@ class DuplicateAccountError(ValueError):
 
 class AccountQueries:
     def create(self, info: AccountIn, hashed_password: str):
-        print(info)
         account = info.dict()
-        print(account)
         del account['password']
         account['hashed_password'] = hashed_password
-        print(account)
-        # if self.get(account['email']) is not None:
-        #     raise DuplicateAccountError
+        if self.get(account['email']) is not None:
+            raise DuplicateAccountError
         with pool.connection() as conn:
             with conn.cursor() as db:
                 result = db.execute(
@@ -53,7 +50,18 @@ class AccountQueries:
                 WHERE email = %s
                 """, [email]
                 )
-                result['id'] = resu
+
+                if result.fetchall() == False:
+                    return None
+
+                account = list(result.fetchall()[0])
+
+                account[0] = str(account[0])
+                d = {}
+                d['id'] = account[0]
+                d['email'] = account[1]
+                d['hashed_password'] = account[2]
+                return AccountOutWithHashedPassword(**d)
 
     # def get(self, username: str):
     #     result = self.collection.find_one({"username": username.lower()})
