@@ -1,5 +1,7 @@
 # from bson.objectid import ObjectId
 # from queries.client import Queries
+import psycopg2
+from psycopg2.extras import RealDictCursor
 from models import AccountIn, AccountOutWithHashedPassword
 from queries.pool import pool
 
@@ -8,27 +10,64 @@ class DuplicateAccountError(ValueError):
 
 class AccountQueries:
     def create(self, info: AccountIn, hashed_password: str):
+        info.username = info.username.lower()
         account = info.dict()
         del account['password']
         account['hashed_password'] = hashed_password
         if self.get(account['email']) is not None:
             raise DuplicateAccountError
-        with pool.connection() as conn:
-            with conn.cursor() as db:
-                result = db.execute(
-                    """
-                    INSERT INTO users
-                        (email, hashed_password)
-                    VALUES
-                    (%s, %s)
-                    RETURNING id;
-                    """,
-                    [account['email'], account['hashed_password']]
-                )
-                id = result.fetchone()[0]
-                account['id'] = str(id)
-                print(account)
-                return AccountOutWithHashedPassword(**account)
+        conn = psycopg2.connect(self.conn_string)
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
+        cursor.execute(
+            """
+            INSERT INTO users
+                (email, hashed_password)
+            VALUES
+            (%s, %s)
+            RETURNING id;
+            """,
+            (account["email"], account["hashed_password"])
+        )
+        result = cursor.fetchone()
+        account_out = AccountOutWithHashedPassword(
+        id=str(result['id']),
+        email=result['email'],
+        hashed_password=result['hashed_password']
+        )
+
+        cursor.close()
+        conn.close()
+
+        return account_out
+
+
+
+
+
+
+
+
+        # account = info.dict()
+        # del account['password']
+        # account['hashed_password'] = hashed_password
+        # if self.get(account['email']) is not None:
+        #     raise DuplicateAccountError
+        # with pool.connection() as conn:
+        #     with conn.cursor() as db:
+        #         result = db.execute(
+        #             """
+        #             INSERT INTO users
+        #                 (email, hashed_password)
+        #             VALUES
+        #             (%s, %s)
+        #             RETURNING id;
+        #             """,
+        #             [account['email'], account['hashed_password']]
+        #         )
+        #         id = result.fetchone()[0]
+        #         account['id'] = str(id)
+        #         print(account)
+        #         return AccountOutWithHashedPassword(**account)
 
     #     info.username = info.username.lower()
     #     account = info.dict()
@@ -50,6 +89,10 @@ class AccountQueries:
                 WHERE email = %s
                 """, [email]
                 )
+
+
+
+
 
                 if result.fetchall() == False:
                     return None

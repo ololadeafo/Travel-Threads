@@ -3,7 +3,7 @@ from jwtdown_fastapi.authentication import Token
 
 
 class AccountOut(BaseModel): # what the front end will need
-    id: str
+    id: int
     email: str
 
 
