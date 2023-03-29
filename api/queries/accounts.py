@@ -27,7 +27,6 @@ class AccountQueries:
                 )
                 id = result.fetchone()[0]
                 account['id'] = str(id)
-                print(account)
                 return AccountOutWithHashedPassword(**account)
 
     #     info.username = info.username.lower()
@@ -45,17 +44,16 @@ class AccountQueries:
             with conn.cursor() as db:
                 result = db.execute(
                 """
-                SELECT id, email, hashed_password
+                SELECT *
                 FROM users
-                WHERE email = %s
+                WHERE email=%s
                 """, [email]
                 )
-
-                if result.fetchall() == False:
+                row = result.fetchone()
+                if not row:
                     return None
-
-                account = list(result.fetchall()[0])
-
+                account = list(row)
+                print(account)
                 account[0] = str(account[0])
                 d = {}
                 d['id'] = account[0]
