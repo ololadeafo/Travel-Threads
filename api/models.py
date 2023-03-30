@@ -2,7 +2,10 @@ from pydantic import BaseModel
 from jwtdown_fastapi.authentication import Token
 from datetime import date
 
+class Error(BaseModel):
+    message: str
 
+    
 class AccountOut(BaseModel): # what the front end will need
     id: int
     email: str
@@ -60,3 +63,4 @@ class ItemsIn(BaseModel):
 
 class ItemsOut(ItemsIn):
     id: int
+
