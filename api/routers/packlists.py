@@ -2,6 +2,8 @@ from fastapi import APIRouter, Request, Response, Depends, HTTPException, status
 from models import PackListIn, PacklistOut, DateListIn, DateListOut, ItemsIn, ItemsOut
 from authenticator import authenticator
 from queries.packlists import PackListQueries
+from typing import List, Optional, Union
+from models import Error
 
 
 router = APIRouter()
@@ -15,3 +17,11 @@ def create_pack_list(
     user_id = account['id']
     new_list = repo.create(pack_list, user_id)
     return new_list
+
+@router.get('/api/packlist', response_model=Union[List[PacklistOut], Error])
+def get_all(
+    account: dict= Depends(authenticator.get_current_account_data),
+    repo: PackListQueries = Depends(),
+):
+    user_id = account['id']
+    return repo.get_all(user_id)
