@@ -1,5 +1,4 @@
-# from bson.objectid import ObjectId
-# from queries.client import Queries
+
 from models import AccountIn, AccountOutWithHashedPassword
 from queries.pool import pool
 
@@ -26,7 +25,7 @@ class AccountQueries:
                     [account['email'], account['hashed_password']]
                 )
                 id = result.fetchone()[0]
-                account['id'] = str(id)
+                account['id'] = id
                 return AccountOutWithHashedPassword(**account)
 
 
@@ -44,8 +43,6 @@ class AccountQueries:
                 if not row:
                     return None
                 account = list(row)
-                print(account)
-                account[0] = str(account[0])
                 d = {}
                 d['id'] = account[0]
                 d['email'] = account[1]

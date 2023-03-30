@@ -1,9 +1,10 @@
 from pydantic import BaseModel
 from jwtdown_fastapi.authentication import Token
+from datetime import date
 
 
 class AccountOut(BaseModel): # what the front end will need
-    id: str
+    id: int
     email: str
 
 
@@ -25,14 +26,37 @@ class AccountToken(Token):
     account: AccountOut
 
 
-# class ThingParams(BaseModel):
-#     name: str
+class PackListIn(BaseModel):
+    name: str
+    start_date: date
+    end_date: date
+    country: str
+    state: str | None
+    city: str
 
 
-# class Thing(ThingParams):
-#     id: str
-#     user_id: str
+class PacklistOut(PackListIn):
+    id: int
+    user_id: int
 
 
-# class ThingsList(BaseModel):
-#     things: list[Thing]
+class DateListIn(BaseModel):
+    date: str
+    description: str | None
+    packing_list_id: int
+
+
+class DateListOut(DateListIn):
+    id: int
+
+
+class ItemsIn(BaseModel):
+    name: str
+    quantity: int
+    is_packed: bool
+    packing_list_id: int
+    date_list_id: int | None
+
+
+class ItemsOut(ItemsIn):
+    id: int
