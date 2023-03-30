@@ -1,0 +1,3 @@
+3/27/2023 - we set up our Postgresql, updated Docker.yaml file, requirements.txt and Dockerfile.dev. I had to leave before my team did migrations and created tables.
+3/28/23 - we worked on authentication and were having a lot of troubles with that. we couldn't create a user like we wanted but contnued to debug to find solutions to our errors.
+3/29/23 - we got our authentication to work, and now we worked on our packinglist, items, and datelist models
