@@ -44,19 +44,19 @@ class PackListQueries:
                         """, [user_id]
                     )
 
-                    return [self.record_to_pack_list_out(record) for record in result]
+                    return [self.record_to_pack_list_out(record[0]) for record in result]
         except Exception as e:
             print(e)
             return {"message": "Could not get all packing lists"}
 
     def record_to_pack_list_out(self, record):
         return PacklistOut(
-            id =record[0][0],
-            user_id=record[0][1],
-            name=record[0][2],
-            start_date=record[0][3],
-            end_date=record[0][4],
-            country=record[0][5],
-            state=record[0][6],
-            city=record[0][7],
+            id =record[0],
+            user_id=record[1],
+            name=record[2],
+            start_date=record[3],
+            end_date=record[4],
+            country=record[5],
+            state=record[6],
+            city=record[7],
         )
