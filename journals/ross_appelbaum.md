@@ -1,2 +1,4 @@
 Monday March 27th - Now that we had our wireframe and API endpoints we were able to actually start coding! We are choosing to code as a group so we are able to solve bugs more efficiently so we all watched and lended our advice while Nina was at the wheel. We set up our docker compose and our requirements.txt file and were able to create our migrations! There were some kinks but we were able to work through them and everything works well.
 Tuesday March 28th - We attempted authentication, ran into quite a few issues and didn't really get anywhere. It's been a really tough day.
+Wednesday March 29th - Today was a lot more productive. We were able to figure everything out with authentication and we have moved onto queries and routers.
+Thursday March 30th - Today was amazing! We were able to get all of our logic done for one of our pages, which makes the rest of the backend quite a bit easier. Onto our other pages and the external apis next week.
