@@ -4,7 +4,7 @@ from typing import Union, List, Optional
 from models import Error
 
 class DateListQueries:
-    def create(self, user_id: int, date_list: DateListIn) -> Union[DateListOut, Error]:
+    def create(self, user_id: int, packing_list_id: int, date_list: DateListIn) -> Union[DateListOut, Error]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -13,7 +13,7 @@ class DateListQueries:
                         SELECT user_id
                         FROM packing_list
                         WHERE (id = %s)
-                        """, [date_list.packing_list_id]
+                        """, [packing_list_id]
                     )
                     confirmed_id = user_confirm.fetchone()
                     if confirmed_id[0] != user_id:
@@ -31,7 +31,7 @@ class DateListQueries:
                                 user_id,
                                 date_list.date,
                                 date_list.description,
-                                date_list.packing_list_id
+                                packing_list_id
                             ]
                         )
                         id = result.fetchone()[0]

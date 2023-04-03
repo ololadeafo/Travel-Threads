@@ -42,14 +42,10 @@ class PacklistOut(PackListIn):
     id: int
     user_id: int
 
-class PacklistID(BaseModel):
-    id: int
-
 
 class DateListIn(BaseModel):
     date: date
     description: str | None
-    packing_list_id: int
 
 
 class DateListOut(DateListIn):
@@ -67,5 +63,3 @@ class ItemsIn(BaseModel):
 
 class ItemsOut(ItemsIn):
     id: int
-
-
