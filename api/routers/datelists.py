@@ -43,3 +43,14 @@ def get_one(
     if date_list is None:
         response.status_code = 404
     return date_list
+
+@router.put('/api/packlist/{packing_list_id}/datelist/{date_list_id}', response_model=Union[DateListOut, Error])
+def update(
+    packing_list_id: int,
+    date_list_id: int,
+    date_list: DateListIn,
+    account: dict = Depends(authenticator.get_current_account_data),
+    repo: DateListQueries = Depends(),
+) -> Union[Error, DateListOut]:
+    user_id = account['id']
+    return repo.update(packing_list_id, date_list_id, user_id, date_list)

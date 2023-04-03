@@ -77,6 +77,28 @@ class DateListQueries:
             print(e)
             return {"message": "Could not get that date list"}
 
+    def update(self, date_list_id:int, user_id:int, packing_list_id: int, date_list: DateListIn) -> Union[DateListOut, Error]:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    db.execute(
+                        """
+                        UPDATE date_list
+                        SET date = %s,  description = %s
+                        WHERE (id = %s AND user_id = %s AND packing_list_id = %s)
+                        """,
+                        [
+                        date_list.date,
+                        date_list.description,
+                        date_list_id,
+                        user_id,
+                        packing_list_id
+                        ]
+                    )
+                    return self.date_list_in_to_out(date_list_id, date_list)
+        except Exception:
+            return {"message": "Could not update that date list"}
+
 
 
 
