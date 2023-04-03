@@ -43,7 +43,8 @@ steps = [
             id SERIAL PRIMARY KEY NOT NULL,
             date DATE NOT NULL,
             description VARCHAR(300) NULL,
-            packing_list_id INTEGER REFERENCES packing_list(id) NOT NULL
+            packing_list_id INTEGER REFERENCES packing_list(id) NOT NULL,
+            user_id INTEGER REFERENCES users(id) NOT NULL
         );
         """,
         # "Down" SQL statement
@@ -61,7 +62,8 @@ steps = [
             quantity SMALLINT NOT NULL,
             is_packed BOOLEAN NOT NULL,
             packing_list_id INTEGER REFERENCES packing_list(id) NOT NULL,
-            date_list_id INTEGER REFERENCES date_list(id)
+            date_list_id INTEGER REFERENCES date_list(id),
+            user_id INTEGER REFERENCES users(id) NOT NULL
 
         );
         """,

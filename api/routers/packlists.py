@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, Response
 from models import PackListIn, PacklistOut, DateListIn, DateListOut, ItemsIn, ItemsOut, PacklistID
 from authenticator import authenticator
-from queries.packlists import PackListQueries, DateListQueries
+from queries.packlists import PackListQueries
 from typing import List, Optional, Union
 from models import Error
 
@@ -62,6 +62,7 @@ def delete(
 ) -> bool:
     user_id = account['id']
     return repo.delete(user_id, id)
+<<<<<<< HEAD
 
 @router.post('/api/packlist/datelist', response_model=Union[DateListOut, Error])
 def create_date_list(
@@ -85,3 +86,5 @@ def create_date_list(
 # ):
 #     user_id = account['id']
 #     return repo.get_all_date_lists(user_id, pack_list_id)
+=======
+>>>>>>> 6dd70603a1b279cd111d5587c02cb83fa3c4ee49

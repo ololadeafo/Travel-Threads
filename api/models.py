@@ -56,6 +56,7 @@ class DateListOut(DateListIn):
     id: int
 
 
+
 class ItemsIn(BaseModel):
     name: str
     quantity: int
@@ -66,3 +67,5 @@ class ItemsIn(BaseModel):
 
 class ItemsOut(ItemsIn):
     id: int
+
+

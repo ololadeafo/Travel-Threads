@@ -2,12 +2,13 @@ from fastapi import FastAPI, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
 import os
 from authenticator import authenticator
-from routers import accounts, packlists
+from routers import accounts, packlists, datelists
 
 app = FastAPI()
-app.include_router(authenticator.router)
-app.include_router(accounts.router)
-app.include_router(packlists.router)
+app.include_router(authenticator.router, tags=["Accounts"])
+app.include_router(accounts.router, tags=["Accounts"])
+app.include_router(packlists.router, tags=["Pack Lists"])
+app.include_router(datelists.router, tags=["Date Lists"])
 
 app.add_middleware(
     CORSMiddleware,
