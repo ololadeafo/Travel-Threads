@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, Response
 from models import PackListIn, PacklistOut, DateListIn, DateListOut, ItemsIn, ItemsOut
 from authenticator import authenticator
-from queries.packlists import PackListQueries
+from queries.packlists import PackListQueries, DateListQueries
 from typing import List, Optional, Union
 from models import Error
 
@@ -20,7 +20,7 @@ def create_pack_list(
     if pack_list is None:
         response.status_code = 400
     return pack_list
-    
+
 
 @router.get('/api/packlist', response_model=Union[List[PacklistOut], Error])
 def get_all(
@@ -62,3 +62,14 @@ def delete(
 ) -> bool:
     user_id = account['id']
     return repo.delete(user_id, id)
+
+@router.post('/api/packlist/datelist', response_model=Union[DateListOut, Error])
+def create_date_list(
+    date_list: DateListIn,
+    response: Response,
+    repo: DateListQueries = Depends()
+):
+    date_list = repo.create(date_list)
+    if date_list is None:
+        response.status_code = 400
+    return date_list
