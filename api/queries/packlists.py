@@ -1,5 +1,5 @@
 
-from models import PackListIn, PacklistOut, DateListIn, DateListOut
+from models import PackListIn, PacklistOut, DateListIn, DateListOut, PacklistID
 from queries.pool import pool
 from typing import Union, List, Optional
 from models import Error
@@ -140,11 +140,11 @@ class PackListQueries:
 
 
 class DateListQueries:
-    def create(self, date_list: DateListIn) -> Union[DateListOut, Error]:
+    def create(self, date_list: DateListIn, user_id: int) -> Union[DateListOut, Error]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
-                    result = db.execute(
+                    make_date_list = db.execute(
                         """
                         INSERT INTO date_list
                             (date, description, packing_list_id)
@@ -158,13 +158,55 @@ class DateListQueries:
                             date_list.packing_list_id
                         ]
                     )
-                    id = result.fetchone()[0]
-                    return self.date_list_in_to_out(id, date_list)
+                    id = make_date_list.fetchone()[0]
+
+                    user_confirm = db.execute(
+                        """
+                        SELECT user_id
+                        FROM packing_list
+                        WHERE (id = %s)
+                        """, [date_list.packing_list_id]
+                    )
+                    confirmed_id = user_confirm.fetchone()
+                    if confirmed_id[0] != user_id:
+                        return {"message": "Invalid packing list id"}
+                    else:
+                        return self.date_list_in_to_out(id, date_list)
         except Exception:
             return {"message": "Could not create packing list associated with this date"}
+
+
+    def get_all_date_lists(self, pack_list_id: PacklistID, user_id: int) -> Union[Error, List[DateListOut]]:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        SELECT (date, description, packing_list_id, user_id)
+                        FROM date_list
+                        WHERE (user_id = %s AND packing_list_id = %s)
+                        ORDER BY start_date;
+                        """, [user_id, pack_list_id.id]
+                    )
+
+                    print(result)
+
+        #             return [self.record_to_date_list_out(record[0]) for record in result]
+        except Exception as e:
+            print(e)
+            return {"message": "Could not get all date lists"}
 
 
 
     def date_list_in_to_out(self, id: int, date_list: DateListIn):
         old_data = date_list.dict()
         return DateListOut(id=id, **old_data)
+
+
+    def record_to_date_list_out(self, record):
+        return DateListOut(
+            date =record[0],
+            description=record[1],
+            packing_list_id=record[2],
+            id=record[3]
+        )

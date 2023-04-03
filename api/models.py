@@ -42,6 +42,9 @@ class PacklistOut(PackListIn):
     id: int
     user_id: int
 
+class PacklistID(BaseModel):
+    id: int
+
 
 class DateListIn(BaseModel):
     date: date
