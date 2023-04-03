@@ -29,10 +29,11 @@ class PackListQueries:
                         ]
                     )
                     id = result.fetchone()[0]
-                    return self.pack_list_in_to_out(user_id, id, pack_list)
+                    print(self.pack_list_in_to_out(id, user_id, pack_list))
+                    return self.pack_list_in_to_out(id, user_id, pack_list)
         except Exception:
             return {"message": "Could not create packing list"}
-        
+
 
 
     def get_all(self, user_id) -> Union[Error, List[PacklistOut]]:
@@ -93,7 +94,7 @@ class PackListQueries:
                     db.execute(
                         """
                         UPDATE packing_list
-                        SET name = %s 
+                        SET name = %s
                         , start_date = %s
                         , end_date = %s
                         , country = %s
@@ -134,4 +135,3 @@ class PackListQueries:
                     return True
         except Exception as e:
             return False
-
