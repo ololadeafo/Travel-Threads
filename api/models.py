@@ -65,5 +65,4 @@ class ItemsIn(BaseModel):
 class ItemsOut(ItemsIn):
     id: int
 
-class PackListID(BaseModel):
-    id:int
+
