@@ -1,5 +1,5 @@
 
-from models import PackListIn, PacklistOut
+from models import PackListIn, PacklistOut, DateListIn, DateListOut
 from queries.pool import pool
 from typing import Union, List, Optional
 from models import Error
@@ -29,7 +29,6 @@ class PackListQueries:
                         ]
                     )
                     id = result.fetchone()[0]
-                    print(self.pack_list_in_to_out(id, user_id, pack_list))
                     return self.pack_list_in_to_out(id, user_id, pack_list)
         except Exception:
             return {"message": "Could not create packing list"}
@@ -54,17 +53,7 @@ class PackListQueries:
             print(e)
             return {"message": "Could not get all packing lists"}
 
-    def record_to_pack_list_out(self, record):
-        return PacklistOut(
-            id =record[0],
-            user_id=record[1],
-            name=record[2],
-            start_date=record[3],
-            end_date=record[4],
-            country=record[5],
-            state=record[6],
-            city=record[7],
-        )
+
 
     def get_one(self, id: int, user_id: int) -> Optional[PacklistOut]:
         try:
@@ -117,9 +106,6 @@ class PackListQueries:
         except Exception:
             return {"message": "Could not update that packing list"}
 
-    def pack_list_in_to_out(self, id: int, user_id: int, pack_list: PackListIn):
-        old_data = pack_list.dict()
-        return PacklistOut(user_id=user_id, id=id, **old_data)
 
     def delete(self, user_id: int, id: int) -> bool:
         try:
@@ -135,3 +121,50 @@ class PackListQueries:
                     return True
         except Exception as e:
             return False
+
+    def pack_list_in_to_out(self, id: int, user_id: int, pack_list: PackListIn):
+        old_data = pack_list.dict()
+        return PacklistOut(id=id, user_id=user_id, **old_data)
+
+    def record_to_pack_list_out(self, record):
+        return PacklistOut(
+            id =record[0],
+            user_id=record[1],
+            name=record[2],
+            start_date=record[3],
+            end_date=record[4],
+            country=record[5],
+            state=record[6],
+            city=record[7],
+        )
+
+
+class DateListQueries:
+    def create(self, date_list: DateListIn) -> Union[DateListOut, Error]:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        INSERT INTO date_list
+                            (date, description, packing_list_id)
+                        VALUES
+                            (%s, %s, %s)
+                        RETURNING id;
+                        """,
+                        [
+                            date_list.date,
+                            date_list.description,
+                            date_list.packing_list_id
+                        ]
+                    )
+                    id = result.fetchone()[0]
+                    return self.date_list_in_to_out(id, date_list)
+        except Exception:
+            return {"message": "Could not create packing list associated with this date"}
+
+
+
+    def date_list_in_to_out(self, id: int, date_list: DateListIn):
+        old_data = date_list.dict()
+        return DateListOut(id=id, **old_data)

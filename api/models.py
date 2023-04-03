@@ -5,7 +5,7 @@ from datetime import date
 class Error(BaseModel):
     message: str
 
-    
+
 class AccountOut(BaseModel): # what the front end will need
     id: int
     email: str
@@ -44,7 +44,7 @@ class PacklistOut(PackListIn):
 
 
 class DateListIn(BaseModel):
-    date: str
+    date: date
     description: str | None
     packing_list_id: int
 
@@ -63,4 +63,3 @@ class ItemsIn(BaseModel):
 
 class ItemsOut(ItemsIn):
     id: int
-
