@@ -7,15 +7,16 @@ from models import Error
 
 router = APIRouter()
 
-@router.post('/api/packlist/datelist', response_model=Union[DateListOut, Error])
+@router.post('/api/packlist/{packing_list_id}/datelist', response_model=Union[DateListOut, Error])
 def create_date_list(
     date_list: DateListIn,
+    packing_list_id: int,
     response: Response,
     account: dict= Depends(authenticator.get_current_account_data),
     repo: DateListQueries = Depends()
 ):
     user_id = account['id']
-    date_list = repo.create(user_id, date_list)
+    date_list = repo.create(user_id, packing_list_id, date_list)
     if date_list is None:
         response.status_code = 400
     return date_list
