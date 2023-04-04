@@ -68,7 +68,7 @@ class ItemsQueries:
             return {"message": "Could not get that item"}
 
     def update(self, packing_list_id: int, date_list_id: int, items_id: int, user_id: int, items: ItemsIn) -> Union[ItemsOut, Error]:
-        # try:
+        try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
                     db.execute(
@@ -88,12 +88,12 @@ class ItemsQueries:
                         ]
                     )
                     return self.items_in_to_out(items_id, items)
-        # except Exception:
-        #     return {"message": "Could not update the item list"}
+        except Exception:
+            return {"message": "Could not update the item list"}
 
     def items_in_to_out(self, id: int, items: ItemsIn):
         old_data = items.dict()
-        return ItemsOut(id=id, **old_data)
+        return ItemsOut(id=id, packing_list_id=id, date_list_id=id, **old_data)
 
     def record_to_items_out(self, record):
         return ItemsOut(
