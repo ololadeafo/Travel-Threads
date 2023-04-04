@@ -73,7 +73,6 @@ class DateListQueries:
                         return None
                     return self.record_to_date_list_out(record[0])
         except Exception as e:
-            print(e)
             return {"message": "Could not get that date list"}
 
     def update(self, packing_list_id: int, date_list_id:int, user_id:int, date_list: DateListIn) -> Union[DateListOut, Error]:

@@ -91,6 +91,21 @@ class ItemsQueries:
         except Exception:
             return {"message": "Could not update the item list"}
 
+    def delete(self, user_id: int, packing_list_id: int, date_list_id: int, items_id: int) -> bool:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    db.execute(
+                        """
+                        DELETE FROM items
+                        WHERE (user_id=%s AND packing_list_id=%s AND date_list_id=%s AND id=%s)
+                        """,
+                        [user_id, packing_list_id, date_list_id, items_id]
+                    )
+                    return True
+        except Exception as e:
+            return False
+
     def items_in_to_out(self, id: int, packing_list_id: int, date_list_id: int, items: ItemsIn):
         old_data = items.dict()
         return ItemsOut(id=id, packing_list_id=packing_list_id, date_list_id=date_list_id, **old_data)

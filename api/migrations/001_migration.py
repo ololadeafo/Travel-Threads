@@ -20,7 +20,11 @@ steps = [
         """
         CREATE TABLE packing_list (
             id SERIAL PRIMARY KEY NOT NULL,
-            user_id INTEGER REFERENCES users(id) NOT NULL,
+            user_id INTEGER NOT NULL,
+            CONSTRAINT fk_user_id
+                FOREIGN KEY(user_id)
+                    REFERENCES users(id)
+                    ON DELETE CASCADE,
             name VARCHAR(100) NOT NULL,
             start_date DATE NOT NULL,
             end_date DATE NOT NULL,
@@ -43,8 +47,16 @@ steps = [
             id SERIAL PRIMARY KEY NOT NULL,
             date DATE NOT NULL,
             description VARCHAR(300) NULL,
-            packing_list_id INTEGER REFERENCES packing_list(id) NOT NULL,
-            user_id INTEGER REFERENCES users(id) NOT NULL
+            packing_list_id INTEGER NOT NULL,
+            CONSTRAINT fk_packing_list_id
+                FOREIGN KEY(packing_list_id)
+                    REFERENCES packing_list(id)
+                    ON DELETE CASCADE,
+            user_id INTEGER NOT NULL,
+            CONSTRAINT fk_user_id
+                FOREIGN KEY(user_id)
+                    REFERENCES users(id)
+                    ON DELETE CASCADE
         );
         """,
         # "Down" SQL statement
@@ -61,10 +73,21 @@ steps = [
             name VARCHAR(100) NOT NULL,
             quantity SMALLINT NOT NULL,
             is_packed BOOLEAN NOT NULL,
-            packing_list_id INTEGER REFERENCES packing_list(id) NOT NULL,
-            date_list_id INTEGER REFERENCES date_list(id),
-            user_id INTEGER REFERENCES users(id) NOT NULL
-
+            packing_list_id INTEGER NOT NULL,
+            CONSTRAINT fk_packing_list_id
+                FOREIGN KEY(packing_list_id)
+                    REFERENCES packing_list(id)
+                    ON DELETE CASCADE,
+            date_list_id INTEGER NOT NULL,
+            CONSTRAINT fk_date_list_id
+                FOREIGN KEY(date_list_id)
+                    REFERENCES date_list(id)
+                    ON DELETE CASCADE,
+            user_id INTEGER NOT NULL,
+            CONSTRAINT fk_user_id
+                FOREIGN KEY(user_id)
+                    REFERENCES users(id)
+                    ON DELETE CASCADE
         );
         """,
         # "Down" SQL statement
