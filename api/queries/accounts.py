@@ -6,7 +6,6 @@ class DuplicateAccountError(ValueError):
 
 class AccountQueries:
     def create(self, info: AccountIn, hashed_password: str):
-        info.username = info.username.lower()
         account = info.dict()
         del account['password']
         account['hashed_password'] = hashed_password
