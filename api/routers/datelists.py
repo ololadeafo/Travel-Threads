@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, Response
 from models import  DateListIn, DateListOut
 from authenticator import authenticator
 from queries.datelists import DateListQueries
-from typing import List, Optional, Union
+from typing import List, Union, Optional
 from models import Error
 
 router = APIRouter()

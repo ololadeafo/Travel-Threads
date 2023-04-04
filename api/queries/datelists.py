@@ -100,12 +100,9 @@ class DateListQueries:
         except Exception:
             return {"message": "Could not update that date list"}
 
-
-
-
     def date_list_in_to_out(self, id: int, date_list: DateListIn):
         old_data = date_list.dict()
-        return DateListOut(id=id, **old_data)
+        return DateListOut(id=id, packing_list_id=id, date_list_id=id, **old_data)
 
     def record_to_date_list_out(self, record):
         return DateListOut(
