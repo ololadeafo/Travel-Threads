@@ -1,6 +1,6 @@
 from models import DateListIn, DateListOut
 from queries.pool import pool
-from typing import Union, List, Optional
+from typing import Union, List
 from models import Error
 
 class DateListQueries:
@@ -57,25 +57,25 @@ class DateListQueries:
             print(e)
             return {"message" : "Could not get all date lists"}
 
-    def get_one(self, date_list_id:int, user_id: int, packing_list_id: int) -> Optional[DateListOut]:
-        try:
-            with pool.connection() as conn:
-                with conn.cursor() as db:
-                    result = db.execute(
-                        """
-                        SELECT (id, date, description, packing_list_id, user_id)
-                        FROM date_list
-                        WHERE (id=%s AND user_id = %s AND packing_list_id = %s)
-                        ORDER BY date;
-                        """, [date_list_id, user_id, packing_list_id]
-                    )
-                    record = result.fetchone()
-                    if record is None:
-                        return None
-                    return self.record_to_date_list_out(record[0])
-        except Exception as e:
-            print(e)
-            return {"message": "Could not get that date list"}
+    # def get_one(self, date_list_id:int, user_id: int, packing_list_id: int) -> Optional[DateListOut]:
+    #     try:
+    #         with pool.connection() as conn:
+    #             with conn.cursor() as db:
+    #                 result = db.execute(
+    #                     """
+    #                     SELECT (id, date, description, packing_list_id, user_id)
+    #                     FROM date_list
+    #                     WHERE (id=%s AND user_id = %s AND packing_list_id = %s)
+    #                     ORDER BY date;
+    #                     """, [date_list_id, user_id, packing_list_id]
+    #                 )
+    #                 record = result.fetchone()
+    #                 if record is None:
+    #                     return None
+    #                 return self.record_to_date_list_out(record[0])
+    #     except Exception as e:
+    #         print(e)
+    #         return {"message": "Could not get that date list"}
 
     def update(self, date_list_id:int, user_id:int, packing_list_id: int, date_list: DateListIn) -> Union[DateListOut, Error]:
         try:
@@ -98,9 +98,6 @@ class DateListQueries:
                     return self.date_list_in_to_out(date_list_id, date_list)
         except Exception:
             return {"message": "Could not update that date list"}
-
-
-
 
     def date_list_in_to_out(self, id: int, date_list: DateListIn):
         old_data = date_list.dict()
