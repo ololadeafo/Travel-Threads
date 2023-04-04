@@ -22,7 +22,7 @@ class DateListQueries:
                         result = db.execute(
                             """
                             INSERT INTO date_list
-                                (date, description, packing_list_id)
+                                (user_id, date, description, packing_list_id)
                             VALUES
                                 (%s, %s, %s, %s)
                             RETURNING id;
@@ -35,7 +35,7 @@ class DateListQueries:
                             ]
                         )
                         id = result.fetchone()[0]
-                        return self.date_list_in_to_out(id, date_list)
+                        return self.date_list_in_to_out(id, packing_list_id, date_list)
         except Exception:
             return {"message": "Could not create packing list associated with this date"}
 
@@ -45,13 +45,12 @@ class DateListQueries:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
-                        SELECT (id, date, description, packing_list_id)
+                        SELECT (id, date, description, packing_list_id, user_id)
                         FROM date_list
                         WHERE (user_id = %s AND packing_list_id = %s)
                         ORDER BY date;
                         """, [user_id, packing_list_id]
                     )
-                    print(result.fetchall()[0])
                     return[self.record_to_date_list_out(record[0]) for record in result]
         except Exception as e:
             print(e)
@@ -96,13 +95,16 @@ class DateListQueries:
                         ]
                     )
 
-                    return self.date_list_in_to_out(date_list_id, date_list)
+                    return self.date_list_in_to_out(date_list_id, packing_list_id, date_list)
         except Exception:
             return {"message": "Could not update that date list"}
 
-    def date_list_in_to_out(self, id: int, date_list: DateListIn):
+
+
+
+    def date_list_in_to_out(self, id: int, packing_list_id: int, date_list: DateListIn):
         old_data = date_list.dict()
-        return DateListOut(id=id, packing_list_id=id, date_list_id=id, **old_data)
+        return DateListOut(id=id, packing_list_id=packing_list_id, **old_data)
 
     def record_to_date_list_out(self, record):
         return DateListOut(

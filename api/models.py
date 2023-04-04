@@ -51,7 +51,6 @@ class DateListIn(BaseModel):
 class DateListOut(DateListIn):
     id: int
     packing_list_id: int
-    date_list_id: int
 
 
 class ItemsIn(BaseModel):
