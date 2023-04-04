@@ -22,7 +22,7 @@ class DateListQueries:
                         result = db.execute(
                             """
                             INSERT INTO date_list
-                                (user_id, date, description, packing_list_id)
+                                (date, description, packing_list_id)
                             VALUES
                                 (%s, %s, %s, %s)
                             RETURNING id;
@@ -45,13 +45,13 @@ class DateListQueries:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
-                        SELECT (id, date, description, packing_list_id, user_id)
+                        SELECT (id, date, description, packing_list_id)
                         FROM date_list
                         WHERE (user_id = %s AND packing_list_id = %s)
                         ORDER BY date;
                         """, [user_id, packing_list_id]
                     )
-
+                    print(result.fetchall()[0])
                     return[self.record_to_date_list_out(record[0]) for record in result]
         except Exception as e:
             print(e)
