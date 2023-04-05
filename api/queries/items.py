@@ -27,7 +27,7 @@ class ItemsQueries:
                         ]
                     )
                     id = result.fetchone()[0]
-                    return self.items_in_to_out(id, items)
+                    return self.items_in_to_out(id, packing_list_id, date_list_id, items)
         except Exception:
             return {"message": "Could not create items list"}
 
@@ -38,7 +38,7 @@ class ItemsQueries:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
-                        SELECT (id, name, quantity, is_packed, packing_list_id, date_list_id, user_id)
+                        SELECT (id, name, quantity, is_packed, packing_list_id, date_list_id)
                         FROM items
                         WHERE (packing_list_id = %s AND date_list_id = %s AND user_id = %s)
                         ORDER BY name;
@@ -54,11 +54,11 @@ class ItemsQueries:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
-                        SELECT (id, name, quantity, is_packed, packing_list_id, date_list_id, user_id)
+                        SELECT (id, name, quantity, is_packed, packing_list_id, date_list_id)
                         FROM items
                         WHERE (id=%s AND user_id=%s AND packing_list_id=%s AND date_list_id=%s)
                         ORDER BY name;
-                        """, [packing_list_id, date_list_id, items_id, user_id]
+                        """, [items_id, user_id, packing_list_id, date_list_id]
                     )
                     record = result.fetchone()
                     if record is None:
@@ -87,13 +87,28 @@ class ItemsQueries:
                             user_id
                         ]
                     )
-                    return self.items_in_to_out(items_id, items)
+                    return self.items_in_to_out(items_id, packing_list_id, date_list_id, items)
         except Exception:
             return {"message": "Could not update the item list"}
 
-    def items_in_to_out(self, id: int, items: ItemsIn):
+    def delete(self, user_id: int, packing_list_id: int, date_list_id: int, items_id: int) -> bool:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    db.execute(
+                        """
+                        DELETE FROM items
+                        WHERE (user_id=%s AND packing_list_id=%s AND date_list_id=%s AND id=%s)
+                        """,
+                        [user_id, packing_list_id, date_list_id, items_id]
+                    )
+                    return True
+        except Exception as e:
+            return False
+
+    def items_in_to_out(self, id: int, packing_list_id: int, date_list_id: int, items: ItemsIn):
         old_data = items.dict()
-        return ItemsOut(id=id, packing_list_id=id, date_list_id=id, **old_data)
+        return ItemsOut(id=id, packing_list_id=packing_list_id, date_list_id=date_list_id, **old_data)
 
     def record_to_items_out(self, record):
         return ItemsOut(

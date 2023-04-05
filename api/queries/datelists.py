@@ -35,7 +35,7 @@ class DateListQueries:
                             ]
                         )
                         id = result.fetchone()[0]
-                        return self.date_list_in_to_out(id, date_list)
+                        return self.date_list_in_to_out(id, packing_list_id, date_list)
         except Exception:
             return {"message": "Could not create packing list associated with this date"}
 
@@ -51,7 +51,6 @@ class DateListQueries:
                         ORDER BY date;
                         """, [user_id, packing_list_id]
                     )
-
                     return[self.record_to_date_list_out(record[0]) for record in result]
         except Exception as e:
             print(e)
@@ -74,7 +73,6 @@ class DateListQueries:
                         return None
                     return self.record_to_date_list_out(record[0])
         except Exception as e:
-            print(e)
             return {"message": "Could not get that date list"}
 
     def update(self, packing_list_id: int, date_list_id:int, user_id:int, date_list: DateListIn) -> Union[DateListOut, Error]:
@@ -96,13 +94,16 @@ class DateListQueries:
                         ]
                     )
 
-                    return self.date_list_in_to_out(date_list_id, date_list)
+                    return self.date_list_in_to_out(date_list_id, packing_list_id, date_list)
         except Exception:
             return {"message": "Could not update that date list"}
 
-    def date_list_in_to_out(self, id: int, date_list: DateListIn):
+
+
+
+    def date_list_in_to_out(self, id: int, packing_list_id: int, date_list: DateListIn):
         old_data = date_list.dict()
-        return DateListOut(id=id, packing_list_id=id, date_list_id=id, **old_data)
+        return DateListOut(id=id, packing_list_id=packing_list_id, **old_data)
 
     def record_to_date_list_out(self, record):
         return DateListOut(

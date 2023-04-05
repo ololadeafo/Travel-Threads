@@ -102,7 +102,7 @@ class PackListQueries:
                             id
                         ]
                     )
-                    return self.pack_list_in_to_out(user_id, id, pack_list)
+                    return self.pack_list_in_to_out(id, user_id, pack_list)
         except Exception:
             return {"message": "Could not update that packing list"}
 

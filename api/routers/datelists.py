@@ -16,10 +16,10 @@ def create_date_list(
     repo: DateListQueries = Depends()
 ):
     user_id = account['id']
-    date_list = repo.create(user_id, packing_list_id, date_list)
-    if date_list is None:
+    new_date_list = repo.create(user_id, packing_list_id, date_list)
+    if new_date_list is None:
         response.status_code = 400
-    return date_list
+    return new_date_list
 
 @router.get('/api/packlist/{packing_list_id}/datelist', response_model=Union[List[DateListOut], Error])
 def get_all(
