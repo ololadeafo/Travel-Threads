@@ -20,7 +20,7 @@ steps = [
         """
         CREATE TABLE packing_list (
             id SERIAL PRIMARY KEY NOT NULL,
-            user_id INTEGER REFERENCES users(id) NOT NULL,
+            user_id INTEGER REFERENCES users(id) NOT NULL ON DELETE CASCADE,
             name VARCHAR(100) NOT NULL,
             start_date DATE NOT NULL,
             end_date DATE NOT NULL,
