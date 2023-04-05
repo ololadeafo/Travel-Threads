@@ -63,3 +63,7 @@ class ItemsOut(ItemsIn):
     id: int
     packing_list_id: int
     date_list_id: int
+
+
+class WeatherOut(BaseModel):
+    daily: object

@@ -96,4 +96,69 @@ steps = [
         """
     ],
 
+    [
+        # "Up" SQL statement
+        """
+        CREATE TABLE countries (
+            id SERIAL PRIMARY KEY NOT NULL,
+            name VARCHAR(100) NOT NULL,
+            iso3 VARCHAR(3) NOT NULL,
+        );
+        """,
+
+        # "Down" SQL statement
+        """
+        DROP TABLE users;
+        """
+    ],
+
+    [
+        # "Up" SQL statement
+        """
+        CREATE TABLE states (
+            id SERIAL PRIMARY KEY NOT NULL,
+            name VARCHAR(100) NOT NULL,
+            country_id INTEGER NOT NULL,
+            CONSTRAINT fk_country
+                FOREIGN KEY(country_id)
+                    REFERENCES country(id)
+                    ON DELETE CASCADE
+
+        );
+        """,
+
+        # "Down" SQL statement
+        """
+        DROP TABLE users;
+        """
+    ],
+
+    [
+        # "Up" SQL statement
+        """
+        CREATE TABLE cities (
+            id SERIAL PRIMARY KEY NOT NULL,
+            name VARCHAR(100) NOT NULL,
+            latitude NUMERIC NOT NULL,
+            longitude NUMERIC NOT NULL,
+            country_id INTEGER,
+            CONSTRAINT fk_country
+                FOREIGN KEY(country_id)
+                    REFERENCES countries(id)
+                    ON DELETE CASCADE,
+            state_id INTEGER,
+            CONSTRAINT fk_state_id
+                FOREIGN KEY(state_id)
+                    REFERENCES states(id)
+                    ON DELETE CASCADE
+
+        );
+        """,
+
+        # "Down" SQL statement
+        """
+        DROP TABLE users;
+        """
+    ]
+
 ]
