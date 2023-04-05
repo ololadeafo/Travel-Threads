@@ -102,13 +102,13 @@ steps = [
         CREATE TABLE countries (
             id SERIAL PRIMARY KEY NOT NULL,
             name VARCHAR(100) NOT NULL,
-            iso3 VARCHAR(3) NOT NULL,
+            iso3 VARCHAR(3) NOT NULL
         );
         """,
 
         # "Down" SQL statement
         """
-        DROP TABLE users;
+        DROP TABLE countries;
         """
     ],
 
@@ -121,7 +121,7 @@ steps = [
             country_id INTEGER NOT NULL,
             CONSTRAINT fk_country
                 FOREIGN KEY(country_id)
-                    REFERENCES country(id)
+                    REFERENCES countries(id)
                     ON DELETE CASCADE
 
         );
@@ -129,7 +129,7 @@ steps = [
 
         # "Down" SQL statement
         """
-        DROP TABLE users;
+        DROP TABLE states;
         """
     ],
 
@@ -157,7 +157,7 @@ steps = [
 
         # "Down" SQL statement
         """
-        DROP TABLE users;
+        DROP TABLE cities;
         """
     ]
 
