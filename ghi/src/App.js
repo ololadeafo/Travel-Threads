@@ -3,7 +3,7 @@ import Construct from './Construct.js'
 import ErrorNotification from './ErrorNotification';
 import './App.css';
 import { AuthProvider } from "@galvanize-inc/jwtdown-for-react"
-import { BrowserRouter, Route } from "react-router-dom"
+import { BrowserRouter, Routes, Route } from "react-router-dom"
 import LoginForm from './Login.js';
 
 
@@ -37,7 +37,9 @@ function App() {
         <ErrorNotification error={error} />
         <Construct info={launch_info} />
         <BrowserRouter>
-          <Route path="/" element={<LoginForm/>}/>
+          <Routes>
+            <Route path="/" element={<LoginForm />} />
+          </Routes>
         </BrowserRouter>
       </div>
     </AuthProvider>
