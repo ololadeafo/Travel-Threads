@@ -119,7 +119,7 @@ steps = [
             id SERIAL PRIMARY KEY NOT NULL,
             name VARCHAR(100) NOT NULL,
             country_id INTEGER NOT NULL,
-            CONSTRAINT fk_country
+            CONSTRAINT fk_country_id
                 FOREIGN KEY(country_id)
                     REFERENCES countries(id)
                     ON DELETE CASCADE
@@ -142,7 +142,7 @@ steps = [
             latitude NUMERIC NOT NULL,
             longitude NUMERIC NOT NULL,
             country_id INTEGER,
-            CONSTRAINT fk_country
+            CONSTRAINT fk_country_id
                 FOREIGN KEY(country_id)
                     REFERENCES countries(id)
                     ON DELETE CASCADE,

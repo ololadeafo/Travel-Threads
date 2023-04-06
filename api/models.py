@@ -67,3 +67,23 @@ class ItemsOut(ItemsIn):
 
 class WeatherOut(BaseModel):
     daily: object
+
+
+class CountriesOut(BaseModel):
+    id: int
+    name: str
+    iso3: str
+
+class StatesOut(BaseModel):
+    id: int
+    name: str
+
+class CitiesOut(BaseModel):
+    id: int
+    name: str
+
+class CityOut(BaseModel):
+    id: int
+    name: str
+    longitude: float
+    latitude: float
