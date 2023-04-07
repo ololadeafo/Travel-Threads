@@ -5,6 +5,7 @@ import './App.css';
 // import { AuthProvider } from "@galvanize-inc/jwtdown-for-react"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Signup from './Signup.js';
+import Login from './Login.js';
 
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Signup />} />
+            <Route path="/login" element={<Login />} />
           </Routes>
         </BrowserRouter>
       </div>
