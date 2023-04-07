@@ -22,10 +22,24 @@ export const travelThreadsApi = createApi({
                 }
             },
             invalidatesTags: ['Account']
+        }),
+        login: builder.mutation({
+            query: (body) => {
+                const formData = new FormData()
+                formData.append('email', body.email)
+                formData.append('password', body.password)
+                return {
+                    url: '/token',
+                    method: 'POST',
+                    body: formData,
+                }
+            },
+            invalidatesTags: ['Account']
         })
     })
 })
 
 export const {
     useSignupMutation,
+    useLoginMutation,
 } = travelThreadsApi;
