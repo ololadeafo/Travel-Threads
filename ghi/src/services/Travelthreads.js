@@ -35,6 +35,13 @@ export const travelThreadsApi = createApi({
                 }
             },
             invalidatesTags: ['Account']
+        }),
+        logout: builder.mutation({
+            query: () => ({
+                url: '/token',
+                method: 'DELETE'
+            }),
+            invalidatesTags: ['Account']
         })
     })
 })
@@ -42,4 +49,5 @@ export const travelThreadsApi = createApi({
 export const {
     useSignupMutation,
     useLoginMutation,
+    useLogoutMutation,
 } = travelThreadsApi;
