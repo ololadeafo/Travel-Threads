@@ -9,7 +9,7 @@ const Login = () => {
     const { fields } = useSelector(state => state.login)
 
     const handleSubmit = (e) => {
-        e.preventdefault()
+        e.preventDefault()
         console.log('handleSubmit');
         console.log({fields});
         login(fields)

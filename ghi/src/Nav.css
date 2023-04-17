@@ -2,11 +2,25 @@
     background-color: #5E6472;
     color:white;
     height:5em;
-    display:grid;
-    grid-template-columns: auto, 100%;
+    display:flex;
+    justify-content: space-between;
+    padding-left: 5px;
+    padding-right: 25px;
 }
 
 .logo {
     width:auto;
-    height:100%
+    height:100%;
+    background-color: #5E6472
+}
+
+.right-nav-bar {
+    display: flex;
+    align-items: center;
+}
+
+.nav-link {
+    padding-left: 10px;
+    padding-right: 10px;
+    color:black
 }

@@ -6,28 +6,27 @@ import { Link } from "react-router-dom";
 import  travel_Threads from "./images/Logo/travel_Threads.png"
 import { useGetAccountQuery } from './services/Travelthreads';
 import "./Nav.css"
+import { useLogoutMutation } from './services/Travelthreads';
+import Logout from './Logout';
 
 function Nav() {
     const { data } = useGetAccountQuery()
+    const [logout] = useLogoutMutation();
     return(
         <div className="Navbar">
-            <NavLink to="/"><img className="logo" src={ travel_Threads } alt=""/></NavLink>
-            <div>
+            <div className='left-nav-bar'>
+                <NavLink to="/"><img className="logo" src={ travel_Threads } alt="" /></NavLink>
+            </div>
+            <div className='right-nav-bar'>
                 {data === null ? (
-                    <><Link to="/login">
-                    <button type="button">
+                    <><Link to="/login" className="nav-link">
                         Login
-                    </button>
-                </Link><Link to="/signup">
-                        <button type="button">
+                </Link><Link to="/signup" className="nav-link">
                             Sign Up
-                        </button>
                     </Link></>
                 ) : (
-                    <Link to="/logout">
-                        <button type="button">
+                    <Link to="/" className="nav-link" onClick={ logout }>
                             Logout
-                        </button>
                     </Link>
                 )}
             </div>
