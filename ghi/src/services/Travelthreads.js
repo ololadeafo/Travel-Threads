@@ -10,7 +10,6 @@ export const travelThreadsApi = createApi({
     endpoints: (builder) => ({
         getAccount: builder.query({
             query: () => '/token',
-            transformResponse: (response) => response?.account,
             providesTags: ['Account']
         }),
         signup: builder.mutation({
@@ -50,4 +49,5 @@ export const {
     useSignupMutation,
     useLoginMutation,
     useLogoutMutation,
+    useGetAccountQuery,
 } = travelThreadsApi;

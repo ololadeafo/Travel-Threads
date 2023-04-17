@@ -8,7 +8,7 @@ const Signup = () => {
     const dispatch = useDispatch()
     const [signup] = useSignupMutation()
     const { errorNotification, fields } = useSelector(state => state.signup)
-    
+
     const handleSubmit = (e) => {
         e.preventDefault()
         if (fields.password !== fields.passwordConfirmation) {

@@ -1,0 +1,12 @@
+.Navbar {
+    background-color: #5E6472;
+    color:white;
+    height:5em;
+    display:grid;
+    grid-template-columns: auto, 100%;
+}
+
+.logo {
+    width:auto;
+    height:100%
+}

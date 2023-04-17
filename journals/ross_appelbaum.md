@@ -3,4 +3,7 @@ Tuesday March 28th - We attempted authentication, ran into quite a few issues an
 Wednesday March 29th - Today was a lot more productive. We were able to figure everything out with authentication and we have moved onto queries and routers.
 Thursday March 30th - Today was amazing! We were able to get all of our logic done for one of our pages, which makes the rest of the backend quite a bit easier. Onto our other pages and the external apis next week.
 Monday April 3rd - Today was a bit rough. We wrote the logic for our 2nd table but encountered a major issue in the logic that we have written out so far. Essentially we're only going to give the user the option to edit the description. The days themselves would auto populate based on the date range provided in the packing list. Overall we're gonna have to write quite a bit more code this week.
-c   
+Tuesday April 4th- We were able to figure everything out! We just have to write the logic for the rest of the endpoints and we should be good to start on our external APIs
+Wednesday April 5th- We are finished with all of our endpoints and routes! We were able to start with our APIs as well. We decided to use the database of one of the apis to populate our own database as it'd be faster.
+Thursday April 6th- We've finished up the backend! We started on front end authentication but it's proven to be quite the best. We agreed to study up again on every material that we have about it and meet back again with fresh eyes and minds.
+Friday April 7th- We managed to finish up the front end authentification! It was a bit of a doozy but we were able to figure it out with our combined brainpower! A great way to leave off on before break!

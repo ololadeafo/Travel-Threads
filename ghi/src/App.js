@@ -7,6 +7,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Signup from './Signup.js';
 import Login from './Login.js';
 import Logout from './Logout.js';
+import Main from './Main.jsx'
+import Nav from './Nav.jsx'
 
 
 function App() {
@@ -34,17 +36,21 @@ function App() {
 
 
   return (
-      <div>
-        <ErrorNotification error={error} />
-        {/* <Construct info={launch_info} /> */}
-        <BrowserRouter>
+    <div>
+      <ErrorNotification error={error} />
+      {/* <Construct info={launch_info} /> */}
+      <BrowserRouter>
+        <Nav />
+        <div>
           <Routes>
-            <Route path="/" element={<Signup />} />
+            <Route path="/" element={<Main />} />
+            <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
             <Route path="/logout" element={<Logout />} />
           </Routes>
-        </BrowserRouter>
-      </div>
+        </div>
+      </BrowserRouter>
+    </div>
   );
 }
 
