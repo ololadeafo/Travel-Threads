@@ -57,6 +57,14 @@ export const travelThreadsApi = createApi({
         };
       },
     }),
+    getCountry: builder.query({
+      query: () => "/api/location/countries",
+      provideTags: ["Country"],
+    }),
+    // getState: builder.query({
+    //   query: () => "/api/location/{country_id}/states",
+    //   provideTags: ["State"],
+    // }),
   }),
 });
 
@@ -66,4 +74,6 @@ export const {
   useLogoutMutation,
   useGetAccountQuery,
   useCreateListMutation,
+  useGetCountryQuery,
+  // useGetStateQuery,
 } = travelThreadsApi;

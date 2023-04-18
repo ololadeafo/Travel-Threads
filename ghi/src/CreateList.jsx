@@ -9,7 +9,10 @@ import {
   handleEndDateChange,
   reset,
 } from "./features/auth/createList";
-import { useCreateListMutation } from "./services/Travelthreads";
+import {
+  useCreateListMutation,
+  useGetCountryQuery,
+} from "./services/Travelthreads";
 
 const CreateList = () => {
   const dispatch = useDispatch();
@@ -21,6 +24,12 @@ const CreateList = () => {
     createList(fields);
     dispatch(reset());
   };
+
+  const countryData = useGetCountryQuery();
+  const countries = countryData["data"];
+
+  // const stateData = useGetStateQuery();
+  // console.log(stateData);
 
   return (
     <>
@@ -37,12 +46,38 @@ const CreateList = () => {
             />
           </div>
           <div>
-            <label htmlFor="CreateList__location">Location</label>
+            <label htmlFor="CreateList__country">Country</label>
+            <select
+              id="CreateList__country"
+              value={fields.country}
+              onChange={(e) => dispatch(handleCountryChange(e.target.value))}
+            >
+              <option value="">Choose a country</option>
+              {countries.map((country) => {
+                return (
+                  <option value={country.id} key={country.id}>
+                    {country.name}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+          <div>
+            <label htmlFor="CreateList__state">State</label>
             <input
-              type={"text"}
-              id="CreateList__location"
-              value={fields.location}
-              onChange={(e) => dispatch(handleLocationChange(e.target.value))}
+              type={"select"}
+              id="CreateList__state"
+              value={fields.state}
+              onChange={(e) => dispatch(handleStateChange(e.target.value))}
+            />
+          </div>
+          <div>
+            <label htmlFor="CreateList__city">City</label>
+            <input
+              type={"select"}
+              id="CreateList__city"
+              value={fields.city}
+              onChange={(e) => dispatch(handleCityChange(e.target.value))}
             />
           </div>
           <div>
