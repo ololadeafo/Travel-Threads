@@ -9,8 +9,8 @@ const initialState = {
   },
 };
 
-const packingListSlice = createSlice({
-  name: "packing list",
+const createListSlice = createSlice({
+  name: "createList",
   initialState,
   reducers: {
     handleNameChange: (state, action) => {
@@ -35,6 +35,6 @@ export const {
   handleStartDateChange,
   handleEndDateChange,
   reset,
-} = packingListSlice.actions;
+} = createListSlice.actions;
 
-export default packingListSlice.reducer;
+export default createListSlice.reducer;

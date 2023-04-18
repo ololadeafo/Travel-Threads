@@ -9,6 +9,7 @@ import Login from "./Login.js";
 import Logout from "./Logout.js";
 import Main from "./Main.jsx";
 import Nav from "./Nav.jsx";
+import CreateList from "./CreateList.jsx";
 
 function App() {
   const [error] = useState(null);
@@ -24,6 +25,7 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
             <Route path="/logout" element={<Logout />} />
+            <Route path="/createlist" element={<CreateList />} />
           </Routes>
         </div>
       </BrowserRouter>

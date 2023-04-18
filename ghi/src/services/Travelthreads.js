@@ -1,54 +1,69 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const travelThreadsApi = createApi({
-    reducerPath: 'travelThreadsApi',
-    baseQuery: fetchBaseQuery({
-        baseUrl: `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}`,
-        credentials: "include"
+  reducerPath: "travelThreadsApi",
+  baseQuery: fetchBaseQuery({
+    baseUrl: `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}`,
+    credentials: "include",
+  }),
+  tagTypes: ["Account"],
+  endpoints: (builder) => ({
+    getAccount: builder.query({
+      query: () => "/token",
+      transformResponse: (response) => response?.account,
+      providesTags: ["Account"],
     }),
-    tagTypes: ['Account'],
-    endpoints: (builder) => ({
-        getAccount: builder.query({
-            query: () => '/token',
-            transformResponse: (response) => response?.account,
-            providesTags: ['Account']
-        }),
-        signup: builder.mutation({
-            query: (body) => {
-                return {
-                    url: '/api/accounts',
-                    method: 'POST',
-                    body,
-                }
-            },
-            invalidatesTags: ['Account']
-        }),
-        login: builder.mutation({
-            query: (body) => {
-                const formData = new FormData()
-                formData.append('username', body.email)
-                formData.append('password', body.password)
-                return {
-                    url: '/token',
-                    method: 'POST',
-                    body: formData,
-                }
-            },
-            invalidatesTags: ['Account']
-        }),
-        logout: builder.mutation({
-            query: () => ({
-                url: '/token',
-                method: 'DELETE'
-            }),
-            invalidatesTags: ['Account']
-        })
-    })
-})
+    signup: builder.mutation({
+      query: (body) => {
+        return {
+          url: "/api/accounts",
+          method: "POST",
+          body,
+        };
+      },
+      invalidatesTags: ["Account"],
+    }),
+    login: builder.mutation({
+      query: (body) => {
+        const formData = new FormData();
+        formData.append("username", body.email);
+        formData.append("password", body.password);
+        return {
+          url: "/token",
+          method: "POST",
+          body: formData,
+        };
+      },
+      invalidatesTags: ["Account"],
+    }),
+    logout: builder.mutation({
+      query: () => ({
+        url: "/token",
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Account"],
+    }),
+    createList: builder.mutation({
+      query: (body) => {
+        const formData = new FormData();
+        formData.append("name", body.name);
+        formData.append("location", body.location);
+        formData.append("startDate", body.startDate);
+        formData.append("endDate", body.endDate);
+        return {
+          url: "/api/packlist",
+          method: "POST",
+          body: formData,
+        };
+      },
+    }),
+  }),
+});
 
 export const {
-    useSignupMutation,
-    useLoginMutation,
-    useLogoutMutation,
-    useGetAccountQuery,
+  useSignupMutation,
+  useLoginMutation,
+  useLogoutMutation,
+  useGetAccountQuery,
+  useCreateListMutation,
 } = travelThreadsApi;
