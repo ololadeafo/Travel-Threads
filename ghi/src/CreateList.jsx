@@ -12,10 +12,15 @@ import {
 import {
   useCreateListMutation,
   useGetCountryQuery,
+  useGetStateQuery,
 } from "./services/Travelthreads";
 
 const CreateList = () => {
   const dispatch = useDispatch();
+  const countryData = useGetCountryQuery();
+  const countries = countryData["data"];
+  console.log(countryData)
+  console.log(countries)
   const [createList] = useCreateListMutation();
   const { fields } = useSelector((state) => state.createList);
 
@@ -25,11 +30,8 @@ const CreateList = () => {
     dispatch(reset());
   };
 
-  const countryData = useGetCountryQuery();
-  const countries = countryData["data"];
-
-  // const stateData = useGetStateQuery();
-  // console.log(stateData);
+  const stateData = useGetStateQuery(fields.country);
+  const states = stateData["data"]
 
   return (
     <>
@@ -53,7 +55,7 @@ const CreateList = () => {
               onChange={(e) => dispatch(handleCountryChange(e.target.value))}
             >
               <option value="">Choose a country</option>
-              {countries.map((country) => {
+              {countries?.map((country) => {
                 return (
                   <option value={country.id} key={country.id}>
                     {country.name}
@@ -64,12 +66,20 @@ const CreateList = () => {
           </div>
           <div>
             <label htmlFor="CreateList__state">State</label>
-            <input
-              type={"select"}
+            <select
               id="CreateList__state"
               value={fields.state}
               onChange={(e) => dispatch(handleStateChange(e.target.value))}
-            />
+            >
+            <option value="">Choose a State</option>
+              {states?.map((state) => {
+                return (
+                  <option value={state.id} key={state.id}>
+                    {state.name}
+                  </option>
+                );
+              })}
+            </select>
           </div>
           <div>
             <label htmlFor="CreateList__city">City</label>
