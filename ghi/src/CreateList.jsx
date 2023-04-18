@@ -2,7 +2,9 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   handleNameChange,
-  handleLocationChange,
+  handleCountryChange,
+  handleStateChange,
+  handleCityChange,
   handleStartDateChange,
   handleEndDateChange,
   reset,
@@ -11,8 +13,8 @@ import { useCreateListMutation } from "./services/Travelthreads";
 
 const CreateList = () => {
   const dispatch = useDispatch();
-  const { fields } = useSelector((state) => state.CreateList);
   const [createList] = useCreateListMutation();
+  const { fields } = useSelector((state) => state.createList);
 
   const handleSubmit = (e) => {
     e.preventDefault();

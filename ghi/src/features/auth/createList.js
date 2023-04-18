@@ -3,7 +3,9 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   fields: {
     name: "",
-    location: "",
+    country: "",
+    state: "",
+    city: "",
     startDate: "",
     endDate: "",
   },
@@ -16,8 +18,14 @@ const createListSlice = createSlice({
     handleNameChange: (state, action) => {
       state.fields.name = action.payload;
     },
-    handleLocationChange: (state, action) => {
-      state.fields.location = action.payload;
+    handleCountryChange: (state, action) => {
+      state.fields.country = action.payload;
+    },
+    handleStateChange: (state, action) => {
+      state.fields.state = action.payload;
+    },
+    handleCityChange: (state, action) => {
+      state.fields.city = action.payload;
     },
     handleStartDateChange: (state, action) => {
       state.fields.startDate = action.payload;
@@ -31,7 +39,9 @@ const createListSlice = createSlice({
 
 export const {
   handleNameChange,
-  handleLocationChange,
+  handleCountryChange,
+  handleStateChange,
+  handleCityChange,
   handleStartDateChange,
   handleEndDateChange,
   reset,
