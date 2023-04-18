@@ -18,7 +18,7 @@ function Nav() {
                 <NavLink to="/"><img className="logo" src={ travel_Threads } alt="" /></NavLink>
             </div>
             <div className='right-nav-bar'>
-                {data === null ? (
+                {data !== null ? (
                     <><Link to="/login" className="nav-link">
                         Login
                 </Link><Link to="/signup" className="nav-link">
