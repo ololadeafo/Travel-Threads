@@ -10,8 +10,6 @@ const Login = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log('handleSubmit');
-        console.log({fields});
         login(fields)
         dispatch(reset())
     }

@@ -26,7 +26,7 @@ export const travelThreadsApi = createApi({
         login: builder.mutation({
             query: (body) => {
                 const formData = new FormData()
-                formData.append('email', body.email)
+                formData.append('username', body.email)
                 formData.append('password', body.password)
                 return {
                     url: '/token',
