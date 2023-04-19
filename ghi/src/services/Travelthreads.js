@@ -6,7 +6,7 @@ export const travelThreadsApi = createApi({
     baseUrl: `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}`,
     credentials: "include",
   }),
-  tagTypes: ["Account"],
+  tagTypes: ["Account", "Lists", "City", "State", "Country"],
   endpoints: (builder) => ({
     getAccount: builder.query({
       query: () => "/token",
@@ -21,7 +21,7 @@ export const travelThreadsApi = createApi({
           body,
         };
       },
-      invalidatesTags: ["Account"],
+      invalidatesTags: ['Account', 'Lists'],
     }),
     login: builder.mutation({
       query: (body) => {
@@ -34,44 +34,44 @@ export const travelThreadsApi = createApi({
           body: formData,
         };
       },
-      invalidatesTags: ["Account"],
+      invalidatesTags: ['Account', 'Lists'],
     }),
     logout: builder.mutation({
       query: () => ({
         url: "/token",
         method: "DELETE",
       }),
-      invalidatesTags: ["Account"],
+      invalidatesTags: ['Account', 'Lists'],
     }),
     createList: builder.mutation({
       query: (body) => {
-        const formData = new FormData();
-        formData.append("name", body.name);
-        formData.append("country", body.country);
-        formData.append("state", body.state);
-        formData.append("city", body.city);
-        formData.append("start_date", body.startDate);
-        formData.append("end_date", body.endDate);
         return {
           url: "/api/packlist",
           method: "POST",
-          body: formData,
+          body: body,
         };
-      },
+      }, invalidatesTags: ['Lists'],
     }),
     getCity: builder.query({
       query: (params) => `/api/location/${params.province_type}/${params.province_id}/cities`,
-      provideTags: ["City"],
+      provideTags: ['City'],
     }),
     getState: builder.query({
       query: (country_id) => `/api/location/${country_id}/states`,
-      provideTags: ["State"],
-      invalidatesTags: ["City"]
+      provideTags: ['State'],
+      invalidatesTags: ['City']
     }),
     getCountry: builder.query({
       query: () => "/api/location/countries",
-      provideTags: ["Country"],
-      invalidatesTags: ["State", "City"]
+      provideTags: ['Country'],
+      invalidatesTags: ['State', 'City']
+    }),
+    getLists: builder.query({
+      query: () => {
+        console.log("get list query is running")
+        return ("/api/packlist")
+      },
+      provideTags: ['Lists'],
     }),
   }),
 });
@@ -84,5 +84,6 @@ export const {
   useCreateListMutation,
   useGetCountryQuery,
   useGetStateQuery,
-  useGetCityQuery
+  useGetCityQuery,
+  useGetListsQuery
 } = travelThreadsApi;

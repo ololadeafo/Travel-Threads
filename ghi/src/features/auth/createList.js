@@ -3,11 +3,11 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   fields: {
     name: "",
+    start_date: "",
+    end_date: "",
     country: "",
     state: "",
     city: "",
-    start_date: "",
-    end_date: "",
   },
 };
 

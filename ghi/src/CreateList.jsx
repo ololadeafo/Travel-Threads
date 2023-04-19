@@ -26,9 +26,6 @@ const CreateList = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    console.log(fields)
-    console.log(fields)
     createList(fields);
     dispatch(reset());
   };
@@ -36,20 +33,25 @@ const CreateList = () => {
   const countryData = useGetCountryQuery();
   const countries = countryData["data"];
 
-  const stateData = useGetStateQuery(fields.country);
+  var country_id = fields.country
+  if (country_id === "") {
+    country_id = 0
+  }
+  const stateData = useGetStateQuery(country_id);
   const states = stateData["data"]
 
 
   var province_type = "country"
   var province_id = fields.country
+  if (province_id === "") {
+    province_id = 0
+  }
 
 
   if (fields.state !== "") {
     var province_type = "state"
     var province_id = fields.state
   }
-
-  console.log(fields.state)
 
 
   var params = {"province_type": province_type, "province_id": province_id}
@@ -127,7 +129,7 @@ const CreateList = () => {
             <input
               type={"date"}
               id="CreateList__startDate"
-              value={fields.startDate}
+              value={fields.start_date}
               onChange={(e) => dispatch(handleStartDateChange(e.target.value))}
             />
           </div>
@@ -136,7 +138,7 @@ const CreateList = () => {
             <input
               type={"date"}
               id="CreateList__endDate"
-              value={fields.endDate}
+              value={fields.end_date}
               onChange={(e) => dispatch(handleEndDateChange(e.target.value))}
             />
           </div>

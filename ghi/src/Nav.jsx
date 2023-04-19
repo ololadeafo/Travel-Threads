@@ -10,7 +10,6 @@ import { useLogoutMutation } from "./services/Travelthreads";
 
 function Nav() {
   const account = useGetAccountQuery();
-  console.log(account);
   const [logout] = useLogoutMutation();
 
   return (

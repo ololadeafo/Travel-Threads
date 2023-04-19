@@ -13,7 +13,7 @@ const Main = () => {
           <button type="button">Get Packin!</button>
         </Link>
       ) : (
-        <Link to="/createlist">
+        <Link to="/packinglists">
           <button type="button">Get Packin!</button>
         </Link>
       )}
