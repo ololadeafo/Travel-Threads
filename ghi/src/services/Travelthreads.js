@@ -57,13 +57,19 @@ export const travelThreadsApi = createApi({
         };
       },
     }),
-    getCountry: builder.query({
-      query: () => "/api/location/countries",
-      provideTags: ["Country"],
+    getCity: builder.query({
+      query: (params) => `/api/location/${params.province_type}/${params.province_id}/cities`,
+      provideTags: ["City"],
     }),
     getState: builder.query({
       query: (country_id) => `/api/location/${country_id}/states`,
       provideTags: ["State"],
+      invalidatesTags: ["City"]
+    }),
+    getCountry: builder.query({
+      query: () => "/api/location/countries",
+      provideTags: ["Country"],
+      invalidatesTags: ["State", "City"]
     }),
   }),
 });
@@ -76,4 +82,5 @@ export const {
   useCreateListMutation,
   useGetCountryQuery,
   useGetStateQuery,
+  useGetCityQuery
 } = travelThreadsApi;
