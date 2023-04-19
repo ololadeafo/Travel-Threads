@@ -5,12 +5,9 @@ import {
 } from "./services/Travelthreads";
 
 const PackingLists = () => {
-    const account = useGetAccountQuery()
-    console.log(account["data"])
     const packingLists = useGetListsQuery()
-    // console.log(packingLists)
     const test = packingLists["data"]
-    // console.log(test)
+    const [deleteList] = useDeleteListMutation()
 
     return (
         <div className="container">
