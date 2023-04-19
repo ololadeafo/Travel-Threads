@@ -26,9 +26,6 @@ const CreateList = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    console.log(fields)
-    console.log(fields)
     createList(fields);
     dispatch(reset());
   };
@@ -36,20 +33,25 @@ const CreateList = () => {
   const countryData = useGetCountryQuery();
   const countries = countryData["data"];
 
-  const stateData = useGetStateQuery(fields.country);
+  var country_id = fields.country
+  if (country_id === "") {
+    country_id = 0
+  }
+  const stateData = useGetStateQuery(country_id);
   const states = stateData["data"]
 
 
   var province_type = "country"
   var province_id = fields.country
+  if (province_id === "") {
+    province_id = 0
+  }
 
 
   if (fields.state !== "") {
     var province_type = "state"
     var province_id = fields.state
   }
-
-  console.log(fields.state)
 
 
   var params = {"province_type": province_type, "province_id": province_id}
