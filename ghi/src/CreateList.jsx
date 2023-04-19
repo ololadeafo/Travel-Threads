@@ -127,7 +127,7 @@ const CreateList = () => {
             <input
               type={"date"}
               id="CreateList__startDate"
-              value={fields.startDate}
+              value={fields.start_date}
               onChange={(e) => dispatch(handleStartDateChange(e.target.value))}
             />
           </div>
@@ -136,7 +136,7 @@ const CreateList = () => {
             <input
               type={"date"}
               id="CreateList__endDate"
-              value={fields.endDate}
+              value={fields.end_date}
               onChange={(e) => dispatch(handleEndDateChange(e.target.value))}
             />
           </div>

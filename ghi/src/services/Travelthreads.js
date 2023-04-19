@@ -50,8 +50,8 @@ export const travelThreadsApi = createApi({
         formData.append("country", body.country);
         formData.append("state", body.state);
         formData.append("city", body.city);
-        formData.append("start_date", body.startDate);
-        formData.append("end_date", body.endDate);
+        formData.append("start_date", body.start_date);
+        formData.append("end_date", body.end_date);
         return {
           url: "/api/packlist",
           method: "POST",
