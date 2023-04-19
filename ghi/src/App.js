@@ -11,6 +11,7 @@ import Main from "./Main.jsx";
 import Nav from "./Nav.jsx";
 import CreateList from "./CreateList.jsx";
 import PackingLists from "./PackingLists.jsx";
+import ListDetail from "./PackingListDetail.jsx";
 
 function App() {
   const [error] = useState(null);
@@ -28,6 +29,7 @@ function App() {
             <Route path="/logout" element={<Logout />} />
             <Route path="/createlist" element={<CreateList />} />
             <Route path="/packinglists" element={<PackingLists />} />
+            <Route path="/packinglist/:id" element={<ListDetail />} />
           </Routes>
         </div>
       </BrowserRouter>
