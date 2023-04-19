@@ -47,9 +47,11 @@ export const travelThreadsApi = createApi({
       query: (body) => {
         const formData = new FormData();
         formData.append("name", body.name);
-        formData.append("location", body.location);
-        formData.append("startDate", body.startDate);
-        formData.append("endDate", body.endDate);
+        formData.append("country", body.country);
+        formData.append("state", body.state);
+        formData.append("city", body.city);
+        formData.append("start_date", body.startDate);
+        formData.append("end_date", body.endDate);
         return {
           url: "/api/packlist",
           method: "POST",

@@ -6,8 +6,8 @@ const initialState = {
     country: "",
     state: "",
     city: "",
-    startDate: "",
-    endDate: "",
+    start_date: "",
+    end_date: "",
   },
 };
 
@@ -28,10 +28,10 @@ const createListSlice = createSlice({
       state.fields.city = action.payload;
     },
     handleStartDateChange: (state, action) => {
-      state.fields.startDate = action.payload;
+      state.fields.start_date = action.payload;
     },
     handleEndDateChange: (state, action) => {
-      state.fields.endDate = action.payload;
+      state.fields.end_date = action.payload;
     },
     reset: () => initialState,
   },

@@ -13,17 +13,22 @@ import {
   useCreateListMutation,
   useGetCountryQuery,
   useGetStateQuery,
-  useGetCityQuery
+  useGetCityQuery,
 } from "./services/Travelthreads";
+
 
 const CreateList = () => {
   const dispatch = useDispatch();
+
 
   const [createList] = useCreateListMutation();
   const { fields } = useSelector((state) => state.createList);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    console.log(fields)
+    console.log(fields)
     createList(fields);
     dispatch(reset());
   };
@@ -71,7 +76,7 @@ const CreateList = () => {
             <select
               id="CreateList__country"
               value={fields.country}
-              onChange={(e) => dispatch(handleCountryChange(e.target.value))}
+              onChange={(e) => {dispatch(handleCountryChange(e.target.value)); dispatch(handleStateChange("")); dispatch(handleCityChange(""))}}
             >
               <option value="">Choose a country</option>
               {countries?.map((country) => {
@@ -88,7 +93,7 @@ const CreateList = () => {
             <select
               id="CreateList__state"
               value={fields.state}
-              onChange={(e) => dispatch(handleStateChange(e.target.value))}
+              onChange={(e) => {dispatch(handleStateChange(e.target.value)); dispatch(handleCityChange(""))}}
             >
             <option value="">Choose a State</option>
               {states?.map((state) => {
