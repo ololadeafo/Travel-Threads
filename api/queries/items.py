@@ -48,6 +48,24 @@ class ItemsQueries:
         except Exception as e:
             return {"message": "Could not get all items"}
 
+
+    def get_all_by_packlist(self, packing_list_id: int, user_id: int) -> Union[Error, List[ItemsOut]]:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        SELECT (id, name, quantity, is_packed, packing_list_id, date_list_id)
+                        FROM items
+                        WHERE (packing_list_id = %s AND user_id = %s)
+                        ORDER BY name;
+                        """, [packing_list_id, user_id]
+                    )
+                    return[self.record_to_items_out(record[0]) for record in result]
+        except Exception as e:
+            return {"message": "Could not get all items"}
+
+
     def get_one(self, packing_list_id: int, date_list_id: int, items_id: int, user_id: int) -> Optional[ItemsOut]:
         try:
             with pool.connection() as conn:

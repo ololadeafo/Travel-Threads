@@ -54,16 +54,16 @@ export const travelThreadsApi = createApi({
     }),
     getCity: builder.query({
       query: (params) => `/api/location/${params.province_type}/${params.province_id}/cities`,
-      provideTags: ['City'],
+      providesTags: ['City'],
     }),
     getState: builder.query({
       query: (country_id) => `/api/location/${country_id}/states`,
-      provideTags: ['State'],
+      providesTags: ['State'],
       invalidatesTags: ['City']
     }),
     getCountry: builder.query({
       query: () => "/api/location/countries",
-      provideTags: ['Country'],
+      providesTags: ['Country'],
       invalidatesTags: ['State', 'City']
     }),
     getLists: builder.query({
@@ -71,9 +71,34 @@ export const travelThreadsApi = createApi({
         console.log("get list query is running")
         return ("/api/packlist")
       },
-      provideTags: ['Lists'],
+      providesTags: ['Lists'],
+    }),
+    deleteList: builder.mutation({
+      query: (id) => ({
+        url: `/api/packlist/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ['Lists']
+    }),
+    getOneList: builder.query({
+      query: (id) => `/api/packlist/${id}`,
+      providesTags: ['List'],
+    }),
+    getDates: builder.query({
+      query: (id) => `/api/packlist/${id}/datelist`,
+      providesTags: ['Datelist'],
+    }),
+    getOneDate: builder.query({
+      query: (IDs) => `/api/packlist/${IDs.packinglistID}/datelist/${IDs.datelistID}/`,
+      providesTags: ['Datelist'],
+    }),
+    getItemsByPacklist: builder.query({
+      query: (packlist_id) => `/api/packlist/${packlist_id}/items`,
+      providesTags: ['All Items'],
     }),
   }),
+
+
 });
 
 export const {
@@ -85,5 +110,10 @@ export const {
   useGetCountryQuery,
   useGetStateQuery,
   useGetCityQuery,
-  useGetListsQuery
+  useGetListsQuery,
+  useDeleteListMutation,
+  useGetOneListQuery,
+  useGetDatesQuery,
+  useGetOneDateQuery,
+  useGetItemsByPacklistQuery
 } = travelThreadsApi;

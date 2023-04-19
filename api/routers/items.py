@@ -32,6 +32,15 @@ def get_all(
     user_id = account["id"]
     return repo.get_all(packing_list_id, date_list_id, user_id)
 
+@router.get('/api/packlist/{packing_list_id}/items', response_model=Union[List[ItemsOut], Error])
+def get_all_by_packlist(
+    packing_list_id: int,
+    account: dict = Depends(authenticator.get_current_account_data),
+    repo: ItemsQueries = Depends(),
+):
+    user_id = account["id"]
+    return repo.get_all_by_packlist(packing_list_id, user_id)
+
 @router.get('/api/packlist/{packing_list_id}/datelist/{date_list_id}/items/{items_id}', response_model=Optional[ItemsOut])
 def get_one(
     packing_list_id: int,
