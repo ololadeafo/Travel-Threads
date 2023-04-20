@@ -7,3 +7,6 @@ Tuesday April 4th- We were able to figure everything out! We just have to write 
 Wednesday April 5th- We are finished with all of our endpoints and routes! We were able to start with our APIs as well. We decided to use the database of one of the apis to populate our own database as it'd be faster.
 Thursday April 6th- We've finished up the backend! We started on front end authentication but it's proven to be quite the best. We agreed to study up again on every material that we have about it and meet back again with fresh eyes and minds.
 Friday April 7th- We managed to finish up the front end authentification! It was a bit of a doozy but we were able to figure it out with our combined brainpower! A great way to leave off on before break!
+Monday April 17th- The first day back after a break is always rough. It took the group a while to get going but we managed! Made som pretty good progress on the front end today.
+Tuesday April 18th- The front end is proving to be more challenging than we thought. However, we are making good progress, slowly but surely
+Wednesday April 19th- We got stuck on something for quite a bit of time, grabbed all of the SEIRs and everything and it turned out to be a couple of missing letters! It was a bit frustrating but oh well, we'll be a lot less likely to make the same mistake in the future.
