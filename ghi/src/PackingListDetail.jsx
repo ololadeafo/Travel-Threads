@@ -30,8 +30,13 @@ const ListDetail = () => {
 
 
 
-    const weatherData = useGetWeatherDataQuery({"latitude": getLatLon?.latitude, "longitude": getLatLon?.longitude})["data"]
-    console.log(weatherData)
+  const { data: weatherData, isLoading: isLoadingWD } = useGetWeatherDataQuery({
+    latitude: getLatLon?.latitude,
+    longitude: getLatLon?.longitude,
+  });
+  if (isLoadingWD) {
+    return <div>Loading</div>;
+  }
 
 
 
