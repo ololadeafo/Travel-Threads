@@ -11,8 +11,8 @@ router = APIRouter()
 @router.post('/api/packlist/{packing_list_id}/datelist/{start_date}/{end_date}', response_model=Union[List[DateListOut], Error])
 def create_date_list(
     packing_list_id: int,
-    start_date: str,
-    end_date: str,
+    start_date: date,
+    end_date: date,
     response: Response,
     account: dict= Depends(authenticator.get_current_account_data),
     repo: DateListQueries = Depends()

@@ -37,9 +37,9 @@ class DateListQueries:
                         )
                         id = result.fetchone()[0]
                         date_list = {
-                            "id": id,
                             "date": date,
-                            "description": None,
+                            "description": "",
+                            "id": id,
                             "packing_list_id": packing_list_id
                         }
                         print(type(date))
