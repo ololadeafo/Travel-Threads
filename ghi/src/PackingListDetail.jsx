@@ -8,35 +8,17 @@ const ListDetail = () => {
     const params = useParams();
     var packingListID = params["id"]
 
-    const {data: packingList, isLoading: isLoadingPL} = useGetOneListQuery(packingListID)
-    if (isLoadingPL) {
-            return <div> Loading </div>
-        }
+    const packingList = useGetOneListQuery(packingListID)["data"]
     console.log(packingList)
 
-    const {data: allPackingListItems, isLoading: isLoadingPLI} = useGetItemsByPacklistQuery(packingListID)
-    if (isLoadingPLI) {
-            return <div> Loading </div>
-        }
+    const allPackingListItems = useGetItemsByPacklistQuery(packingListID)["data"]
     console.log(allPackingListItems)
 
-
-
-    const {data: getLatLon, isLoading: isLoadingGLL} = useGetLatLonQuery(packingList?.city)
-    if (isLoadingGLL) {
-            return <div> Loading </div>
-        }
+    const getLatLon = useGetLatLonQuery(packingList?.city)["data"]
     console.log(getLatLon)
 
-
-
-  const { data: weatherData, isLoading: isLoadingWD } = useGetWeatherDataQuery({
-    latitude: getLatLon?.latitude,
-    longitude: getLatLon?.longitude,
-  });
-  if (isLoadingWD) {
-    return <div>Loading</div>;
-  }
+    const weatherData = useGetWeatherDataQuery({"latitude": getLatLon?.latitude, "longitude": getLatLon?.longitude})["data"]
+    console.log(weatherData)
 
 
 
