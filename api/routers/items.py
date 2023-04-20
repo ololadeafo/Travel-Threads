@@ -68,13 +68,11 @@ def update(
     user_id = account["id"]
     return repo.update(packing_list_id, date_list_id, items_id, user_id, items)
 
-@router.delete('/api/packlist/{packing_list_id}/datelist/{date_list_id}/items/{items_id}', response_model=bool)
+@router.delete('/api/items/{items_id}', response_model=bool)
 def delete(
-    packing_list_id: int,
-    date_list_id: int,
     items_id: int,
     account: dict= Depends(authenticator.get_current_account_data),
     repo: ItemsQueries = Depends(),
 ) -> bool:
     user_id = account["id"]
-    return repo.delete(user_id, packing_list_id, date_list_id, items_id)
+    return repo.delete(user_id, items_id)
