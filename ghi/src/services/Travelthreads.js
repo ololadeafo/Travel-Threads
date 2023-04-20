@@ -52,6 +52,14 @@ export const travelThreadsApi = createApi({
         };
       }, invalidatesTags: ['Lists'],
     }),
+    createDateLists: builder.mutation({
+      query: (params) => {
+        return {
+          url: `/api/packlist/${params.packing_list_id}/datelist/${params.start_date}/${params.end_date}`,
+          method: "POST"
+        };
+      }, invalidatesTags: ['Datelist', 'Lists']
+    }),
     getCity: builder.query({
       query: (params) => `/api/location/${params.province_type}/${params.province_id}/cities`,
       providesTags: ['City'],
@@ -124,5 +132,6 @@ export const {
   useGetDatesQuery,
   useGetOneDateQuery,
   useGetItemsByPacklistQuery,
-  useDeleteItemMutation
+  useDeleteItemMutation,
+  useCreateDateListsMutation
 } = travelThreadsApi;

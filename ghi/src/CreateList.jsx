@@ -14,6 +14,7 @@ import {
   useGetCountryQuery,
   useGetStateQuery,
   useGetCityQuery,
+  useCreateDateListsMutation
 } from "./services/Travelthreads";
 
 
@@ -23,10 +24,13 @@ const CreateList = () => {
 
   const [createList] = useCreateListMutation();
   const { fields } = useSelector((state) => state.createList);
+  const [createDateList] = useCreateDateListsMutation();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    createList(fields);
+    const new_list = await createList(fields);
+    console.log(new_list["data"])
+    await createDateList({"packing_list_id": new_list["id"], "start_date": fields.start_date, "end_date": fields.end_date })
     dispatch(reset());
   };
 
