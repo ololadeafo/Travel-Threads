@@ -111,6 +111,10 @@ export const travelThreadsApi = createApi({
     getWeatherData: builder.query({
       query: (params) => `/api/weather/${params.latitude}/${params.longitude}`,
       providesTags: ['Weather']
+    }),
+    getLatLon: builder.query({
+      query: (city_id) => `/api/location/city/${city_id}`,
+      providesTags: ['City Info']
     })
   }),
 
@@ -133,5 +137,7 @@ export const {
   useGetOneDateQuery,
   useGetItemsByPacklistQuery,
   useDeleteItemMutation,
-  useCreateDateListsMutation
+  useCreateDateListsMutation,
+  useGetLatLonQuery,
+  useGetWeatherDataQuery
 } = travelThreadsApi;

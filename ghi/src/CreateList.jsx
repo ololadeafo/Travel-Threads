@@ -30,7 +30,7 @@ const CreateList = () => {
     e.preventDefault();
     const new_list = await createList(fields);
     console.log(new_list["data"])
-    await createDateList({"packing_list_id": new_list["id"], "start_date": fields.start_date, "end_date": fields.end_date })
+    await createDateList({"packing_list_id": new_list.data.id, "start_date": fields.start_date, "end_date": fields.end_date })
     dispatch(reset());
   };
 
