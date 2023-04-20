@@ -113,8 +113,34 @@ export const travelThreadsApi = createApi({
       providesTags: ['Weather']
     }),
     getLatLon: builder.query({
-      query: (city_id) => `/api/location/city/${city_id}`,
-      providesTags: ['City Info']
+      async queryFn(packing_list_id, _queryApi, _extraOptions, fetchWithBQ) {
+        const packingListData = await fetchWithBQ(`/api/packlist/${packing_list_id}`)
+        if (packingListData.error) {
+          return { error: packingListData.error }
+        }
+
+        const packingList = packingListData.data
+        console.log(packingList)
+
+        const packingListCityData = await fetchWithBQ(`/api/location/city/${packingList.city}`)
+
+        if (packingListCityData.error) {
+          return { error: packingListCityData.error }
+        }
+
+        const packingListCity = packingListCityData.data
+
+        console.log(packingListCity)
+
+        const weatherData = await fetchWithBQ(`/api/weather/${packingListCity.latitude}/${packingListCity.longitude}`)
+        if (weatherData.error) {
+          return { error: weatherData.error }
+        }
+
+        const weather = weatherData.data
+
+        return {data : weather}
+      }
     })
   }),
 

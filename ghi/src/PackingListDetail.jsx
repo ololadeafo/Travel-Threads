@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams } from 'react-router-dom';
-import { useGetOneListQuery, useGetItemsByPacklistQuery, useGetLatLonQuery, useGetWeatherDataQuery } from "./services/Travelthreads";
+import { useGetItemsByPacklistQuery, useGetLatLonQuery } from "./services/Travelthreads";
 
 
 
@@ -8,30 +8,11 @@ const ListDetail = () => {
     const params = useParams();
     var packingListID = params["id"]
 
-    const {data: packingList, isLoading: isLoadingPL} = useGetOneListQuery(packingListID)
-    if (isLoadingPL) {
-            return <div> Loading </div>
-        }
-    console.log(packingList)
-
-    const {data: allPackingListItems, isLoading: isLoadingPLI} = useGetItemsByPacklistQuery(packingListID)
-    if (isLoadingPLI) {
-            return <div> Loading </div>
-        }
-    console.log(allPackingListItems)
+    // const allPackingListItems = useGetItemsByPacklistQuery(packingListID)
 
 
-
-    const {data: getLatLon, isLoading: isLoadingGLL} = useGetLatLonQuery(packingList?.city)
-    if (isLoadingGLL) {
-            return <div> Loading </div>
-        }
-    console.log(getLatLon)
-
-
-
-    const weatherData = useGetWeatherDataQuery({"latitude": getLatLon?.latitude, "longitude": getLatLon?.longitude})["data"]
-    console.log(weatherData)
+    const allInfo = useGetLatLonQuery(packingListID)
+    console.log(allInfo)
 
 
 
@@ -40,7 +21,7 @@ const ListDetail = () => {
             <div>
 
             </div>
-            <h1>{packingList?.name}</h1>
+            {/* <h1>{packingList?.name}</h1> */}
             <table>
                 <thead>
                     <tr>
@@ -49,7 +30,7 @@ const ListDetail = () => {
                         <th>Quantity</th>
                     </tr>
                 </thead>
-                <tbody>
+                {/* <tbody>
                     {allPackingListItems?.map((item) => {
                         return (
                             <tr key={item.id}>
@@ -59,7 +40,7 @@ const ListDetail = () => {
                             </tr>
                         )
                     })}
-                </tbody>
+                </tbody> */}
             </table>
         </div>
     )
