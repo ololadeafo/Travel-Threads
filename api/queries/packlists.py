@@ -3,6 +3,7 @@ from models import PackListIn, PacklistOut
 from queries.pool import pool
 from typing import Union, List, Optional
 from models import Error
+from routers.datelists import create_date_list
 
 
 class PackListQueries:
@@ -28,6 +29,7 @@ class PackListQueries:
                             pack_list.city
                         ]
                     )
+
                     id = result.fetchone()[0]
                     return self.pack_list_in_to_out(id, user_id, pack_list)
         except Exception:

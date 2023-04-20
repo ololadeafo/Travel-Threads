@@ -44,7 +44,7 @@ class PacklistOut(PackListIn):
 
 
 class DateListIn(BaseModel):
-    date: date
+    date: str
     description: str | None
 
 

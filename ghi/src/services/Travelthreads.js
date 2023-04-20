@@ -96,6 +96,14 @@ export const travelThreadsApi = createApi({
       query: (packlist_id) => `/api/packlist/${packlist_id}/items`,
       providesTags: ['All Items'],
     }),
+    deleteItem: builder.mutation({
+      query: (params) => `/api/items/${params.itemId}`,
+      invalidatesTags: ['All Items']
+    }),
+    getWeatherData: builder.query({
+      query: (params) => `/api/weather/${params.latitude}/${params.longitude}`,
+      providesTags: ['Weather']
+    })
   }),
 
 
@@ -115,5 +123,6 @@ export const {
   useGetOneListQuery,
   useGetDatesQuery,
   useGetOneDateQuery,
-  useGetItemsByPacklistQuery
+  useGetItemsByPacklistQuery,
+  useDeleteItemMutation
 } = travelThreadsApi;

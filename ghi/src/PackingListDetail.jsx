@@ -15,6 +15,9 @@ const ListDetail = () => {
 
     return (
         <div className="container">
+            <div>
+                
+            </div>
             <h1>{packingList?.name}</h1>
             <table>
                 <thead>

@@ -4,11 +4,11 @@ from authenticator import authenticator
 from queries.datelists import DateListQueries
 from typing import List, Union, Optional
 from models import Error
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 
 router = APIRouter()
 
-@router.post('/api/packlist/{packing_list_id}/datelist/{start_date}/{end_date}', response_model=Union[DateListOut, Error])
+@router.post('/api/packlist/{packing_list_id}/datelist/{start_date}/{end_date}', response_model=Union[List[DateListOut], Error])
 def create_date_list(
     packing_list_id: int,
     start_date: str,
@@ -18,16 +18,19 @@ def create_date_list(
     repo: DateListQueries = Depends()
 ):
     user_id = account['id']
-    start = datetime.fromisoformat(start_date)
-    end = datetime.fromisoformat(end_date)
-    difference = end - start
+    start = start_date
+    end = end_date
+    difference = (end + timedelta(days=1)) - start
     day_diff = difference.days
+    print(day_diff)
     new_dates = []
+
     for i in range(day_diff):
         new_date = start + timedelta(days=i)
         new_date_formatted = new_date.isoformat()
         new_date_list = repo.create(user_id, packing_list_id, new_date_formatted)
         new_dates.append(new_date_list)
+        print(new_dates)
         if new_date_list is None:
                 response.status_code = 400
 

@@ -2,9 +2,10 @@ from models import DateListIn, DateListOut
 from queries.pool import pool
 from typing import Union, List, Optional
 from models import Error
+from datetime import date
 
 class DateListQueries:
-    def create(self, user_id: int, packing_list_id: int, date_list: DateListIn) -> Union[DateListOut, Error]:
+    def create(self, user_id: int, packing_list_id: int, date: date) -> Union[DateListOut, Error]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -29,13 +30,20 @@ class DateListQueries:
                             """,
                             [
                                 user_id,
-                                date_list.date,
-                                date_list.description,
+                                date,
+                                "",
                                 packing_list_id
                             ]
                         )
                         id = result.fetchone()[0]
-                        return self.date_list_in_to_out(id, packing_list_id, date_list)
+                        date_list = {
+                            "id": id,
+                            "date": date,
+                            "description": None,
+                            "packing_list_id": packing_list_id
+                        }
+                        print(type(date))
+                        return date_list
         except Exception:
             return {"message": "Could not create packing list associated with this date"}
 
