@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams } from 'react-router-dom';
-import { weather, useGetOneListQuery, useGetDatesQuery, useGetLatLonQuery, useGetWeatherDataQuery} from "./services/Travelthreads";
+import { useGetOneListQuery, useGetDatesQuery, useGetLatLonQuery} from "./services/Travelthreads";
 
 
 const DateDetail = () => {
@@ -15,6 +15,8 @@ const DateDetail = () => {
 
     const {data: allInfo} = useGetLatLonQuery(packingListID)
     console.log(allInfo)
+
+
 
 
 
@@ -33,11 +35,21 @@ const DateDetail = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {allDateListItems?.map((item) => {
+                    {allDateListItems?.map((dates) => {
+                        let index = -1
+                        const weatherInfo = <td></td>
+                        if (allInfo.weather_time.indexOf(dates.date)!== -1) {
+                            index = allInfo.weather_time.indexOf(dates.date)
+
+                        }
+                        
                         return (
-                            <tr key={item.id}>
-                                <td>{item.name}</td>
-                                <td>{item.quantity}</td>
+                            <tr key={dates.id}>
+                                <td>{dates.date}</td>
+                                <td>{dates.description}</td>
+                                <td>
+                                    {allInfo.weather_time.indexOf(dates.date)!== -1}
+                                </td>
                             </tr>
                         )
                     }
@@ -45,17 +57,12 @@ const DateDetail = () => {
                     )}
                 </tbody>
                 <tbody>
-                    {allInfo?.map((weatherData) => {
-                        return (
-                            <tr key={weatherData.data.daily}>
-                                <td>{weatherData.precipitation_probability_max}</td>
-                                <td>{weatherData.temperature_2m_min}</td>
-                                <td>{weatherData.temperature_2m_max}</td>
-                            </tr>
-                        )
-                    }
-
-                    )}
+                    {/* <tr key={weatherData.data}>
+                        <td>{weatherData}</td>
+                        <td>{weatherData.data.temperature_2m_min}</td>
+                        <td>{weatherData.data.temperature_2m_max}</td>
+                        <td>{weatherData.data.time}</td>
+                    </tr> */}
                 </tbody>
             </table>
             <div>
