@@ -11,7 +11,7 @@ import Main from "./Main.jsx";
 import Nav from "./Nav.jsx";
 import CreateList from "./CreateList.jsx";
 import PackingLists from "./PackingLists.jsx";
-import ListDetail from "./PackingListDetail.jsx";
+import ListDetail from "./PackingList.jsx";
 
 function App() {
   const [error] = useState(null);
