@@ -8,7 +8,7 @@ const ListDetail = () => {
     const params = useParams();
     var packingListID = params["id"]
 
-    // const allPackingListItems = useGetItemsByPacklistQuery(packingListID)
+    const allPackingListItems = useGetItemsByPacklistQuery(packingListID)
 
 
     const allInfo = useGetLatLonQuery(packingListID)
@@ -21,7 +21,7 @@ const ListDetail = () => {
             <div>
 
             </div>
-            {/* <h1>{packingList?.name}</h1> */}
+            <h1>{packingList?.name}</h1>
             <table>
                 <thead>
                     <tr>
@@ -30,7 +30,7 @@ const ListDetail = () => {
                         <th>Quantity</th>
                     </tr>
                 </thead>
-                {/* <tbody>
+                <tbody>
                     {allPackingListItems?.map((item) => {
                         return (
                             <tr key={item.id}>
@@ -40,7 +40,7 @@ const ListDetail = () => {
                             </tr>
                         )
                     })}
-                </tbody> */}
+                </tbody>
             </table>
         </div>
     )

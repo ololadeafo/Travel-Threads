@@ -24,7 +24,7 @@ def add_locations():
                 id = result.fetchone()[0]
                 print(id)
         for state in country["states"]:
-            if len(state["cities"]) <= 1 :
+            if len(state["cities"]) == 1:
                 with pool.connection() as conn:
                     with conn.cursor() as db:
                         db.execute(
