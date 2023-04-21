@@ -137,7 +137,7 @@ export const travelThreadsApi = createApi({
           return { error: weatherData.error }
         }
 
-        const weather = weatherData.data
+        const weather = weatherData.data.daily
 
         return {data : weather}
       }

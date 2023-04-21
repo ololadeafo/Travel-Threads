@@ -12,6 +12,7 @@ import Nav from "./Nav.jsx";
 import CreateList from "./CreateList.jsx";
 import PackingLists from "./PackingLists.jsx";
 import ListDetail from "./PackingList.jsx";
+import DateDetail from "./DateListDetail.jsx";
 
 function App() {
   const [error] = useState(null);
@@ -30,6 +31,7 @@ function App() {
             <Route path="/createlist" element={<CreateList />} />
             <Route path="/packinglists" element={<PackingLists />} />
             <Route path="/packinglist/:id" element={<ListDetail />} />
+            <Route path="/packinglist/:id/datelists" element={<DateDetail />} />
           </Routes>
         </div>
       </BrowserRouter>
