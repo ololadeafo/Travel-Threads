@@ -186,7 +186,7 @@ export const travelThreadsApi = createApi({
           if (itemData.data.length !== 0) {
             final_data[i+1]["item_data"] = itemData.data
           } else {
-            final_data[i+1]["item_data"] = [{"date_list_id": params.date_list_id, "name": "test", "quantity":10, "id":100}]
+            final_data[i+1]["item_data"] = [{"date_list_id": params.date_list_id, "name": "No items"}]
           }
         }
 

@@ -30,9 +30,20 @@ const DateDetail = () => {
 
                 {date.item_data?.map((item) => {
                     return (
-                        <div className="item-container" key={item.id}>
-                            <div>{item.name}: {item.quantity}</div>
-                        </div>
+                        <div>
+                            {(() => {
+                                if(item.name !== "No items"){
+                                    return (
+                                        <div>{item.name}: {item.quantity}</div>
+                                    )
+                                } else {
+                                    return(
+                                        <div>No Items in List</div>
+                                    )
+                                }
+                            })()
+                            }
+                    </div>
                     )
                 })}
             </div>)
