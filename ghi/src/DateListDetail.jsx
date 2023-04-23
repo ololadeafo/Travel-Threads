@@ -1,20 +1,20 @@
 import React from "react";
 import { useParams } from 'react-router-dom';
-import { useGetOneListQuery, useGetDatesQuery, useGetLatLonQuery} from "./services/Travelthreads";
+import { useGetOneListQuery, useGetDatesQuery, useGetLatLonQuery, useGetItemsByPacklistQuery} from "./services/Travelthreads";
 
 
 const DateDetail = () => {
     const params = useParams();
     var packingListID = params["id"]
 
-    const {data: allDateListItems} = useGetDatesQuery(packingListID)
-    console.log(allDateListItems)
+    const {data: allDateLists} = useGetDatesQuery(params?.id, { skip: !params?.id })
 
-    const {data: dateList} = useGetOneListQuery(packingListID)
-    console.log(dateList)
+    // const {data: dateList} = useGetOneListQuery(params?.id, { skip: !params?.id })
 
-    const {data: allInfo} = useGetLatLonQuery(packingListID)
-    console.log(allInfo)
+    const {data: allInfo} = useGetLatLonQuery(params?.id, { skip: !params?.id })
+
+    const {data: packListItems} = useGetItemsByPacklistQuery(params.id)
+    console.log(packListItems)
 
 
 
@@ -22,49 +22,49 @@ const DateDetail = () => {
 
     return (
         <div className="container">
-            <div>
-                {/* {allInfo["daily"]?.map()} */}
-            </div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Description</th>
-                        <th>Weather Information</th>
-                        <th>Add Item</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {allDateListItems?.map((dates) => {
-                        let index = -1
-                        const weatherInfo = <td></td>
-                        if (allInfo.weather_time.indexOf(dates.date)!== -1) {
-                            index = allInfo.weather_time.indexOf(dates.date)
+            {allDateLists?.map((dateList) => {
+                let weatherCard = <td>Weather information not available</td>
+                let items = <td></td>
+                if (allInfo !== undefined && allInfo.daily.time.indexOf(dateList.date) !== -1) {
+                    const index = allInfo.daily.time.indexOf(dateList.date)
+                    weatherCard = <td key={dateList.date}>High: {allInfo.daily.temperature_2m_max
+                    [index]} Low: {allInfo.daily.temperature_2m_max
+                    [index]} Precipitation: {allInfo.daily.temperature_2m_max
+                    [index]}</td>
+                }
 
-                        }
-                        
+                if (packListItems !== undefined) {
+                    const filteredItems = packListItems.filter(item => {
+                        return item.date_list_id === dateList.id
+                    })
+                    items = filteredItems.map(item => {
                         return (
-                            <tr key={dates.id}>
-                                <td>{dates.date}</td>
-                                <td>{dates.description}</td>
-                                <td>
-                                    {allInfo.weather_time.indexOf(dates.date)!== -1}
-                                </td>
-                            </tr>
+                            <td key={item.id}>{item.name} - {item.quantity}</td>
                         )
-                    }
+                    })
+                }
 
-                    )}
-                </tbody>
-                <tbody>
-                    {/* <tr key={weatherData.data}>
-                        <td>{weatherData}</td>
-                        <td>{weatherData.data.temperature_2m_min}</td>
-                        <td>{weatherData.data.temperature_2m_max}</td>
-                        <td>{weatherData.data.time}</td>
-                    </tr> */}
-                </tbody>
-            </table>
+                return (
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Description</th>
+                                <th>Weather Information</th>
+                                <th>Add Item</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr key={dateList.id}>
+                                <td>{dateList.date}</td>
+                                <td>{dateList.description}</td>
+                                {weatherCard}
+                                {items}
+                            </tr>
+                        </tbody>
+                    </table>
+                )
+            })}
             <div>
                 <table>
                     <thead>

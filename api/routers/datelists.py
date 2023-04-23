@@ -8,7 +8,7 @@ from datetime import datetime, timedelta, date
 
 router = APIRouter()
 
-@router.post('/api/packlist/{packing_list_id}/datelist/{start_date}/{end_date}', response_model=Union[List[DateListOut], Error])
+@router.post('/api/packlist/{packing_list_id}/datelist/start/{start_date}/end/{end_date}', response_model=Union[List[DateListOut], Error])
 def create_date_list(
     packing_list_id: int,
     start_date: date,

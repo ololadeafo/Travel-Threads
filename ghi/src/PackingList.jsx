@@ -23,9 +23,9 @@ const ListDetail = () => {
     return (
         <div className="container">
             <div>
-                {allInfo["daily"]?.map()}
+                {/* {allInfo["daily"]?.map()} */}
             </div>
-            {/* <h1>{packingList?.name}</h1> */}
+            <h1>{packingList?.name}</h1>
             <table>
                 <thead>
                     <tr>

@@ -62,7 +62,7 @@ class ItemsIn(BaseModel):
 class ItemsOut(ItemsIn):
     id: int
     packing_list_id: int
-    date_list_id: int
+    date_list_id: int | None
 
 
 class WeatherOut(BaseModel):
