@@ -104,6 +104,10 @@ export const travelThreadsApi = createApi({
       query: (packlist_id) => `/api/packlist/${packlist_id}/items`,
       providesTags: ['All Items'],
     }),
+    getItemsByDatelist: builder.query({
+      query: (params) => `/api/packlist/${params.packing_list_id}/datelist/${params.date_list_id}/items`,
+      providesTags: ['Datelist Items'],
+    }),
     deleteItem: builder.mutation({
       query: (params) => `/api/items/${params.itemId}`,
       invalidatesTags: ['All Items']
@@ -112,7 +116,7 @@ export const travelThreadsApi = createApi({
       query: (params) => `/api/weather/${params.latitude}/${params.longitude}`,
       providesTags: ['Weather']
     }),
-    getLatLon: builder.query({
+    getDateListDetailInfo: builder.query({
       async queryFn(packing_list_id, _queryApi, _extraOptions, fetchWithBQ) {
         const packingListData = await fetchWithBQ(`/api/packlist/${packing_list_id}`)
         if (packingListData.error) {
@@ -137,32 +141,58 @@ export const travelThreadsApi = createApi({
           return { error: weatherData.error }
         }
 
-        const weather_time = weatherData.data.daily.weather_time
+
+        const weather_time = weatherData.data.daily.time
         const weather_precipitation = weatherData.data.daily.precipitation_probability_max
         const weather_min_temp = weatherData.data.daily.temperature_2m_min
         const weather_max_temp = weatherData.data.daily.temperature_2m_max
 
-        const startingIndex = weather_time.indexOf(packingList.start_date)
+
+        var startingIndex = weather_time.indexOf(packingList.start_date)
         var endingIndex = weather_time.indexOf(packingList.end_date)
         if (endingIndex === -1) {
           endingIndex = weather_time.length
         }
-        const new_start_date = new Date(packingList.start_date)
-        const new_end_date = new Date(packingList.end_date)
-        const tripLength = ((new_end_date-new_start_date) / (1000 * 60 * 60 * 24))
-        console.log(tripLength)
+
         var final_data = {}
-        for (let i=0; i <= weather_time.length || i <= 16; i++) {
-            final_data[weather_time[i]]= {
+        for (let i=startingIndex; i <= endingIndex; i++) {
+            final_data[i]= {
+                "weather_time":weather_time[i],
                 "weather_precipitation":weather_precipitation[i],
                 "weather_max": weather_max_temp[i],
                 "weather_min": weather_min_temp[i]
             }
         }
 
-        return {data : final_data}
+        const allDateLists = await fetchWithBQ(`/api/packlist/${packing_list_id}/datelist`)
+        if (allDateLists.error) {
+          return { error: allDateLists.error }
+        }
+
+        const allDates = allDateLists.data
+
+        const params = {}
+
+        for (let i = 0; i < allDates.length; i++) {
+          var dateID = allDates[i].id
+          var packingListID = allDates[i].packing_list_id
+          params["packing_list_id"] = packingListID
+          params["date_list_id"] = dateID
+
+          var itemData = await fetchWithBQ(`/api/packlist/${params.packing_list_id}/datelist/${params.date_list_id}/items`)
+
+          console.log(itemData)
+
+          if (itemData.data.length !== 0) {
+            final_data[i+1]["item_data"] = itemData.data
+          } else {
+            final_data[i+1]["item_data"] = [{"date_list_id": params.date_list_id, "name": "test", "quantity":10, "id":100}]
+          }
+        }
+
+        return {data : Object.values(final_data)}
       }
-    })
+    }),
   }),
 
 
@@ -185,6 +215,6 @@ export const {
   useGetItemsByPacklistQuery,
   useDeleteItemMutation,
   useCreateDateListsMutation,
-  useGetLatLonQuery,
-  useGetWeatherDataQuery
+  useGetDateListDetailInfoQuery,
+  useGetWeatherDataQuery,
 } = travelThreadsApi;

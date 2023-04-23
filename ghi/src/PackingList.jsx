@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams } from 'react-router-dom';
-import { useGetItemsByPacklistQuery, useGetLatLonQuery } from "./services/Travelthreads";
+import { useGetItemsByPacklistQuery } from "./services/Travelthreads";
 import { useGetOneListQuery } from "./services/Travelthreads";
 
 
@@ -15,15 +15,15 @@ const ListDetail = () => {
     const {data: packingList} = useGetOneListQuery(packingListID)
     console.log(packingList)
 
-    const {data: allInfo} = useGetLatLonQuery(packingListID)
-    console.log(allInfo)
+    // const {data: allInfo} = useGetLatLonQuery(packingListID)
+    // console.log(allInfo)
 
 
 
     return (
         <div className="container">
             <div>
-                {allInfo["daily"]?.map()}
+                {/* {allInfo["daily"]?.map()} */}
             </div>
             {/* <h1>{packingList?.name}</h1> */}
             <table>

@@ -1,20 +1,17 @@
 import React from "react";
 import { useParams } from 'react-router-dom';
-import { useGetOneListQuery, useGetDatesQuery, useGetLatLonQuery} from "./services/Travelthreads";
+import { useGetDateListDetailInfoQuery } from "./services/Travelthreads";
 
 
 const DateDetail = () => {
     const params = useParams();
     var packingListID = params["id"]
 
-    const {data: allDateListItems} = useGetDatesQuery(packingListID)
-    console.log(allDateListItems)
-
-    const {data: dateList} = useGetOneListQuery(packingListID)
-    console.log(dateList)
-
-    const {data: allInfo} = useGetLatLonQuery(packingListID)
+    const {data: allInfo} = useGetDateListDetailInfoQuery(packingListID)
     console.log(allInfo)
+
+
+
 
 
 
@@ -22,59 +19,24 @@ const DateDetail = () => {
 
     return (
         <div className="container">
-            <div>
-                {/* {allInfo["daily"]?.map()} */}
-            </div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Description</th>
-                        <th>Weather Information</th>
-                        <th>Add Item</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {allDateListItems?.map((dates) => {
-                        let index = -1
-                        const weatherInfo = <td></td>
-                        if (allInfo.weather_time.indexOf(dates.date)!== -1) {
-                            index = allInfo.weather_time.indexOf(dates.date)
+           {allInfo?.map((date) => {
+            return (
+            <div className="info-container" key={date.item_data.date_list_id}>
+                <div>Date: {date.weather_time}</div>
+                <div>Max: {date.weather_max}</div>
+                <div>Min: {date.weather_min}</div>
+                <div>Chance of Rain: {date.weather_precipitation}%</div>
+                {console.log("Date Items", date.item_data)}
 
-                        }
-                        
-                        return (
-                            <tr key={dates.id}>
-                                <td>{dates.date}</td>
-                                <td>{dates.description}</td>
-                                <td>
-                                    {allInfo.weather_time.indexOf(dates.date)!== -1}
-                                </td>
-                            </tr>
-                        )
-                    }
-
-                    )}
-                </tbody>
-                <tbody>
-                    {/* <tr key={weatherData.data}>
-                        <td>{weatherData}</td>
-                        <td>{weatherData.data.temperature_2m_min}</td>
-                        <td>{weatherData.data.temperature_2m_max}</td>
-                        <td>{weatherData.data.time}</td>
-                    </tr> */}
-                </tbody>
-            </table>
-            <div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Other Items</th>
-                            <th>Add Item</th>
-                        </tr>
-                    </thead>
-                </table>
-            </div>
+                {date.item_data?.map((item) => {
+                    return (
+                        <div className="item-container" key={item.id}>
+                            <div>{item.name}: {item.quantity}</div>
+                        </div>
+                    )
+                })}
+            </div>)
+           })}
         </div>
     )
 }

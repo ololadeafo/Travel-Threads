@@ -12,3 +12,10 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
+
+.info-container {
+  border: solid;
+  border-width: 5px;
+  padding: 25px;
+  margin: 10px;
+}
