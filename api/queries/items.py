@@ -116,13 +116,14 @@ class ItemsQueries:
                         UPDATE items
                         SET name=%s, quantity=%s, is_packed=%s
                         WHERE (id=%s AND packing_list_id=%s AND date_list_id=%s AND user_id=%s)
-                        RETURNING packing_list_id, date_list_id;
                         """,
                         [
                             items.name,
                             items.quantity,
                             items.is_packed,
                             items_id,
+                            items.packing_list_id,
+                            items.date_list_id,
                             user_id
                         ]
                     )

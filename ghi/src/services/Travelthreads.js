@@ -77,9 +77,8 @@ export const travelThreadsApi = createApi({
     }),
     updateItem: builder.mutation({
       query: ({params, ...body}) => {
-        {console.log(body)}
         return {
-          url: `/api/packlist/${params.packing_list_id}/datelist/${params.date_list_id}/items/${params.item_id}`,
+          url: `/api/packlist/items/${params.item_id}`,
           method: "PUT",
           body: {
             "date_list_id": params.date_list_id,
@@ -89,7 +88,7 @@ export const travelThreadsApi = createApi({
             "is_packed": body.fields.is_packed
           }
         };
-      }, invalidatesTags: ["Datelist Detail Page"]
+      }, invalidatesTags: ["Get One Item"]
     }),
     getCity: builder.query({
       query: (params) => `/api/location/${params.province_type}/${params.province_id}/cities`,
@@ -141,7 +140,7 @@ export const travelThreadsApi = createApi({
     }),
     getItemsByID: builder.query({
       query: (item_id) => `/api/items/${item_id}`,
-      providesTags: ['One Item'],
+      providesTags: ['Get One Item'],
     }),
     deleteItem: builder.mutation({
       query: (params) => `/api/items/${params.itemId}`,

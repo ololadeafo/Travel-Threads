@@ -3,8 +3,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { handleNameChange, handleIsPackedChange, handleQuantityChange, reset } from "./features/auth/updateItem";
 import { useGetItemsByIDQuery, useUpdateItemMutation } from "./services/Travelthreads";
 import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const UpdateItem = () => {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const [updateItem] = useUpdateItemMutation();
     const { fields } = useSelector((state => state.updateItem));
@@ -16,15 +18,12 @@ const UpdateItem = () => {
     if(isLoading) return <div>Loading...</div>
     const dateListID = itemInfo.date_list_id
     params["date_list_id"] = dateListID
-    console.log(params)
-
-    console.log(fields)
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         const updatedItem = await updateItem({params, fields});
-        console.log(updatedItem)
-        dispatch(reset());
+        navigate(`/packinglist/${params.packing_list_id}/datelists`)
+
     };
 
     return (
@@ -58,7 +57,7 @@ const UpdateItem = () => {
                         onChange={(e) => dispatch(handleIsPackedChange(e.target.value))}
                     />
                 </div>
-                <button type="submit">Add Item</button>
+                <button type="submit">Update Item</button>
             </form>
 
         </div>
