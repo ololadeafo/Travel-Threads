@@ -1,6 +1,7 @@
-import React from "react";
+import { React, useDispatch, useSelector }from "react";
 import { useParams } from 'react-router-dom';
-import { useGetDatesQuery, useGetWeatherInfoQuery, useGetItemsByPacklistQuery} from "./services/Travelthreads";
+import { useGetDatesQuery, useGetWeatherInfoQuery, useGetItemsByPacklistQuery, useCreateItemMutation} from "./services/Travelthreads";
+import { handleNameChange } from "./features/auth/createItem";
 
 
 const DateDetail = () => {
@@ -19,10 +20,9 @@ const DateDetail = () => {
         return item.date_list_id === null
     })
 
-
-
-
-
+    const dispatch = useDispatch();
+    const [createItem] = useCreateItemMutation();
+    const { fields } = useSelector((state) => state.createItem);
 
 
     return (
@@ -44,7 +44,10 @@ const DateDetail = () => {
                     })
                     items = filteredItems.map(item => {
                         return (
-                            <div key={item.id}>{item.name} - {item.quantity}</div>
+                            <>
+                                <div key={item.id}>{item.name} - {item.quantity}</div>
+                                <button>Edit</button>
+                            </>
                         )
                     })
                 }
@@ -64,9 +67,10 @@ const DateDetail = () => {
                                 <td>{dateList.date}</td>
                                 <td>{dateList.description}</td>
                                 <td>{weatherCard}</td>
-                                <td>{items}</td>
+                                <td>{items}<input onChange={(e) => dispatch(handleNameChange(e.target.value))}></input></td>
                             </tr>
                         </tbody>
+
                     </table>
                 )
             })}
