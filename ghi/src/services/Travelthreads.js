@@ -134,11 +134,7 @@ export const travelThreadsApi = createApi({
       query: (params) => `/api/items/${params.itemId}`,
       invalidatesTags: ['All Items']
     }),
-    getWeatherData: builder.query({
-      query: (params) => `/api/weather/${params.latitude}/${params.longitude}`,
-      providesTags: ['Weather']
-    }),
-    getDateListDetailInfo: builder.query({
+    getWeatherInfo: builder.query({
       async queryFn(packing_list_id, _queryApi, _extraOptions, fetchWithBQ) {
         const packingListData = await fetchWithBQ(`/api/packlist/${packing_list_id}`)
         if (packingListData.error) {
@@ -188,9 +184,8 @@ export const {
   useGetItemsByPacklistQuery,
   useDeleteItemMutation,
   useCreateDateListsMutation,
-  useGetDateListDetailInfoQuery,
-  useGetWeatherDataQuery,
+  useGetWeatherInfoQuery,
   useCreateItemMutation,
   useGetItemsByIDQuery,
-  useUpdateItemMutation
+  useUpdateItemMutation,
 } = travelThreadsApi;

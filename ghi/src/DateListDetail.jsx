@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams } from 'react-router-dom';
-import { useGetOneListQuery, useGetDatesQuery, useGetLatLonQuery, useGetItemsByPacklistQuery} from "./services/Travelthreads";
+import { useGetDatesQuery, useGetWeatherInfoQuery, useGetItemsByPacklistQuery} from "./services/Travelthreads";
 
 
 const DateDetail = () => {
@@ -9,9 +9,8 @@ const DateDetail = () => {
 
     const {data: allDateLists} = useGetDatesQuery(params?.id, { skip: !params?.id })
 
-    // const {data: dateList} = useGetOneListQuery(params?.id, { skip: !params?.id })
 
-    const {data: allInfo} = useGetLatLonQuery(params?.id, { skip: !params?.id })
+    const {data: allInfo} = useGetWeatherInfoQuery(params?.id, { skip: !params?.id })
 
     const {data: packListItems} = useGetItemsByPacklistQuery(params.id)
     console.log(packListItems)

@@ -2,6 +2,7 @@ import React from "react";
 import { useParams } from 'react-router-dom';
 import { useGetItemsByPacklistQuery } from "./services/Travelthreads";
 import { useGetOneListQuery } from "./services/Travelthreads";
+import { Link } from "react-router-dom";
 
 
 
@@ -46,6 +47,7 @@ const ListDetail = () => {
                     })}
                 </tbody>
             </table>
+            <button><Link to={`/packinglist/${packingListID}/datelists`} >Edit</Link></button>
         </div>
     )
 }
