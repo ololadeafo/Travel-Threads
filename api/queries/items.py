@@ -88,7 +88,7 @@ class ItemsQueries:
             return {"message": "Could not get all items"}
 
 
-    def get_one(self, packing_list_id: int, date_list_id: int, items_id: int, user_id: int) -> Optional[ItemsOut]:
+    def get_one(self, items_id: int, user_id: int) -> Optional[ItemsOut]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -96,9 +96,9 @@ class ItemsQueries:
                         """
                         SELECT (id, name, quantity, is_packed, packing_list_id, date_list_id)
                         FROM items
-                        WHERE (id=%s AND user_id=%s AND packing_list_id=%s AND date_list_id=%s)
+                        WHERE (id=%s AND user_id=%s)
                         ORDER BY name;
-                        """, [items_id, user_id, packing_list_id, date_list_id]
+                        """, [items_id, user_id]
                     )
                     record = result.fetchone()
                     if record is None:
@@ -107,7 +107,7 @@ class ItemsQueries:
         except Exception as e:
             return {"message": "Could not get that item"}
 
-    def update(self, packing_list_id: int, date_list_id: int, items_id: int, user_id: int, items: ItemsIn) -> Union[ItemsOut, Error]:
+    def update(self, items_id: int, user_id: int, items: ItemsIn) -> Union[ItemsOut, Error]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -116,18 +116,17 @@ class ItemsQueries:
                         UPDATE items
                         SET name=%s, quantity=%s, is_packed=%s
                         WHERE (id=%s AND packing_list_id=%s AND date_list_id=%s AND user_id=%s)
+                        RETURNING packing_list_id, date_list_id;
                         """,
                         [
                             items.name,
                             items.quantity,
                             items.is_packed,
                             items_id,
-                            packing_list_id,
-                            date_list_id,
                             user_id
                         ]
                     )
-                    return self.items_in_to_out(items_id, packing_list_id, date_list_id, items)
+                    return self.items_in_to_out(items_id, items)
         except Exception:
             return {"message": "Could not update the item list"}
 

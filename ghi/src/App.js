@@ -35,7 +35,7 @@ function App() {
             <Route path="/packinglist/:id" element={<ListDetail />} />
             <Route path="/packinglist/:id/datelists" element={<DateDetail />} />
             <Route path="/packinglist/:packing_list_id/datelists/:date_list_id/additems" element={<CreateItem />} />
-            <Route path="/packinglist/:packing_list_id/datelists/:date_list_id/items/:item_id" element={<UpdateItem />} />
+            <Route path="/packinglist/:packing_list_id/items/:item_id" element={<UpdateItem />} />
           </Routes>
         </div>
       </BrowserRouter>

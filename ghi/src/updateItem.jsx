@@ -10,10 +10,13 @@ const UpdateItem = () => {
     const { fields } = useSelector((state => state.updateItem));
 
     const params = useParams()
-    console.log(params)
+    const itemID = params.item_id
 
-    const {data: itemInfo} = useGetItemsByIDQuery(params)
-    console.log(itemInfo)
+    const {data: itemInfo, isLoading } = useGetItemsByIDQuery(itemID)
+    if(isLoading) return <div>Loading...</div>
+    const dateListID = itemInfo.date_list_id
+    params["date_list_id"] = dateListID
+    console.log(params)
 
     console.log(fields)
 
@@ -33,7 +36,7 @@ const UpdateItem = () => {
                     <input
                         type={"text"}
                         id="CreateItem__name"
-                        value={fields.name}
+                        defaultValue={itemInfo.name}
                         onChange={(e) => dispatch(handleNameChange(e.target.value))}
                     />
                 </div>
@@ -42,7 +45,7 @@ const UpdateItem = () => {
                     <input
                         type={"number"}
                         id="CreateItem__quantity"
-                        value={fields.quantity}
+                        defaultValue={itemInfo.quantity}
                         onChange={(e) => dispatch(handleQuantityChange(e.target.value))}
                     />
                 </div>
@@ -51,7 +54,7 @@ const UpdateItem = () => {
                     <input
                         type={"checkbox"}
                         id="CreateItem__is_packed"
-                        value={fields.is_packed}
+                        defaultChecked={itemInfo.is_packed}
                         onChange={(e) => dispatch(handleIsPackedChange(e.target.value))}
                     />
                 </div>

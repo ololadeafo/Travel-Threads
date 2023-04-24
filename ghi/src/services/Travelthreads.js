@@ -61,20 +61,33 @@ export const travelThreadsApi = createApi({
       }, invalidatesTags: ['Datelist', 'Lists']
     }),
     createItem: builder.mutation({
-      query: (body) => {
+      query: ({fields, body}) => {
         return {
           url: `/api/packlist/items`,
           method: "POST",
-          body: body
+          body: {
+            "packing_list_id": body.packing_list_id,
+            "date_list_id": body.date_list_id,
+            "name": fields.name,
+            "quantity":fields.quantity,
+            "is_packed":fields.is_packed
+          }
         };
-      }, invalidatesTags: ["Datelist Detail Page"]
+      }, invalidatesTags: ["List of Dates"]
     }),
     updateItem: builder.mutation({
       query: ({params, ...body}) => {
+        {console.log(body)}
         return {
           url: `/api/packlist/${params.packing_list_id}/datelist/${params.date_list_id}/items/${params.item_id}`,
           method: "PUT",
-          body: body["fields"]
+          body: {
+            "date_list_id": params.date_list_id,
+            "packing_list_id": params.packing_list_id,
+            "name": body.fields.name,
+            "quantity": body.fields.quantity,
+            "is_packed": body.fields.is_packed
+          }
         };
       }, invalidatesTags: ["Datelist Detail Page"]
     }),
@@ -112,7 +125,7 @@ export const travelThreadsApi = createApi({
     }),
     getDates: builder.query({
       query: (id) => `/api/packlist/${id}/datelist`,
-      providesTags: ['Datelist'],
+      providesTags: ['List of Dates'],
     }),
     getOneDate: builder.query({
       query: (IDs) => `/api/packlist/${IDs.packinglistID}/datelist/${IDs.datelistID}/`,
@@ -127,8 +140,8 @@ export const travelThreadsApi = createApi({
       providesTags: ['Datelist Items'],
     }),
     getItemsByID: builder.query({
-      query: (params) => `/api/packlist/${params.packing_list_id}/datelist/${params.date_list_id}/items/${params.item_id}`,
-      providesTags: ['Datelist Items'],
+      query: (item_id) => `/api/items/${item_id}`,
+      providesTags: ['One Item'],
     }),
     deleteItem: builder.mutation({
       query: (params) => `/api/items/${params.itemId}`,
