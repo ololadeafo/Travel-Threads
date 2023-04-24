@@ -78,7 +78,7 @@ steps = [
                 FOREIGN KEY(packing_list_id)
                     REFERENCES packing_list(id)
                     ON DELETE CASCADE,
-            date_list_id INTEGER NOT NULL,
+            date_list_id INTEGER NULL,
             CONSTRAINT fk_date_list_id
                 FOREIGN KEY(date_list_id)
                     REFERENCES date_list(id)

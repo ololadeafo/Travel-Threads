@@ -5,29 +5,51 @@ from models import Error
 
 
 class ItemsQueries:
-    def create(self, packing_list_id: int, date_list_id: int, user_id: int, items: ItemsIn) -> Union[ItemsOut, Error]:
+    def create(self, user_id: int, items: ItemsIn) -> Union[ItemsOut, Error]:
         try:
-            with pool.connection() as conn:
-                with conn.cursor() as db:
-                    result = db.execute(
-                        """
-                        INSERT INTO items
-                            (name, quantity, is_packed, packing_list_id, date_list_id, user_id)
-                        VALUES
-                            (%s, %s, %s, %s, %s, %s)
-                        RETURNING id;
-                        """,
-                        [
-                            items.name,
-                            items.quantity,
-                            items.is_packed,
-                            packing_list_id,
-                            date_list_id,
-                            user_id
-                        ]
-                    )
-                    id = result.fetchone()[0]
-                    return self.items_in_to_out(id, packing_list_id, date_list_id, items)
+            if hasattr(items, "date_list_id"):
+                with pool.connection() as conn:
+                    with conn.cursor() as db:
+                        result = db.execute(
+                            """
+                            INSERT INTO items
+                                (name, quantity, is_packed, packing_list_id, date_list_id, user_id)
+                            VALUES
+                                (%s, %s, %s, %s, %s, %s)
+                            RETURNING id;
+                            """,
+                            [
+                                items.name,
+                                items.quantity,
+                                items.is_packed,
+                                items.packing_list_id,
+                                items.date_list_id,
+                                user_id
+                            ]
+                        )
+                        id = result.fetchone()[0]
+                        return self.items_in_to_out(id, items)
+            else:
+                with pool.connection() as conn:
+                    with conn.cursor() as db:
+                        result = db.execute(
+                            """
+                            INSERT INTO items
+                                (name, quantity, is_packed, packing_list_id, user_id)
+                            VALUES
+                                (%s, %s, %s, %s, %s, %s)
+                            RETURNING id;
+                            """,
+                            [
+                                items.name,
+                                items.quantity,
+                                items.is_packed,
+                                items.packing_list_id,
+                                user_id
+                            ]
+                        )
+                        id = result.fetchone()[0]
+                        return self.items_in_to_out(id, items)
         except Exception:
             return {"message": "Could not create items list"}
 
@@ -124,9 +146,9 @@ class ItemsQueries:
         except Exception as e:
             return False
 
-    def items_in_to_out(self, id: int, packing_list_id: int, date_list_id: int, items: ItemsIn):
+    def items_in_to_out(self, id: int, items: ItemsIn):
         old_data = items.dict()
-        return ItemsOut(id=id, packing_list_id=packing_list_id, date_list_id=date_list_id, **old_data)
+        return ItemsOut(id=id, **old_data)
 
     def record_to_items_out(self, record):
         return ItemsOut(

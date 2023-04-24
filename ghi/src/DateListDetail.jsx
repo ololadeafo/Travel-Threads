@@ -16,6 +16,9 @@ const DateDetail = () => {
     const {data: packListItems} = useGetItemsByPacklistQuery(params.id)
     console.log(packListItems)
 
+    const misc_items = packListItems?.filter(item => {
+        return item.date_list_id === null
+    })
 
 
 
@@ -23,14 +26,14 @@ const DateDetail = () => {
     return (
         <div className="container">
             {allDateLists?.map((dateList) => {
-                let weatherCard = <td>Weather information not available</td>
-                let items = <td></td>
+                let weatherCard = <div>Weather information not available</div>
+                let items = <div key=""></div>
                 if (allInfo !== undefined && allInfo.daily.time.indexOf(dateList.date) !== -1) {
                     const index = allInfo.daily.time.indexOf(dateList.date)
-                    weatherCard = <td key={dateList.date}>High: {allInfo.daily.temperature_2m_max
+                    weatherCard = <div key={dateList.date}>High: {allInfo.daily.temperature_2m_max
                     [index]} Low: {allInfo.daily.temperature_2m_max
                     [index]} Precipitation: {allInfo.daily.temperature_2m_max
-                    [index]}</td>
+                    [index]}</div>
                 }
 
                 if (packListItems !== undefined) {
@@ -39,27 +42,27 @@ const DateDetail = () => {
                     })
                     items = filteredItems.map(item => {
                         return (
-                            <td key={item.id}>{item.name} - {item.quantity}</td>
+                            <div key={item.id}>{item.name} - {item.quantity}</div>
                         )
                     })
                 }
 
                 return (
-                    <table>
+                    <table key={dateList.id}>
                         <thead>
                             <tr>
                                 <th>Date</th>
                                 <th>Description</th>
                                 <th>Weather Information</th>
-                                <th>Add Item</th>
+                                <th>Items</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr key={dateList.id}>
+                            <tr>
                                 <td>{dateList.date}</td>
                                 <td>{dateList.description}</td>
-                                {weatherCard}
-                                {items}
+                                <td>{weatherCard}</td>
+                                <td>{items}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -70,9 +73,19 @@ const DateDetail = () => {
                     <thead>
                         <tr>
                             <th>Other Items</th>
-                            <th>Add Item</th>
                         </tr>
                     </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                {misc_items?.map(item => {
+                                    return (
+                                        <div key={item.id}>{item.name} - {item.quantity}</div>
+                                    )
+                                })}
+                            </td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
         </div>
