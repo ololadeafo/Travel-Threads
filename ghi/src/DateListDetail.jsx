@@ -26,15 +26,14 @@ const DateDetail = () => {
                 <div>Max: {date.weather_max}</div>
                 <div>Min: {date.weather_min}</div>
                 <div>Chance of Rain: {date.weather_precipitation}%</div>
-                {console.log("Date Items", date.item_data)}
 
                 {date.item_data?.map((item) => {
                     return (
-                        <div>
+                        <div className="item-container">
                             {(() => {
                                 if(item.name !== "No items"){
                                     return (
-                                        <div>{item.name}: {item.quantity}</div>
+                                        <div key={item.id}>{item.name}: {item.quantity}</div>
                                     )
                                 } else {
                                     return(
@@ -46,6 +45,7 @@ const DateDetail = () => {
                     </div>
                     )
                 })}
+                <button>Add Item</button>
             </div>)
            })}
         </div>

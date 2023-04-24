@@ -55,10 +55,28 @@ export const travelThreadsApi = createApi({
     createDateLists: builder.mutation({
       query: (params) => {
         return {
-          url: `/api/packlist/${params.packing_list_id}/datelist/${params.start_date}/${params.end_date}`,
+          url: `/api/packlist/${params.packing_list_id}/datelist/start/${params.start_date}/end/${params.end_date}`,
           method: "POST"
         };
       }, invalidatesTags: ['Datelist', 'Lists']
+    }),
+    createItem: builder.mutation({
+      query: ({params, ...body}) => {
+        return {
+          url: `/api/packlist/${params.packing_list_id}/datelist/${params.date_list_id}/items`,
+          method: "POST",
+          body: body["fields"]
+        };
+      }, invalidatesTags: ["Datelist Detail Page"]
+    }),
+    updateItem: builder.mutation({
+      query: ({params, ...body}) => {
+        return {
+          url: `/api/packlist/${params.packing_list_id}/datelist/${params.date_list_id}/items/${params.item_id}`,
+          method: "PUT",
+          body: body["fields"]
+        };
+      }, invalidatesTags: ["Datelist Detail Page"]
     }),
     getCity: builder.query({
       query: (params) => `/api/location/${params.province_type}/${params.province_id}/cities`,
@@ -106,6 +124,10 @@ export const travelThreadsApi = createApi({
     }),
     getItemsByDatelist: builder.query({
       query: (params) => `/api/packlist/${params.packing_list_id}/datelist/${params.date_list_id}/items`,
+      providesTags: ['Datelist Items'],
+    }),
+    getItemsByID: builder.query({
+      query: (params) => `/api/packlist/${params.packing_list_id}/datelist/${params.date_list_id}/items/${params.item_id}`,
       providesTags: ['Datelist Items'],
     }),
     deleteItem: builder.mutation({
@@ -173,6 +195,8 @@ export const travelThreadsApi = createApi({
 
         const params = {}
 
+        console.log("All Dates:", allDates)
+
         for (let i = 0; i < allDates.length; i++) {
           var dateID = allDates[i].id
           var packingListID = allDates[i].packing_list_id
@@ -181,17 +205,19 @@ export const travelThreadsApi = createApi({
 
           var itemData = await fetchWithBQ(`/api/packlist/${params.packing_list_id}/datelist/${params.date_list_id}/items`)
 
-          console.log(itemData)
+          console.log("Final Data:", final_data)
+          console.log("Items Data:", itemData)
 
           if (itemData.data.length !== 0) {
-            final_data[i+1]["item_data"] = itemData.data
+            final_data[i]["item_data"] = itemData.data
           } else {
-            final_data[i+1]["item_data"] = [{"date_list_id": params.date_list_id, "name": "No items"}]
+            console.log(final_data[i+1])
+            final_data[i]["item_data"] = [{"date_list_id": params.date_list_id, "name": "No items"}]
           }
         }
 
         return {data : Object.values(final_data)}
-      }
+      }, providesTags: ["Datelist Detail Page"]
     }),
   }),
 
@@ -217,4 +243,7 @@ export const {
   useCreateDateListsMutation,
   useGetDateListDetailInfoQuery,
   useGetWeatherDataQuery,
+  useCreateItemMutation,
+  useGetItemsByIDQuery,
+  useUpdateItemMutation
 } = travelThreadsApi;
