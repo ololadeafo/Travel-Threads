@@ -1,7 +1,8 @@
-import { React, useDispatch, useSelector }from "react";
+import { React }from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { useParams } from 'react-router-dom';
 import { useGetDatesQuery, useGetWeatherInfoQuery, useGetItemsByPacklistQuery, useCreateItemMutation} from "./services/Travelthreads";
-import { handleNameChange } from "./features/auth/createItem";
+import { handleNameChange, handlePacklistIDChange, handleDatelistIDChange, handleQuantityChange } from "./features/auth/createItem";
 
 
 const DateDetail = () => {
@@ -14,7 +15,7 @@ const DateDetail = () => {
     const {data: allInfo} = useGetWeatherInfoQuery(params?.id, { skip: !params?.id })
 
     const {data: packListItems} = useGetItemsByPacklistQuery(params.id)
-    console.log(packListItems)
+
 
     const misc_items = packListItems?.filter(item => {
         return item.date_list_id === null
@@ -23,6 +24,23 @@ const DateDetail = () => {
     const dispatch = useDispatch();
     const [createItem] = useCreateItemMutation();
     const { fields } = useSelector((state) => state.createItem);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const newPackingListID = await dispatch(handlePacklistIDChange(packingListID))
+        const dateListID = e.target.value
+        const newDateListID = await dispatch(handleDatelistIDChange(dateListID))
+        const item = createItem(fields)
+        console.log(item)
+    }
+
+    const changeIsEditable = (currentValue) => {
+        if (currentValue === true) {
+            return false
+        } else {
+            return true
+        }
+    }
 
 
     return (
@@ -41,19 +59,31 @@ const DateDetail = () => {
                 if (packListItems !== undefined) {
                     const filteredItems = packListItems.filter(item => {
                         return item.date_list_id === dateList.id
-                    })
+                    });
+
                     items = filteredItems.map(item => {
+                        let isEditable = false
                         return (
-                            <>
-                                <div key={item.id}>{item.name} - {item.quantity}</div>
-                                <button>Edit</button>
-                            </>
+                            <button key={item.id} id="Click this" onClick={() => isEditable = changeIsEditable(isEditable)}>
+                                <div key={item.id}>
+                                    {console.log(isEditable)}
+                                    {isEditable ? (
+                                        <>
+                                        <input type={"text"} defaultValue={item.name} onKeyPress={(e) => handleNameChange(e)} />
+                                        <input type={"number"} defaultValue={item.quantity} onKeyPress={(e) => handleQuantityChange(e)} />
+                                        </>
+                                    ) : (
+                                        <span>{item.name}: {item.quantity}</span>
+                                    )}
+                                </div>
+
+                            </button>
                         )
                     })
                 }
 
                 return (
-                    <table key={dateList.id}>
+                    <table key={dateList.id} id={dateList.id}>
                         <thead>
                             <tr>
                                 <th>Date</th>
@@ -68,6 +98,7 @@ const DateDetail = () => {
                                 <td>{dateList.description}</td>
                                 <td>{weatherCard}</td>
                                 <td>{items}<input onChange={(e) => dispatch(handleNameChange(e.target.value))}></input></td>
+                                <td><button value={dateList.id} onClick={handleSubmit}>Add Item</button></td>
                             </tr>
                         </tbody>
 
