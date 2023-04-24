@@ -60,6 +60,24 @@ export const travelThreadsApi = createApi({
         };
       }, invalidatesTags: ['Datelist', 'Lists']
     }),
+    createItem: builder.mutation({
+      query: ({params, ...body}) => {
+        return {
+          url: `/api/packlist/${params.packing_list_id}/datelist/${params.date_list_id}/items`,
+          method: "POST",
+          body: body["fields"]
+        };
+      }, invalidatesTags: ["Datelist Detail Page"]
+    }),
+    updateItem: builder.mutation({
+      query: ({params, ...body}) => {
+        return {
+          url: `/api/packlist/${params.packing_list_id}/datelist/${params.date_list_id}/items/${params.item_id}`,
+          method: "PUT",
+          body: body["fields"]
+        };
+      }, invalidatesTags: ["Datelist Detail Page"]
+    }),
     getCity: builder.query({
       query: (params) => `/api/location/${params.province_type}/${params.province_id}/cities`,
       providesTags: ['City'],
@@ -104,6 +122,14 @@ export const travelThreadsApi = createApi({
       query: (packlist_id) => `/api/packlist/${packlist_id}/items`,
       providesTags: ['All Items'],
     }),
+    getItemsByDatelist: builder.query({
+      query: (params) => `/api/packlist/${params.packing_list_id}/datelist/${params.date_list_id}/items`,
+      providesTags: ['Datelist Items'],
+    }),
+    getItemsByID: builder.query({
+      query: (params) => `/api/packlist/${params.packing_list_id}/datelist/${params.date_list_id}/items/${params.item_id}`,
+      providesTags: ['Datelist Items'],
+    }),
     deleteItem: builder.mutation({
       query: (params) => `/api/items/${params.itemId}`,
       invalidatesTags: ['All Items']
@@ -112,7 +138,7 @@ export const travelThreadsApi = createApi({
       query: (params) => `/api/weather/${params.latitude}/${params.longitude}`,
       providesTags: ['Weather']
     }),
-    getLatLon: builder.query({
+    getDateListDetailInfo: builder.query({
       async queryFn(packing_list_id, _queryApi, _extraOptions, fetchWithBQ) {
         const packingListData = await fetchWithBQ(`/api/packlist/${packing_list_id}`)
         if (packingListData.error) {
@@ -162,6 +188,9 @@ export const {
   useGetItemsByPacklistQuery,
   useDeleteItemMutation,
   useCreateDateListsMutation,
-  useGetLatLonQuery,
-  useGetWeatherDataQuery
+  useGetDateListDetailInfoQuery,
+  useGetWeatherDataQuery,
+  useCreateItemMutation,
+  useGetItemsByIDQuery,
+  useUpdateItemMutation
 } = travelThreadsApi;

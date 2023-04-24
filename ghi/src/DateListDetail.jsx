@@ -23,6 +23,9 @@ const DateDetail = () => {
 
 
 
+
+
+
     return (
         <div className="container">
             {allDateLists?.map((dateList) => {
