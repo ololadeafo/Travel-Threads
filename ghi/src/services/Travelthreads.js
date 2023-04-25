@@ -85,7 +85,7 @@ export const travelThreadsApi = createApi({
             "packing_list_id": body.packing_list_id,
             "name": body.name,
             "quantity": body.quantity,
-            "is_packed": body.is_packed
+            "is_packed": body.is_packed,
           }
         };
       }, invalidatesTags: ["Get One Item", "All Items From Packlist"]
