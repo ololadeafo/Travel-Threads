@@ -55,10 +55,28 @@ export const travelThreadsApi = createApi({
     createDateLists: builder.mutation({
       query: (params) => {
         return {
-          url: `/api/packlist/${params.packing_list_id}/datelist/${params.start_date}/${params.end_date}`,
+          url: `/api/packlist/${params.packing_list_id}/datelist/start/${params.start_date}/end/${params.end_date}`,
           method: "POST"
         };
       }, invalidatesTags: ['Datelist', 'Lists']
+    }),
+    createItem: builder.mutation({
+      query: ({params, ...body}) => {
+        return {
+          url: `/api/packlist/${params.packing_list_id}/datelist/${params.date_list_id}/items`,
+          method: "POST",
+          body: body["fields"]
+        };
+      }, invalidatesTags: ["Datelist Detail Page"]
+    }),
+    updateItem: builder.mutation({
+      query: ({params, ...body}) => {
+        return {
+          url: `/api/packlist/${params.packing_list_id}/datelist/${params.date_list_id}/items/${params.item_id}`,
+          method: "PUT",
+          body: body["fields"]
+        };
+      }, invalidatesTags: ["Datelist Detail Page"]
     }),
     getCity: builder.query({
       query: (params) => `/api/location/${params.province_type}/${params.province_id}/cities`,
@@ -104,6 +122,14 @@ export const travelThreadsApi = createApi({
       query: (packlist_id) => `/api/packlist/${packlist_id}/items`,
       providesTags: ['All Items'],
     }),
+    getItemsByDatelist: builder.query({
+      query: (params) => `/api/packlist/${params.packing_list_id}/datelist/${params.date_list_id}/items`,
+      providesTags: ['Datelist Items'],
+    }),
+    getItemsByID: builder.query({
+      query: (params) => `/api/packlist/${params.packing_list_id}/datelist/${params.date_list_id}/items/${params.item_id}`,
+      providesTags: ['Datelist Items'],
+    }),
     deleteItem: builder.mutation({
       query: (params) => `/api/items/${params.itemId}`,
       invalidatesTags: ['All Items']
@@ -112,7 +138,7 @@ export const travelThreadsApi = createApi({
       query: (params) => `/api/weather/${params.latitude}/${params.longitude}`,
       providesTags: ['Weather']
     }),
-    getLatLon: builder.query({
+    getDateListDetailInfo: builder.query({
       async queryFn(packing_list_id, _queryApi, _extraOptions, fetchWithBQ) {
         const packingListData = await fetchWithBQ(`/api/packlist/${packing_list_id}`)
         if (packingListData.error) {
@@ -137,11 +163,62 @@ export const travelThreadsApi = createApi({
           return { error: weatherData.error }
         }
 
-        const weather = weatherData.data.daily
 
-        return {data : weather}
-      }
-    })
+        const weather_time = weatherData.data.daily.time
+        const weather_precipitation = weatherData.data.daily.precipitation_probability_max
+        const weather_min_temp = weatherData.data.daily.temperature_2m_min
+        const weather_max_temp = weatherData.data.daily.temperature_2m_max
+
+
+        var startingIndex = weather_time.indexOf(packingList.start_date)
+        var endingIndex = weather_time.indexOf(packingList.end_date)
+        if (endingIndex === -1) {
+          endingIndex = weather_time.length
+        }
+
+        var final_data = {}
+        for (let i=startingIndex; i <= endingIndex; i++) {
+            final_data[i]= {
+                "weather_time":weather_time[i],
+                "weather_precipitation":weather_precipitation[i],
+                "weather_max": weather_max_temp[i],
+                "weather_min": weather_min_temp[i]
+            }
+        }
+
+        const allDateLists = await fetchWithBQ(`/api/packlist/${packing_list_id}/datelist`)
+        if (allDateLists.error) {
+          return { error: allDateLists.error }
+        }
+
+        const allDates = allDateLists.data
+
+        const params = {}
+
+        console.log("All Dates:", allDates)
+
+        for (let i = 0; i < allDates.length; i++) {
+          var dateID = allDates[i].id
+          var packingListID = allDates[i].packing_list_id
+          params["packing_list_id"] = packingListID
+          params["date_list_id"] = dateID
+
+          var itemData = await fetchWithBQ(`/api/packlist/${params.packing_list_id}/datelist/${params.date_list_id}/items`)
+
+          console.log("Final Data:", final_data)
+          console.log("Items Data:", itemData)
+
+          if (itemData.data.length !== 0) {
+            final_data[i]["item_data"] = itemData.data
+          } else {
+            console.log(final_data[i+1])
+            final_data[i]["item_data"] = [{"date_list_id": params.date_list_id, "name": "No items"}]
+          }
+        }
+
+        return {data : Object.values(final_data)}
+      }, providesTags: ["Datelist Detail Page"]
+    }),
   }),
 
 
@@ -164,6 +241,9 @@ export const {
   useGetItemsByPacklistQuery,
   useDeleteItemMutation,
   useCreateDateListsMutation,
-  useGetLatLonQuery,
-  useGetWeatherDataQuery
+  useGetDateListDetailInfoQuery,
+  useGetWeatherDataQuery,
+  useCreateItemMutation,
+  useGetItemsByIDQuery,
+  useUpdateItemMutation
 } = travelThreadsApi;

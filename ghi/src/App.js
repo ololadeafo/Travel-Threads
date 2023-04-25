@@ -13,6 +13,8 @@ import CreateList from "./CreateList.jsx";
 import PackingLists from "./PackingLists.jsx";
 import ListDetail from "./PackingList.jsx";
 import DateDetail from "./DateListDetail.jsx";
+import CreateItem from "./addItem.jsx";
+import UpdateItem from "./updateItem.jsx";
 
 function App() {
   const [error] = useState(null);
@@ -32,6 +34,8 @@ function App() {
             <Route path="/packinglists" element={<PackingLists />} />
             <Route path="/packinglist/:id" element={<ListDetail />} />
             <Route path="/packinglist/:id/datelists" element={<DateDetail />} />
+            <Route path="/packinglist/:packing_list_id/datelists/:date_list_id/additems" element={<CreateItem />} />
+            <Route path="/packinglist/:packing_list_id/datelists/:date_list_id/items/:item_id" element={<UpdateItem />} />
           </Routes>
         </div>
       </BrowserRouter>

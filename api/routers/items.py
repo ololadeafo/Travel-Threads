@@ -17,6 +17,7 @@ def create_items(
     repo: ItemsQueries = Depends()
 ):
     user_id = account["id"]
+    print(type(items.name), type(items.quantity), type(items.is_packed))
     items = repo.create(packing_list_id, date_list_id, user_id, items)
     if items is None:
         response.status_code = 400
