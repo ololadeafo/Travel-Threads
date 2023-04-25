@@ -115,18 +115,17 @@ class ItemsQueries:
                         """
                         UPDATE items
                         SET name=%s, quantity=%s, is_packed=%s
-                        WHERE (id=%s AND packing_list_id=%s AND date_list_id=%s AND user_id=%s)
+                        WHERE (id=%s AND user_id=%s)
                         """,
                         [
                             items.name,
                             items.quantity,
                             items.is_packed,
                             items_id,
-                            items.packing_list_id,
-                            items.date_list_id,
                             user_id
                         ]
                     )
+                    print("Items after function:", self.items_in_to_out(items_id, items))
                     return self.items_in_to_out(items_id, items)
         except Exception:
             return {"message": "Could not update the item list"}

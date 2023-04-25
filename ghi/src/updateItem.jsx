@@ -18,10 +18,12 @@ const UpdateItem = () => {
     if(isLoading) return <div>Loading...</div>
     const dateListID = itemInfo.date_list_id
     params["date_list_id"] = dateListID
+    console.log(dateListID)
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        updateItem({params, fields});
+        const updatedItem = updateItem({params, fields});
+        console.log(updatedItem)
         dispatch(reset);
         navigate(`/packinglist/${params.packing_list_id}/datelists`);
     };

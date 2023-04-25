@@ -11,6 +11,7 @@ const DateDetail = () => {
     var packingListID = params["id"]
 
     const {data: allDateLists} = useGetDatesQuery(params?.id, { skip: !params?.id })
+    console.log(allDateLists)
 
 
     const {data: allInfo} = useGetWeatherInfoQuery(params?.id, { skip: !params?.id })
@@ -30,7 +31,10 @@ const DateDetail = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const dateListID = e.target.value
+        var dateListID = e.target.value
+        if (dateListID === "") {
+            dateListID = null
+        }
 
         var body = {"packing_list_id": packingListID, "date_list_id": dateListID}
 
@@ -113,10 +117,16 @@ const DateDetail = () => {
                             <td>
                                 {misc_items?.map(item => {
                                     return (
-                                        <div key={item.id}>{item.name} - {item.quantity}</div>
+                                        <div key={item.id}>
+                                            <div key={item.id}>{item.name}: {item.quantity}</div>
+                                            <Link to={`/packinglist/${packingListID}/items/${item.id}`}><button>Edit</button></Link>
+                                            <button value={item.id} onClick={handleDelete}>Delete</button>
+                                        </div>
                                     )
                                 })}
                             </td>
+                            <td><input onChange={(e) => dispatch(handleNameChange(e.target.value))}></input></td>
+                            <td><button value={null} onClick={handleSubmit}>Add Item</button></td>
                         </tr>
                     </tbody>
                 </table>
