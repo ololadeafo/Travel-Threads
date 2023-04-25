@@ -62,6 +62,96 @@ export const travelThreadsApi = createApi({
       },
       invalidatesTags: ["Datelist", "Lists"],
     }),
+    createItem: builder.mutation({
+      query: ({ fields, body }) => {
+        return {
+          url: `/api/packlist/items`,
+          method: "POST",
+          body: {
+            packing_list_id: body.packing_list_id,
+            date_list_id: body.date_list_id,
+            name: fields.name,
+            quantity: fields.quantity,
+            is_packed: fields.is_packed,
+          },
+        };
+      },
+      invalidatesTags: ["List of Dates", "All Items From Packlist"],
+    }),
+    updateItem: builder.mutation({
+      query: ({ ...body }) => {
+        return {
+          url: `/api/packlist/items/${body.id}`,
+          method: "PUT",
+          body: {
+            date_list_id: body.date_list_id,
+            packing_list_id: body.packing_list_id,
+            name: body.name,
+            quantity: body.quantity,
+            is_packed: body.is_packed,
+          },
+        };
+      },
+      invalidatesTags: ["Get One Item", "All Items From Packlist"],
+    }),
+    updateDescription: builder.mutation({
+      query: ({ params, body }) => {
+        return {
+          url: `/api/packlist/${params.packing_list_id}/datelist/${params.date_list_id}`,
+          method: "PUT",
+          body: {
+            date: body.date,
+            description: body.description,
+          },
+        };
+      },
+      invalidatesTags: ["Get One Item", "List of Dates"],
+    }),
+    createItem: builder.mutation({
+      query: ({ fields, body }) => {
+        return {
+          url: `/api/packlist/items`,
+          method: "POST",
+          body: {
+            packing_list_id: body.packing_list_id,
+            date_list_id: body.date_list_id,
+            name: fields.name,
+            quantity: fields.quantity,
+            is_packed: fields.is_packed,
+          },
+        };
+      },
+      invalidatesTags: ["List of Dates", "All Items From Packlist"],
+    }),
+    updateItem: builder.mutation({
+      query: ({ ...body }) => {
+        return {
+          url: `/api/packlist/items/${body.id}`,
+          method: "PUT",
+          body: {
+            date_list_id: body.date_list_id,
+            packing_list_id: body.packing_list_id,
+            name: body.name,
+            quantity: body.quantity,
+            is_packed: body.is_packed,
+          },
+        };
+      },
+      invalidatesTags: ["Get One Item", "All Items From Packlist"],
+    }),
+    updateDescription: builder.mutation({
+      query: ({ params, body }) => {
+        return {
+          url: `/api/packlist/${params.packing_list_id}/datelist/${params.date_list_id}`,
+          method: "PUT",
+          body: {
+            date: body.date,
+            description: body.description,
+          },
+        };
+      },
+      invalidatesTags: ["Get One Item", "List of Dates"],
+    }),
     getCity: builder.query({
       query: (params) =>
         `/api/location/${params.province_type}/${params.province_id}/cities`,
@@ -81,6 +171,7 @@ export const travelThreadsApi = createApi({
       query: () => {
         console.log("get list query is running");
         return "/api/packlist";
+        return "/api/packlist";
       },
       providesTags: ["Lists"],
     }),
@@ -98,15 +189,29 @@ export const travelThreadsApi = createApi({
     getDates: builder.query({
       query: (id) => `/api/packlist/${id}/datelist`,
       providesTags: ["Datelist"],
+      providesTags: ["List of Dates"],
     }),
     getOneDate: builder.query({
       query: (IDs) =>
         `/api/packlist/${IDs.packinglistID}/datelist/${IDs.datelistID}/`,
       providesTags: ["Datelist"],
+      query: (params) =>
+        `/api/packlist/${params.packing_list_id}/datelist/${params.date_list_id}/`,
+      providesTags: ["Datelist"],
     }),
     getItemsByPacklist: builder.query({
       query: (packlist_id) => `/api/packlist/${packlist_id}/items`,
       providesTags: ["All Items"],
+      providesTags: ["All Items From Packlist"],
+    }),
+    getItemsByDatelist: builder.query({
+      query: (params) =>
+        `/api/packlist/${params.packing_list_id}/datelist/${params.date_list_id}/items`,
+      providesTags: ["Datelist Items"],
+    }),
+    getItemsByID: builder.query({
+      query: (item_id) => `/api/items/${item_id}`,
+      providesTags: ["Get One Item"],
     }),
     deleteItem: builder.mutation({
       query: (params) => `/api/items/${params.itemId}`,
@@ -115,8 +220,13 @@ export const travelThreadsApi = createApi({
     getWeatherData: builder.query({
       query: (params) => `/api/weather/${params.latitude}/${params.longitude}`,
       providesTags: ["Weather"],
+      query: (item_id) => ({
+        url: `/api/items/${item_id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["All Items From Packlist", "List of Dates"],
     }),
-    getLatLon: builder.query({
+    getWeatherInfo: builder.query({
       async queryFn(packing_list_id, _queryApi, _extraOptions, fetchWithBQ) {
         const packingListData = await fetchWithBQ(
           `/api/packlist/${packing_list_id}`
@@ -144,7 +254,7 @@ export const travelThreadsApi = createApi({
           return { error: weatherData.error };
         }
 
-        const weather = weatherData.data.daily;
+        const weather = weatherData.data;
 
         return { data: weather };
       },
@@ -171,4 +281,9 @@ export const {
   useCreateDateListsMutation,
   useGetLatLonQuery,
   useGetWeatherDataQuery,
+  useGetWeatherInfoQuery,
+  useCreateItemMutation,
+  useGetItemsByIDQuery,
+  useUpdateItemMutation,
+  useUpdateDescriptionMutation,
 } = travelThreadsApi;
