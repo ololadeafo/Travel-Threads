@@ -8,6 +8,7 @@ import {
 import { useLoginMutation } from "./services/Travelthreads";
 import { useGetAccountQuery } from "./services/Travelthreads";
 import { useNavigate } from "react-router-dom";
+import travelThreads from "./images/Logo/travel_Threads.png";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -30,9 +31,17 @@ const Login = () => {
   };
 
   return (
-    <div className="container mt-5">
+    <div
+      className="container"
+      style={{ backgroundColor: "#AED9E0", minHeight: "100vh", minWidth: "100%", marginTop: "0px" }}
+    >
       <div className="row justify-content-center">
-        <div className="col-md-6">
+        <div className="col-md-6 text-center">
+          <img
+            src={travelThreads}
+            alt="Travel Threads"
+            style={{ width: "200px", marginBottom: "1rem" }}
+          />
           <h2 className="mb-3">Login</h2>
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
