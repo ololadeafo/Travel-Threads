@@ -168,11 +168,7 @@ export const travelThreadsApi = createApi({
       invalidatesTags: ["State", "City"],
     }),
     getLists: builder.query({
-      query: () => {
-        console.log("get list query is running");
-        return "/api/packlist";
-        return "/api/packlist";
-      },
+      query: () => "/api/packlist",
       providesTags: ["Lists"],
     }),
     deleteList: builder.mutation({

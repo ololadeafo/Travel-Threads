@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   handlePasswordChange,
@@ -6,11 +6,22 @@ import {
   reset,
 } from "./features/auth/loginSlice";
 import { useLoginMutation } from "./services/Travelthreads";
+import { useGetAccountQuery } from "./services/Travelthreads";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const dispatch = useDispatch();
   const [login] = useLoginMutation();
   const { fields } = useSelector((state) => state.login);
+  const navigate = useNavigate();
+  const account = useGetAccountQuery();
+  const { data } = account;
+
+  useEffect(() => {
+    if (data !== undefined) {
+      navigate("/packinglists");
+    }
+  }, [account]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
