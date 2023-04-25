@@ -135,6 +135,12 @@ export const travelThreadsApi = createApi({
             quantity: body.quantity,
             is_packed: body.is_packed,
           },
+            "date_list_id": body.date_list_id,
+            "packing_list_id": body.packing_list_id,
+            "name": body.name,
+            "quantity": body.quantity,
+            "is_packed": body.is_packed,
+          }
         };
       },
       invalidatesTags: ["Get One Item", "All Items From Packlist"],
@@ -168,7 +174,9 @@ export const travelThreadsApi = createApi({
       invalidatesTags: ["State", "City"],
     }),
     getLists: builder.query({
-      query: () => "/api/packlist",
+      query: () => {
+        return "/api/packlist";
+      },
       providesTags: ["Lists"],
     }),
     deleteList: builder.mutation({
@@ -250,9 +258,7 @@ export const travelThreadsApi = createApi({
           return { error: weatherData.error };
         }
 
-        const weather = weatherData.data;
-
-        return { data: weather };
+        return weatherData;
       },
     }),
   }),

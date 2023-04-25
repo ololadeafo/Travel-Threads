@@ -10,7 +10,6 @@ const UpdateItem = () => {
     const [formData, setFormData] = useState({
         name: state.name,
         quantity: state.quantity,
-        id: state.id
     })
 
     const [checked, setChecked] = useState(state.is_packed)
@@ -47,16 +46,17 @@ const UpdateItem = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const data = {
+        console.log(state.id)
+        const body = {
             name: formData.name,
             quantity: formData.quantity,
             "is_packed": checked,
             "packing_list_id": packingListID,
             "date_list_id": dateListID,
-            id: formData.id
+            "id": state.id
         }
 
-        updateItem({data})
+        updateItem(body)
 
         navigate(`/packinglist/${params.packing_list_id}/datelists`);
     };
