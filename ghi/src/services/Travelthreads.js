@@ -91,13 +91,13 @@ export const travelThreadsApi = createApi({
       }, invalidatesTags: ["Get One Item", "All Items From Packlist"]
     }),
     updateDescription: builder.mutation({
-      query: ({params, fields, body}) => {
+      query: ({params, body}) => {
         return {
           url: `/api/packlist/${params.packing_list_id}/datelist/${params.date_list_id}`,
           method: "PUT",
           body: {
             "date":body.date,
-            "description":fields.description
+            "description":body.description
           }
         };
       }, invalidatesTags: ["Get One Item", "List of Dates"]

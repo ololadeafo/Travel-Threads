@@ -1,16 +1,21 @@
-import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { handleDescriptionChange, reset } from "./features/auth/updateDescription";
+import React, { useState } from "react";
 import { useUpdateDescriptionMutation, useGetOneDateQuery } from "./services/Travelthreads";
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
 const UpdateDescription = () => {
     const navigate = useNavigate();
-    const dispatch = useDispatch();
+
+    let { state } = useLocation();
+    const [description, setDescription] = useState(state.description)
+
+    const handleDescriptionChange = (e) => {
+        setDescription(e.target.value)
+    }
+
     const params = useParams();
     const [updateDescription] = useUpdateDescriptionMutation();
-    const { fields } = useSelector((state => state.updateDescription));
+
     const {data: dateInfo, isLoading} = useGetOneDateQuery(params)
     if (isLoading) return <div>Loading...</div>
 
@@ -19,10 +24,12 @@ const UpdateDescription = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const body = {date}
-        const updatedDescription = await updateDescription({params, fields, body})
+        const body = {
+            "date": date,
+            "description":description
+        }
+        updateDescription({params, body})
         navigate(`/packinglist/${params.packing_list_id}/datelists`)
-        dispatch(reset)
     };
 
 
@@ -38,8 +45,8 @@ const UpdateDescription = () => {
                     <input
                         type={"text"}
                         id="UpdateDescription__name"
-                        value={fields.description}
-                        onChange={(e) => dispatch(handleDescriptionChange(e.target.value))}
+                        value={description}
+                        onChange={handleDescriptionChange}
                     />
                 </div>
                 <button type="submit">Update Description</button>

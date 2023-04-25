@@ -1,4 +1,4 @@
-import { React }from "react";
+import { React, useState }from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from 'react-router-dom';
@@ -48,6 +48,11 @@ const DateDetail = () => {
         deleteItem(item_id);
     }
 
+    const changeDateFormat = (date) => {
+        var newDate = date.split("-");
+        return `${newDate[1]}/${newDate[2]}/${newDate[0]}`
+    }
+
 
     return (
         <div className="container">
@@ -70,7 +75,7 @@ const DateDetail = () => {
                         return (
                             <div key={item.id}>
                                 <div>{item.name} - {item.quantity}</div>
-                                <Link to={`/packinglist/${packingListID}/items/${item.id}`}><button>Edit</button></Link>
+                                <Link to={`/packinglist/${packingListID}/items/${item.id}`} state={item}><button>Edit</button></Link>
                                 <button value={item.id} onClick={handleDelete}>Delete</button>
                             </div>
                         )
@@ -89,11 +94,11 @@ const DateDetail = () => {
                         </thead>
                         <tbody>
                             <tr>
-                                <td>{dateList.date}</td>
+                                <td>{changeDateFormat(dateList.date)}</td>
                                 {(dateList.description !== "") ?
-                                    (<td><Link to={`/packinglist/${packingListID}/datelists/${dateList.id}`}>{dateList.description}</Link></td>)
+                                    (<td><Link to={`/packinglist/${packingListID}/datelists/${dateList.id}`} state={dateList}>{dateList.description}</Link></td>)
                                 :
-                                    (<td><Link to={`/packinglist/${packingListID}/datelists/${dateList.id}`}>Add Description</Link></td>)
+                                    (<td><Link to={`/packinglist/${packingListID}/datelists/${dateList.id}`} state={dateList}>Add Description</Link></td>)
                                 }
                                 <td>{weatherCard}</td>
                                 <td>{items}</td>
@@ -119,7 +124,7 @@ const DateDetail = () => {
                                     return (
                                         <div key={item.id}>
                                             <div key={item.id}>{item.name}: {item.quantity}</div>
-                                            <Link to={`/packinglist/${packingListID}/items/${item.id}`}><button>Edit</button></Link>
+                                            <Link to={`/packinglist/${packingListID}/items/${item.id}`} state={item}><button>Edit</button></Link>
                                             <button value={item.id} onClick={handleDelete}>Delete</button>
                                         </div>
                                     )
