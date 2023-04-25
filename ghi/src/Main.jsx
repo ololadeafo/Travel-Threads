@@ -1,16 +1,18 @@
-import React, { useCallback } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React from "react";
 import { Link } from "react-router-dom";
 import { useGetAccountQuery } from "./services/Travelthreads";
+import "./Main.css";
 
 const Main = () => {
   const { data } = useGetAccountQuery();
-  console.log(data);
+
   return (
     <div>
       {data === undefined ? (
         <Link to="/login">
-          <button type="button">Get Packin!</button>
+          <button type="button" class="btn btn-outline-dark">
+            Get Packin!
+          </button>
         </Link>
       ) : (
         <Link to="/packinglists">

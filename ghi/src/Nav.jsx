@@ -1,8 +1,6 @@
 import { NavLink } from "react-router-dom";
 import React from "react";
-// import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-// import { useGetAccountQuery } from "./services/Travelthreads";
 import travel_Threads from "./images/Logo/travel_Threads.png";
 import { useGetAccountQuery } from "./services/Travelthreads";
 import "./Nav.css";

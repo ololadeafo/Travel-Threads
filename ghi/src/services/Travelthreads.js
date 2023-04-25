@@ -21,7 +21,7 @@ export const travelThreadsApi = createApi({
           body,
         };
       },
-      invalidatesTags: ['Account', 'Lists'],
+      invalidatesTags: ["Account", "Lists"],
     }),
     login: builder.mutation({
       query: (body) => {
@@ -34,14 +34,14 @@ export const travelThreadsApi = createApi({
           body: formData,
         };
       },
-      invalidatesTags: ['Account', 'Lists'],
+      invalidatesTags: ["Account", "Lists"],
     }),
     logout: builder.mutation({
       query: () => ({
         url: "/token",
         method: "DELETE",
       }),
-      invalidatesTags: ['Account', 'Lists'],
+      invalidatesTags: ["Account", "Lists"],
     }),
     createList: builder.mutation({
       query: (body) => {
@@ -50,101 +50,106 @@ export const travelThreadsApi = createApi({
           method: "POST",
           body: body,
         };
-      }, invalidatesTags: ['Lists'],
+      },
+      invalidatesTags: ["Lists"],
     }),
     createDateLists: builder.mutation({
       query: (params) => {
         return {
           url: `/api/packlist/${params.packing_list_id}/datelist/${params.start_date}/${params.end_date}`,
-          method: "POST"
+          method: "POST",
         };
-      }, invalidatesTags: ['Datelist', 'Lists']
+      },
+      invalidatesTags: ["Datelist", "Lists"],
     }),
     getCity: builder.query({
-      query: (params) => `/api/location/${params.province_type}/${params.province_id}/cities`,
-      providesTags: ['City'],
+      query: (params) =>
+        `/api/location/${params.province_type}/${params.province_id}/cities`,
+      providesTags: ["City"],
     }),
     getState: builder.query({
       query: (country_id) => `/api/location/${country_id}/states`,
-      providesTags: ['State'],
-      invalidatesTags: ['City']
+      providesTags: ["State"],
+      invalidatesTags: ["City"],
     }),
     getCountry: builder.query({
       query: () => "/api/location/countries",
-      providesTags: ['Country'],
-      invalidatesTags: ['State', 'City']
+      providesTags: ["Country"],
+      invalidatesTags: ["State", "City"],
     }),
     getLists: builder.query({
       query: () => {
-        console.log("get list query is running")
-        return ("/api/packlist")
+        console.log("get list query is running");
+        return "/api/packlist";
       },
-      providesTags: ['Lists'],
+      providesTags: ["Lists"],
     }),
     deleteList: builder.mutation({
       query: (id) => ({
         url: `/api/packlist/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ['Lists']
+      invalidatesTags: ["Lists"],
     }),
     getOneList: builder.query({
       query: (id) => `/api/packlist/${id}`,
-      providesTags: ['List'],
+      providesTags: ["List"],
     }),
     getDates: builder.query({
       query: (id) => `/api/packlist/${id}/datelist`,
-      providesTags: ['Datelist'],
+      providesTags: ["Datelist"],
     }),
     getOneDate: builder.query({
-      query: (IDs) => `/api/packlist/${IDs.packinglistID}/datelist/${IDs.datelistID}/`,
-      providesTags: ['Datelist'],
+      query: (IDs) =>
+        `/api/packlist/${IDs.packinglistID}/datelist/${IDs.datelistID}/`,
+      providesTags: ["Datelist"],
     }),
     getItemsByPacklist: builder.query({
       query: (packlist_id) => `/api/packlist/${packlist_id}/items`,
-      providesTags: ['All Items'],
+      providesTags: ["All Items"],
     }),
     deleteItem: builder.mutation({
       query: (params) => `/api/items/${params.itemId}`,
-      invalidatesTags: ['All Items']
+      invalidatesTags: ["All Items"],
     }),
     getWeatherData: builder.query({
       query: (params) => `/api/weather/${params.latitude}/${params.longitude}`,
-      providesTags: ['Weather']
+      providesTags: ["Weather"],
     }),
     getLatLon: builder.query({
       async queryFn(packing_list_id, _queryApi, _extraOptions, fetchWithBQ) {
-        const packingListData = await fetchWithBQ(`/api/packlist/${packing_list_id}`)
+        const packingListData = await fetchWithBQ(
+          `/api/packlist/${packing_list_id}`
+        );
         if (packingListData.error) {
-          return { error: packingListData.error }
+          return { error: packingListData.error };
         }
 
-        const packingList = packingListData.data
-        console.log(packingList)
+        const packingList = packingListData.data;
 
-        const packingListCityData = await fetchWithBQ(`/api/location/city/${packingList.city}`)
+        const packingListCityData = await fetchWithBQ(
+          `/api/location/city/${packingList.city}`
+        );
 
         if (packingListCityData.error) {
-          return { error: packingListCityData.error }
+          return { error: packingListCityData.error };
         }
 
-        const packingListCity = packingListCityData.data
+        const packingListCity = packingListCityData.data;
 
-        console.log(packingListCity)
-
-        const weatherData = await fetchWithBQ(`/api/weather/${packingListCity.latitude}/${packingListCity.longitude}`)
+        const weatherData = await fetchWithBQ(
+          `/api/weather/${packingListCity.latitude}/${packingListCity.longitude}`
+        );
         if (weatherData.error) {
-          return { error: weatherData.error }
+          return { error: weatherData.error };
         }
 
-        const weather = weatherData.data
+        const weather = weatherData.data.daily;
 
-        return {data : weather}
-      }
-    })
+        return { data: weather };
+      },
+    }),
   }),
-
-
 });
 
 export const {
@@ -165,5 +170,5 @@ export const {
   useDeleteItemMutation,
   useCreateDateListsMutation,
   useGetLatLonQuery,
-  useGetWeatherDataQuery
+  useGetWeatherDataQuery,
 } = travelThreadsApi;
