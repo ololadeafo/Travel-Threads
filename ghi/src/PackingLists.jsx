@@ -19,6 +19,13 @@ const PackingLists = () => {
     deleteList(id);
   };
 
+
+  const changeDateFormat = (date) => {
+    var newDate = date.split("-");
+    return `${newDate[1]}/${newDate[2]}/${newDate[0]}`
+  };
+
+
   return (
     <div className="container">
       {packingListData?.length !== 0 ? (
@@ -41,7 +48,7 @@ const PackingLists = () => {
                     <div className="card-body">
                       <h5 className="card-title">{packinglist.name}</h5>
                       <p className="card-text">
-                        {packinglist.start_date} - {packinglist.end_date}
+                        {changeDateFormat(packinglist.start_date)} - {changeDateFormat(packinglist.end_date)}
                         <br />
                         {packinglist.cityInfo.name}, {packinglist.cityInfo.state},{" "}
                         {packinglist.cityInfo.country}
