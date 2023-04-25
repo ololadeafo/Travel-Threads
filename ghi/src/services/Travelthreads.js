@@ -116,18 +116,12 @@ export const travelThreadsApi = createApi({
       providesTags: ['Country'],
       invalidatesTags: ['State', 'City']
     }),
-    getLists: builder.query({
-      query: () => {
-        return ("/api/packlist")
-      },
-      providesTags: ['Lists'],
-    }),
     deleteList: builder.mutation({
       query: (id) => ({
         url: `/api/packlist/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ['Lists']
+      invalidatesTags: ['List of PackingLists']
     }),
     getOneList: builder.query({
       query: (id) => `/api/packlist/${id}`,
@@ -187,7 +181,25 @@ export const travelThreadsApi = createApi({
 
         return weatherData
       }
-    })
+    }),
+    getLists: builder.query({
+      async queryFn(_arg, _queryApi, _extraOptions, fetchWithBQ) {
+        const packingListsData = await fetchWithBQ("/api/packlist");
+
+        if (packingListsData.error) {
+          return { error: packingListsData.error }
+        }
+
+        for (let i = 0; i < packingListsData.data.length; i++) {
+          var packingListCityID = packingListsData.data[i].city
+          var packingListCityData = await fetchWithBQ(`/api/location/city/details/${packingListCityID}`)
+          packingListsData.data[i]["cityInfo"] = packingListCityData.data
+        }
+
+        return packingListsData
+      },
+      providesTags: ['List of PackingLists'],
+    }),
   }),
 
 

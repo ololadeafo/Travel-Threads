@@ -1,4 +1,4 @@
-from models import CountriesOut, StatesOut, CitiesOut, CityOut
+from models import CountriesOut, StatesOut, CitiesOut, CityOut, CityOutWithAllInfo
 from queries.pool import pool
 from typing import Union, List, Optional
 from models import Error
@@ -79,6 +79,31 @@ class LocationQueries:
                 record = result.fetchone()
 
                 return self.record_to_city_out(record)
+
+    def get_all_city_info(self, city_id) -> CityOutWithAllInfo:
+        with pool.connection() as conn:
+            with conn.cursor() as db:
+                result = db.execute(
+                    """
+                    SELECT ci.id AS id, ci.name AS name, s.name AS state, co.name AS country
+                    FROM cities AS ci
+                    LEFT OUTER JOIN states s
+                        ON (ci.state_id = s.id)
+                    LEFT OUTER JOIN countries co
+                        ON (ci.country_id = co.id)
+                    WHERE ci.id = %s
+                    ORDER BY name;
+                    """,
+                    [city_id]
+                )
+                record = result.fetchone()
+                return CityOutWithAllInfo(
+                    id = city_id,
+                    name = record[1],
+                    state = record[2],
+                    country = record[3]
+                )
+
 
     def record_to_countries_out(self, record):
         return CountriesOut(
