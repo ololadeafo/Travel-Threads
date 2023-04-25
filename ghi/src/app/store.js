@@ -5,7 +5,6 @@ import { setupListeners } from "@reduxjs/toolkit/query";
 import { travelThreadsApi } from "../services/Travelthreads";
 import createListReducer from "../features/auth/createList";
 import createItemReducer from "../features/auth/createItem";
-import updateDescriptionReducer from "../features/auth/updateDescription";
 
 export const store = configureStore({
   reducer: {
@@ -13,7 +12,6 @@ export const store = configureStore({
     signup: signupReducer,
     createList: createListReducer,
     createItem: createItemReducer,
-    updateDescription: updateDescriptionReducer,
 
     [travelThreadsApi.reducerPath]: travelThreadsApi.reducer,
   },
