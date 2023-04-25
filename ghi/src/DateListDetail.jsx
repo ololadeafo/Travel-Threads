@@ -2,7 +2,7 @@ import { React }from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from 'react-router-dom';
-import { useGetDatesQuery, useGetWeatherInfoQuery, useGetItemsByPacklistQuery, useCreateItemMutation} from "./services/Travelthreads";
+import { useGetDatesQuery, useGetWeatherInfoQuery, useGetItemsByPacklistQuery, useCreateItemMutation, useDeleteItemMutation} from "./services/Travelthreads";
 import { handleNameChange } from "./features/auth/createItem";
 
 
@@ -24,6 +24,7 @@ const DateDetail = () => {
 
     const dispatch = useDispatch();
     const [createItem] = useCreateItemMutation();
+    const [deleteItem] = useDeleteItemMutation();
     const { fields } = useSelector((state) => state.createItem);
 
     const handleSubmit = (e) => {
@@ -36,6 +37,11 @@ const DateDetail = () => {
 
         const item = createItem({fields, body})
         console.log(item)
+    }
+
+    const handleDelete = (e) => {
+        const item_id = e.target.value;
+        deleteItem(item_id);
     }
 
 
@@ -61,6 +67,7 @@ const DateDetail = () => {
                             <div key={item.id}>
                                 <div>{item.name} - {item.quantity}</div>
                                 <Link to={`/packinglist/${packingListID}/items/${item.id}`}><button>Edit</button></Link>
+                                <button value={item.id} onClick={handleDelete}>Delete</button>
                             </div>
                         )
                     })

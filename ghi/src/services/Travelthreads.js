@@ -92,7 +92,6 @@ export const travelThreadsApi = createApi({
     }),
     updateDescription: builder.mutation({
       query: ({params, fields, body}) => {
-        {console.log("params", params, "fields", fields, "body", body)}
         return {
           url: `/api/packlist/${params.packing_list_id}/datelist/${params.date_list_id}`,
           method: "PUT",
@@ -101,7 +100,7 @@ export const travelThreadsApi = createApi({
             "description":fields.description
           }
         };
-      }, invalidatesTags: ["Get One Item", "All Items From Packlist"]
+      }, invalidatesTags: ["Get One Item", "List of Dates"]
     }),
     getCity: builder.query({
       query: (params) => `/api/location/${params.province_type}/${params.province_id}/cities`,
@@ -119,7 +118,6 @@ export const travelThreadsApi = createApi({
     }),
     getLists: builder.query({
       query: () => {
-        console.log("get list query is running")
         return ("/api/packlist")
       },
       providesTags: ['Lists'],
@@ -156,8 +154,11 @@ export const travelThreadsApi = createApi({
       providesTags: ['Get One Item'],
     }),
     deleteItem: builder.mutation({
-      query: (params) => `/api/items/${params.itemId}`,
-      invalidatesTags: ['All Items']
+      query: (item_id) => ({
+        url: `/api/items/${item_id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ['All Items From Packlist', "List of Dates"]
     }),
     getWeatherInfo: builder.query({
       async queryFn(packing_list_id, _queryApi, _extraOptions, fetchWithBQ) {

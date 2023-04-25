@@ -21,10 +21,12 @@ const UpdateItem = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const updatedItem = await updateItem({params, fields});
-        navigate(`/packinglist/${params.packing_list_id}/datelists`)
-        dispatch(reset)
+        updateItem({params, fields});
+        dispatch(reset);
+        navigate(`/packinglist/${params.packing_list_id}/datelists`);
     };
+
+    console.log(fields)
 
     return (
         <div className="container">

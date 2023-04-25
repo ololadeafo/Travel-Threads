@@ -21,7 +21,6 @@ const UpdateDescription = () => {
         e.preventDefault();
         const body = {date}
         const updatedDescription = await updateDescription({params, fields, body})
-        console.log(updatedDescription)
         navigate(`/packinglist/${params.packing_list_id}/datelists`)
         dispatch(reset)
     };
