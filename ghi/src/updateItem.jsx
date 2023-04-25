@@ -23,7 +23,7 @@ const UpdateItem = () => {
         e.preventDefault();
         const updatedItem = await updateItem({params, fields});
         navigate(`/packinglist/${params.packing_list_id}/datelists`)
-
+        dispatch(reset)
     };
 
     return (
@@ -35,7 +35,7 @@ const UpdateItem = () => {
                     <input
                         type={"text"}
                         id="CreateItem__name"
-                        defaultValue={itemInfo.name}
+                        value={fields.name}
                         onChange={(e) => dispatch(handleNameChange(e.target.value))}
                     />
                 </div>
@@ -44,7 +44,7 @@ const UpdateItem = () => {
                     <input
                         type={"number"}
                         id="CreateItem__quantity"
-                        defaultValue={itemInfo.quantity}
+                        value={fields.quantity}
                         onChange={(e) => dispatch(handleQuantityChange(e.target.value))}
                     />
                 </div>
@@ -53,7 +53,6 @@ const UpdateItem = () => {
                     <input
                         type={"checkbox"}
                         id="CreateItem__is_packed"
-                        defaultChecked={itemInfo.is_packed}
                         onChange={(e) => dispatch(handleIsPackedChange(e.target.value))}
                     />
                 </div>

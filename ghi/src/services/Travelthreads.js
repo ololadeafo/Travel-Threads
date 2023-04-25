@@ -73,7 +73,7 @@ export const travelThreadsApi = createApi({
             "is_packed":fields.is_packed
           }
         };
-      }, invalidatesTags: ["List of Dates"]
+      }, invalidatesTags: ["List of Dates", "All Items From Packlist"]
     }),
     updateItem: builder.mutation({
       query: ({params, ...body}) => {
@@ -88,7 +88,20 @@ export const travelThreadsApi = createApi({
             "is_packed": body.fields.is_packed
           }
         };
-      }, invalidatesTags: ["Get One Item"]
+      }, invalidatesTags: ["Get One Item", "All Items From Packlist"]
+    }),
+    updateDescription: builder.mutation({
+      query: ({params, fields, body}) => {
+        {console.log("params", params, "fields", fields, "body", body)}
+        return {
+          url: `/api/packlist/${params.packing_list_id}/datelist/${params.date_list_id}`,
+          method: "PUT",
+          body: {
+            "date":body.date,
+            "description":fields.description
+          }
+        };
+      }, invalidatesTags: ["Get One Item", "All Items From Packlist"]
     }),
     getCity: builder.query({
       query: (params) => `/api/location/${params.province_type}/${params.province_id}/cities`,
@@ -127,12 +140,12 @@ export const travelThreadsApi = createApi({
       providesTags: ['List of Dates'],
     }),
     getOneDate: builder.query({
-      query: (IDs) => `/api/packlist/${IDs.packinglistID}/datelist/${IDs.datelistID}/`,
+      query: (params) => `/api/packlist/${params.packing_list_id}/datelist/${params.date_list_id}/`,
       providesTags: ['Datelist'],
     }),
     getItemsByPacklist: builder.query({
       query: (packlist_id) => `/api/packlist/${packlist_id}/items`,
-      providesTags: ['All Items'],
+      providesTags: ['All Items From Packlist'],
     }),
     getItemsByDatelist: builder.query({
       query: (params) => `/api/packlist/${params.packing_list_id}/datelist/${params.date_list_id}/items`,
@@ -200,4 +213,5 @@ export const {
   useCreateItemMutation,
   useGetItemsByIDQuery,
   useUpdateItemMutation,
+  useUpdateDescriptionMutation,
 } = travelThreadsApi;

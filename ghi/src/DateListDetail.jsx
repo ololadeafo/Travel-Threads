@@ -79,7 +79,11 @@ const DateDetail = () => {
                         <tbody>
                             <tr>
                                 <td>{dateList.date}</td>
-                                <td>{dateList.description}</td>
+                                {(dateList.description !== "") ?
+                                    (<td><Link to={`/packinglist/${packingListID}/datelists/${dateList.id}`}>{dateList.description}</Link></td>)
+                                :
+                                    (<td><Link to={`/packinglist/${packingListID}/datelists/${dateList.id}`}>Add Description</Link></td>)
+                                }
                                 <td>{weatherCard}</td>
                                 <td>{items}</td>
                                 <td><input onChange={(e) => dispatch(handleNameChange(e.target.value))}></input></td>
