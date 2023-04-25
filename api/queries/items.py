@@ -80,7 +80,7 @@ class ItemsQueries:
                         SELECT (id, name, quantity, is_packed, packing_list_id, date_list_id)
                         FROM items
                         WHERE (packing_list_id = %s AND user_id = %s)
-                        ORDER BY name;
+                        ORDER BY id;
                         """, [packing_list_id, user_id]
                     )
                     return[self.record_to_items_out(record[0]) for record in result]
