@@ -12,6 +12,23 @@ import airplane from "./images/mainPage/airplane.png";
 const Main = () => {
   const { data } = useGetAccountQuery();
   const isLoggedIn = !!data;
+
+  const actionButton = {
+    fontFamily: "Righteous, cursive",
+    fontSize: "24px",
+    borderRadius: "30px",
+    boxShadow: "5px 5px 5px rgba(0,0,0,0.2)",
+    backgroundColor: "#FFA69E",
+    color: "white",
+  }
+
+  const heading = {
+    fontFamily: "Righteous, cursive",
+    fontSize: "36px",
+    fontWeight: "bold",
+    color: "white",
+    marginBottom: "-20px",
+  }
   return (
     <div
       className="d-flex flex-column align-items-center justify-content-center vh-100"
@@ -19,13 +36,7 @@ const Main = () => {
     >
       <h1
         className="mb-5"
-        style={{
-          fontFamily: "Righteous, cursive",
-          fontSize: "36px",
-          fontWeight: "bold",
-          color: "white",
-          marginBottom: "-20px",
-        }}
+        style={{heading}}
       >
         Welcome to Travel Threads!
       </h1>
@@ -37,14 +48,7 @@ const Main = () => {
         <button
           type="button"
           className="btn btn-primary btn-lg mt-5"
-          style={{
-            fontFamily: "Righteous, cursive",
-            fontSize: "24px",
-            borderRadius: "30px",
-            boxShadow: "5px 5px 5px rgba(0,0,0,0.2)",
-            backgroundColor: "#FFA69E",
-            color: "white",
-          }}
+          style={{actionButton}}
         >
           Get Packin!
         </button>

@@ -3,8 +3,8 @@ import signupReducer from "../features/auth/signupSlice";
 import loginReducer from "../features/auth/loginSlice";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { travelThreadsApi } from "../services/Travelthreads";
-import createListReducer from "../features/auth/createList";
-import createItemReducer from "../features/auth/createItem";
+import createListReducer from "../features/createSlices/createList";
+import createItemReducer from "../features/createSlices/createItem";
 
 export const store = configureStore({
   reducer: {
