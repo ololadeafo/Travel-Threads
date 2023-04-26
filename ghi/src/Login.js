@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   handlePasswordChange,
@@ -37,7 +37,7 @@ const Login = () => {
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
               <label htmlFor="email" className="form-label">
-                Email:
+                Email Address
               </label>
               <input
                 type="text"
@@ -47,9 +47,10 @@ const Login = () => {
                 onChange={(e) => dispatch(handleEmailChange(e.target.value))}
               />
             </div>
+
             <div className="mb-3">
               <label htmlFor="password" className="form-label">
-                Password:
+                Password
               </label>
               <input
                 type="password"

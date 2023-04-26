@@ -12,7 +12,6 @@ export const store = configureStore({
     signup: signupReducer,
     createList: createListReducer,
     createItem: createItemReducer,
-
     [travelThreadsApi.reducerPath]: travelThreadsApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>

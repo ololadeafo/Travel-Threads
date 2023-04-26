@@ -52,7 +52,7 @@ const Signup = () => {
           )}
           <div className="mb-3">
             <label htmlFor="Signup__email" className="form-label">
-              Email:
+              Username
             </label>
             <input
               className="form-control form-control-sm"
@@ -64,7 +64,7 @@ const Signup = () => {
           </div>
           <div className="mb-3">
             <label htmlFor="Signup__password" className="form-label">
-              Password:
+              Password
             </label>
             <input
               className="form-control form-control-sm"
@@ -79,7 +79,7 @@ const Signup = () => {
               htmlFor="Signup__password_confirmation"
               className="form-label"
             >
-              Confirm Password:
+              Confirm Password
             </label>
             <input
               className="form-control form-control-sm"
