@@ -127,7 +127,7 @@ export const travelThreadsApi = createApi({
         url: `/api/packlist/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Lists"],
+      invalidatesTags: ['List of PackingLists']
     }),
     getOneList: builder.query({
       query: (id) => `/api/packlist/${id}`,
