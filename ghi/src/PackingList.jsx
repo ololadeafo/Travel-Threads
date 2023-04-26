@@ -7,7 +7,7 @@ import {
   useGetWeatherInfoQuery,
   useGetDatesQuery
 } from "./services/Travelthreads";
-import { Link } from "react-router-dom";
+import { Link } from "react-router-do`m";
 
 const ListDetail = () => {
     const params = useParams();
