@@ -1,4 +1,4 @@
-import { useLogoutMutation } from "./services/Travelthreads";
+import { useLogoutMutation } from "../services/Travelthreads";
 
 const Logout = () => {
   const [logout] = useLogoutMutation();

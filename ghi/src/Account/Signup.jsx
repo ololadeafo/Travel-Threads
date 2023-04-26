@@ -6,12 +6,12 @@ import {
   handleEmailChange,
   reset,
   error,
-} from "./features/auth/signupSlice";
-import ErrorNotification from "./ErrorNotification";
-import { useSignupMutation } from "./services/Travelthreads";
+} from "../features/auth/signupSlice";
+import ErrorNotification from "../ErrorNotification";
+import { useSignupMutation } from "../services/Travelthreads";
 import { useNavigate } from "react-router-dom";
-import { useGetAccountQuery } from "./services/Travelthreads";
-import travelThreads from "./images/Logo/travel_Threads.png";
+import { useGetAccountQuery } from "../services/Travelthreads";
+import travel_Threads from "../images/Logo/travel_Threads.png";
 
 const Signup = () => {
   const dispatch = useDispatch();
@@ -44,12 +44,17 @@ const Signup = () => {
   return (
     <div
       className="container"
-      style={{ backgroundColor: "#AED9E0", minHeight: "100vh", minWidth:"100%", marginTop: "0%" }}
+      style={{
+        backgroundColor: "#AED9E0",
+        minHeight: "100vh",
+        minWidth: "100%",
+        marginTop: "0%",
+      }}
     >
       <div className="row justify-content-center">
         <div className="col-md-6 text-center">
           <img
-            src={travelThreads}
+            src={travel_Threads}
             alt="Travel Threads"
             style={{ width: "200px", marginBottom: "1rem" }}
           />

@@ -3,10 +3,13 @@ import { useParams } from "react-router-dom";
 import {
   useGetItemsByPacklistQuery,
   useUpdateItemMutation,
-} from "./services/Travelthreads";
-import { useGetOneListQuery } from "./services/Travelthreads";
+} from "../services/Travelthreads";
+import { useGetOneListQuery } from "../services/Travelthreads";
 import { Link } from "react-router-dom";
-import { handleIsPackedChange, reset } from "./features/auth/createItem";
+import {
+  handleIsPackedChange,
+  reset,
+} from "../features/createSlices/createItem";
 import { useSelector, useDispatch } from "react-redux";
 
 const ListDetail = () => {
@@ -24,13 +27,8 @@ const ListDetail = () => {
   const getData = async () => {
     await setItems(allPackingListItems);
   };
-  // const {data: allInfo} = useGetLatLonQuery(packingListID)
-  // console.log(allInfo)
   const handleChange = async (e, object) => {
-    console.log(e);
-    console.log(object);
     let is_packed = object.is_packed ? false : true;
-    console.log(is_packed);
     const body = {
       name: object.name,
       quantity: object.quantity,
@@ -40,7 +38,6 @@ const ListDetail = () => {
       id: object.id,
     };
     const updatedItem = await updateItem(body);
-    console.log(updatedItem);
   };
 
   useEffect(() => {

@@ -172,7 +172,6 @@ export const travelThreadsApi = createApi({
         }
 
         const packingList = packingListData.data;
-        console.log(packingList);
 
         const packingListCityData = await fetchWithBQ(
           `/api/location/city/${packingList.city}`
@@ -184,7 +183,6 @@ export const travelThreadsApi = createApi({
 
         const packingListCity = packingListCityData.data;
 
-        console.log(packingListCity);
 
         const weatherData = await fetchWithBQ(
           `/api/weather/${packingListCity.latitude}/${packingListCity.longitude}`

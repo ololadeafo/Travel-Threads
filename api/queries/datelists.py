@@ -42,7 +42,6 @@ class DateListQueries:
                             "id": id,
                             "packing_list_id": packing_list_id
                         }
-                        print(type(date))
                         return date_list
         except Exception:
             return {"message": "Could not create packing list associated with this date"}
@@ -61,7 +60,6 @@ class DateListQueries:
                     )
                     return[self.record_to_date_list_out(record[0]) for record in result]
         except Exception as e:
-            print(e)
             return {"message" : "Could not get all date lists"}
 
     def get_one(self, date_list_id:int, user_id: int, packing_list_id: int) -> Optional[DateListOut]:
