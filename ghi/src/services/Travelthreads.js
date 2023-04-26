@@ -51,7 +51,7 @@ export const travelThreadsApi = createApi({
           body: body,
         };
       },
-      invalidatesTags: ["Lists"],
+      invalidatesTags: ["List of PackingLists"],
     }),
     createDateLists: builder.mutation({
       query: (params) => {

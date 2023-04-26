@@ -7,26 +7,29 @@ import { handleNameChange } from "./features/auth/createItem";
 
 
 const DateDetail = () => {
+    const dispatch = useDispatch();
+    const [createItem] = useCreateItemMutation();
+    const [deleteItem] = useDeleteItemMutation();
+    const { fields } = useSelector((state) => state.createItem);
     const params = useParams();
     var packingListID = params["id"]
 
     const {data: allDateLists} = useGetDatesQuery(params?.id, { skip: !params?.id })
     console.log(allDateLists)
 
-
-    const {data: allInfo} = useGetWeatherInfoQuery(params?.id, { skip: !params?.id })
-
     const {data: packListItems} = useGetItemsByPacklistQuery(params.id)
+
+
+    const {data: allInfo } = useGetWeatherInfoQuery(params?.id, { skip: !params?.id })
+
+
 
 
     const misc_items = packListItems?.filter(item => {
         return item.date_list_id === null
-    })
+    });
 
-    const dispatch = useDispatch();
-    const [createItem] = useCreateItemMutation();
-    const [deleteItem] = useDeleteItemMutation();
-    const { fields } = useSelector((state) => state.createItem);
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -40,7 +43,6 @@ const DateDetail = () => {
 
 
         const item = createItem({fields, body})
-        console.log(item)
     }
 
     const handleDelete = (e) => {
@@ -61,10 +63,10 @@ const DateDetail = () => {
                 let items = <div key=""></div>
                 if (allInfo !== undefined && allInfo.daily.time.indexOf(dateList.date) !== -1) {
                     const index = allInfo.daily.time.indexOf(dateList.date)
-                    weatherCard = <div key={dateList.date} style={{display: "flex", alignItems: "center"}}>High: {allInfo.daily.temperature_2m_max
-                    [index]} Low: {allInfo.daily.temperature_2m_max
-                    [index]} Precipitation: {allInfo.daily.temperature_2m_max
-                    [index]}</div>
+                    weatherCard = <div key={dateList.date} style={{display: "flex", alignItems: "center"}}>
+                    High: {allInfo.daily.temperature_2m_max[index]}
+                    Low: {allInfo.daily.temperature_2m_min[index]}
+                    Precipitation: {allInfo.daily.precipitation_probability_max[index]}</div>
                 }
 
                 if (packListItems !== undefined) {

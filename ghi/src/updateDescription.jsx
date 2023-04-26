@@ -48,7 +48,7 @@ const UpdateDescription = () => {
                             id="UpdateDescription__name"
                             value={description}
                             onChange={handleDescriptionChange}
-                            style={{height: "7.5rem", width: "15rem"}}
+                            style={{height: "7.5rem", width: "15rem", resize:"none"}}
                         />
                     </div>
                     <button type="submit" style={{backgroundColor: "#FFA69E", width: "100px"}}>Update</button>
