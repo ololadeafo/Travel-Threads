@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import createlistimage from "./images/Logo/createlist.png";
+import createlistimage from "../images/Logo/createlist.png";
 import {
   handleNameChange,
   handleCountryChange,
@@ -9,7 +9,7 @@ import {
   handleStartDateChange,
   handleEndDateChange,
   reset,
-} from "./features/auth/createList";
+} from "../features/createSlices/createList";
 import {
   useCreateListMutation,
   useGetCountryQuery,
