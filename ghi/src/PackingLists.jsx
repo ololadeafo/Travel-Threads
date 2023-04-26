@@ -10,8 +10,6 @@ const PackingLists = () => {
   const {data: packingLists, isLoading} = useGetListsQuery();
   if (isLoading) return <div>Loading...</div>
 
-  console.log(packingLists)
-
 
   const checkLocationInfo = (input) => {
     if (input.city === "" && input.state === "") {

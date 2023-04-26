@@ -25,6 +25,8 @@ const ListDetail = () => {
 
     const {data: weatherInfo} = useGetWeatherInfoQuery(packingListID)
 
+    console.log(weatherInfo)
+
 
     const [location, setLocation] = useState({
         city: "",
@@ -33,9 +35,30 @@ const ListDetail = () => {
     })
 
     const getData = async () => {
-        const locationResponse = await fetch(`http://localhost:8000/api/location/city/details/${packingList.city}`)
+        var locationResponse = ""
 
-        if (locationResponse.ok) {
+        if (packingList.city === "" && packingList.state === ""){
+            locationResponse = await fetch(`http://localhost:8000/api/location/country/details/${packingList.country}`)
+            if (locationResponse.ok) {
+            const data = await locationResponse.json()
+            console.log(data)
+            setLocation({
+                country: data.name
+            })
+        }
+        } else if (packingList.city === "" && packingList.state !== "") {
+            locationResponse = await fetch(`http://localhost:8000/api/location/state/details/${packingList.state}`)
+            if (locationResponse.ok) {
+            const data = await locationResponse.json()
+            console.log(data)
+            setLocation({
+                state: data.name,
+                country: data.country
+            })
+        }
+        } else {
+            locationResponse = await fetch(`http://localhost:8000/api/location/city/details/${packingList.city}`)
+            if (locationResponse.ok) {
             const data = await locationResponse.json()
             console.log(data)
             setLocation({
@@ -43,6 +66,7 @@ const ListDetail = () => {
                 state: data.state,
                 country: data.country
             })
+        }
         }
     }
 
@@ -62,6 +86,23 @@ const ListDetail = () => {
         const updatedItem = await updateItem(body);
         console.log(updatedItem);
     };
+
+
+    const checkLocationInfo = (location) => {
+        if (location.city === undefined && location.state === undefined) {
+            return (
+                <p>Your trip to beautiful {location.country}.</p>
+            )
+            } else if (location.city === undefined && location.state !== undefined){
+            return (
+                <p>Your trip to beautiful {location.state}, {location.country}.</p>
+            )
+            } else {
+            return(
+                <p>Your trip to beautiful {location.city}, {location.state}, {location.country}.</p>
+            )
+        }
+    }
 
     useEffect(() => {
         if (packingList) {
@@ -118,7 +159,7 @@ const ListDetail = () => {
                 <div className="row" style={listInfo}>
                     <div className="col" style={{color: "white"}}>
                         <h1>{packingList?.name}</h1>
-                        <p>Your trip to beautiful {location.city}, {location.state}, {location.country}.</p>
+                        {checkLocationInfo(location)}
                     </div>
                     <table className="col-7 card row" style={weatherWindow}>
                         <tbody style={weatherWindowBody}>

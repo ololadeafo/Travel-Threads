@@ -186,11 +186,11 @@ export const travelThreadsApi = createApi({
           );
         } else {
           locationData = await fetchWithBQ(
-          `/api/location/city/details/${packingList.city}`
+          `/api/location/city/${packingList.city}`
           );
         }
 
-        console.log(locationData.data)
+        console.log("Location Data:", locationData.data)
 
 
         if (locationData.error) {
