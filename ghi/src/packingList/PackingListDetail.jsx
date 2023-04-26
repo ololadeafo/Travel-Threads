@@ -5,7 +5,7 @@ import {
   useGetLatLonQuery,
   allPackingListItems,
   useGetOneListQuery,
-} from "./services/Travelthreads";
+} from "../services/Travelthreads";
 
 const ListDetail = () => {
   const params = useParams();

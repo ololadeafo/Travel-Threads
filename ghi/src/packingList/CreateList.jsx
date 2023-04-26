@@ -16,7 +16,7 @@ import {
   useGetStateQuery,
   useGetCityQuery,
   useCreateDateListsMutation,
-} from "./services/Travelthreads";
+} from "../services/Travelthreads";
 import { useNavigate } from "react-router-dom";
 const CreateList = () => {
   const dispatch = useDispatch();
@@ -27,7 +27,6 @@ const CreateList = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const new_list = await createList(fields);
-    console.log(new_list["data"]);
     await createDateList({
       packing_list_id: new_list.data.id,
       start_date: fields.start_date,
@@ -105,7 +104,7 @@ const CreateList = () => {
                       <option select="">Choose a State</option>
                       {states?.map((state) => {
                         return (
-                         <option value={state.id} key={state.id}>
+                          <option value={state.id} key={state.id}>
                           {state.name}
                         </option>
                       );
@@ -165,11 +164,3 @@ const CreateList = () => {
   );
 };
 export default CreateList;
-
-
-
-
-
-
-
-

@@ -2,7 +2,7 @@ import React from "react";
 import {
   useGetListsQuery,
   useDeleteListMutation,
-} from "./services/Travelthreads";
+} from "../services/Travelthreads";
 import { Link } from "react-router-dom";
 
 const PackingLists = () => {
@@ -21,60 +21,60 @@ const PackingLists = () => {
     return `${newDate[1]}/${newDate[2]}/${newDate[0]}`;
   };
 
-const cardStyle = {
-  width: "300px",
-  height: "300px",
-  margin: "0 auto",
-  padding: "1rem",
-  boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-  transition: "all 0.3s linear",
-  backgroundColor: "#FFA69E",
-};
+  const cardStyle = {
+    width: "300px",
+    height: "300px",
+    margin: "0 auto",
+    padding: "1rem",
+    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+    transition: "all 0.3s linear",
+    backgroundColor: "#FFA69E",
+  };
 
-const cardHoverStyle = {
-  boxShadow: "0 8px 12px rgba(0, 0, 0, 0.1)",
-};
+  const cardHoverStyle = {
+    boxShadow: "0 8px 12px rgba(0, 0, 0, 0.1)",
+  };
 
-const cardBodyStyle = {
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "space-between",
-  height: "100%",
-};
+  const cardBodyStyle = {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    height: "100%",
+  };
 
-const deleteButtonContainerStyle = {
-  display: "flex",
-  justifyContent: "center",
-  marginTop: "auto",
-};
+  const deleteButtonContainerStyle = {
+    display: "flex",
+    justifyContent: "center",
+    marginTop: "auto",
+  };
 
-const wrapperStyle = {
-  minHeight: "100vh",
-  paddingTop: "2rem",
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "center",
-  backgroundColor: "#AED9E0",
-  backgroundSize: "cover",
-  minWidth: "100%"
-};
+  const wrapperStyle = {
+    minHeight: "100vh",
+    paddingTop: "2rem",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    backgroundColor: "#AED9E0",
+    backgroundSize: "cover",
+    minWidth: "100%",
+  };
 
-const titleStyle = {
-  textAlign: "center",
-  marginBottom: "2rem",
-};
+  const titleStyle = {
+    textAlign: "center",
+    marginBottom: "2rem",
+  };
 
-const addButtonStyle = {
-  textAlign: "center",
-  marginBottom: "2rem",
-};
+  const addButtonStyle = {
+    textAlign: "center",
+    marginBottom: "2rem",
+  };
 
-const noPackingListsStyle = {
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  minHeight: "50vh",
-};
+  const noPackingListsStyle = {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    minHeight: "50vh",
+  };
 
   return (
     <div className="container" style={wrapperStyle}>
