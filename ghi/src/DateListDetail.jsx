@@ -14,7 +14,7 @@ const DateDetail = () => {
     console.log(allDateLists)
 
 
-    const {data: allInfo} = useGetWeatherInfoQuery(params?.id, { skip: !params?.id })
+    const {data: weatherInfo} = useGetWeatherInfoQuery(params?.id, { skip: !params?.id })
 
     const {data: packListItems} = useGetItemsByPacklistQuery(params.id)
 
@@ -59,11 +59,11 @@ const DateDetail = () => {
             {allDateLists?.map((dateList) => {
                 let weatherCard = <div>Weather information not available</div>
                 let items = <div key=""></div>
-                if (allInfo !== undefined && allInfo.daily.time.indexOf(dateList.date) !== -1) {
-                    const index = allInfo.daily.time.indexOf(dateList.date)
-                    weatherCard = <div key={dateList.date}>High: {allInfo.daily.temperature_2m_max
-                    [index]} Low: {allInfo.daily.temperature_2m_max
-                    [index]} Precipitation: {allInfo.daily.temperature_2m_max
+                if (weatherInfo !== undefined && weatherInfo.daily.time.indexOf(dateList.date) !== -1) {
+                    const index = weatherInfo.daily.time.indexOf(dateList.date)
+                    weatherCard = <div key={dateList.date}>High: {weatherInfo.daily.temperature_2m_max
+                    [index]} Low: {weatherInfo.daily.temperature_2m_max
+                    [index]} Precipitation: {weatherInfo.daily.temperature_2m_max
                     [index]}</div>
                 }
 

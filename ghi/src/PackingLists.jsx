@@ -8,8 +8,8 @@ import styles from "./font.css";
 
 const PackingLists = () => {
   const packingLists = useGetListsQuery();
-  const test = packingLists["data"];
-  console.log(test);
+  const packingListData = packingLists["data"];
+  console.log(packingListData);
   const [deleteList] = useDeleteListMutation();
 
   const handleDelete = (e) => {
@@ -19,11 +19,18 @@ const PackingLists = () => {
     deleteList(id);
   };
 
+
+  const changeDateFormat = (date) => {
+    var newDate = date.split("-");
+    return `${newDate[1]}/${newDate[2]}/${newDate[0]}`
+  };
+
+
   return (
     <div className="container">
-      {test?.length !== 0 ? (
+      {packingListData?.length !== 0 ? (
         <div className="row">
-          {packingLists["data"]?.map((packinglist) => {
+          {packingListData?.map((packinglist) => {
             return (
               <div
                 key={packinglist.id}
@@ -41,10 +48,10 @@ const PackingLists = () => {
                     <div className="card-body">
                       <h5 className="card-title">{packinglist.name}</h5>
                       <p className="card-text">
-                        {packinglist.start_date} - {packinglist.end_date}
+                        {changeDateFormat(packinglist.start_date)} - {changeDateFormat(packinglist.end_date)}
                         <br />
-                        {packinglist.city}, {packinglist.state},{" "}
-                        {packinglist.country}
+                        {packinglist.cityInfo.name}, {packinglist.cityInfo.state},{" "}
+                        {packinglist.cityInfo.country}
                       </p>
                       <button className="btn btn-danger" onClick={handleDelete}>
                         Delete
