@@ -236,6 +236,11 @@ export const travelThreadsApi = createApi({
       },
       providesTags: ["List of PackingLists"],
     }),
+    getCityStateCountry: builder.query({
+      query: (city_id) =>
+        `/api/location/city/details/${city_id}`,
+      providesTags: ["CityStateCountry"],
+    }),
   }),
 });
 
@@ -261,4 +266,5 @@ export const {
   useGetItemsByIDQuery,
   useUpdateItemMutation,
   useUpdateDescriptionMutation,
+  useGetCityStateCountryQuery
 } = travelThreadsApi;
