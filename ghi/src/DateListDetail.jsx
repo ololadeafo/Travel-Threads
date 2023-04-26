@@ -65,7 +65,7 @@ const DateDetail = () => {
         height: "auto",
         margin: "0 auto",
         padding: "1rem",
-        marginBottom: "25px",
+        marginBottom: "100px",
         boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
         transition: "all 0.3s linear",
         backgroundColor: "#FFA69E",
@@ -137,13 +137,15 @@ const DateDetail = () => {
                     )
                 })}
                 <div className="card" style={{...cardStyle, marginBottom:"150px"}}>
-                    <h1>Other Items</h1>
+                    <h1 style={{marginBottom: "15px"}}>Other Items</h1>
                         {misc_items?.map(item => {
                             return (
-                                <div key={item.id} style={cardBodyStyle}>
-                                    <div key={item.id}>{item.name}: {item.quantity}</div>
-                                    <Link to={`/packinglist/${packingListID}/items/${item.id}`} state={item}><button style={{height: "26px", fontSize: "12px", backgroundColor: "#6c757d", color: "white"}}>Edit</button></Link>
-                                    <button value={item.id} onClick={handleDelete} style={{height: "26px", fontSize: "12px", backgroundColor: "#6c757d", color: "white"}}>Delete</button>
+                                <div key={item.id} style={{display:"flex", justifyContent: "space-between", width: "266px"}}>
+                                    <div key={item.id} style={{marginBottom: "15px"}}>{item.name}: {item.quantity}</div>
+                                    <div className="buttons">
+                                        <Link to={`/packinglist/${packingListID}/items/${item.id}`} state={item}><button style={{height: "26px", fontSize: "12px", backgroundColor: "#6c757d", color: "white"}}>Edit</button></Link>
+                                        <button value={item.id} onClick={handleDelete} style={{height: "26px", fontSize: "12px", backgroundColor: "#6c757d", color: "white"}}>Delete</button>
+                                    </div>
                                 </div>
                             )
                         })}
