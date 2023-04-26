@@ -69,26 +69,70 @@ const ListDetail = () => {
         }
     }, [packingList]);
 
+    const weatherCardStyling = {
+        padding: "1em",
+        minWidth: "5.5em",
+        outlineStyle: "solid",
+        outlineWidth: ".4em",
+        outlineColor: "#FFA69E",
+        outlineOffset: "-5px",
+        borderRadius: "10px",
+        backgroundColor: "white"
+    }
+
+    const weatherWindow = {
+        paddingLeft: "0px",
+        outlineStyle: "solid",
+        outlineWidth: ".2em",
+        outlineColor: "#FFA69E",
+        overflowX: "scroll",
+        whiteSpace: "nowrap",
+        backgroundColor: "#FFA69E"
+    }
+
+    const weatherWindowBody = {
+        marginLeft: "auto",
+        marginRight: "auto",
+        paddingLeft: "0px"
+    }
+
+    const background = {
+        minHeight: "100vh",
+        height: "100%",
+        backgroundColor: "#AED9E0",
+        backgroundSizing: "cover",
+        padding:"3em",
+
+    }
+
+    const listInfo = {
+        padding: "6em",
+        marginTop: "0px",
+        height: "7em"
+    }
+
 
     return (
-        <div  style={{ backgroundColor: "#AED9E0", backgroundSizing: "cover", padding:"3em"}}>
+        <div  style={background}>
             <div className="card" style={{backgroundColor: "#5E6472"}}>
-                <div className="row" style={{ padding: "6em", marginTop: "0px", height: "7em"}}>
+                <div className="row" style={listInfo}>
                     <div className="col" style={{color: "white"}}>
                         <h1>{packingList?.name}</h1>
                         <p>Your trip to beautiful {location.city}, {location.state}, {location.country}.</p>
                     </div>
-                    <table className="col-7 card row" style={{outlineStyle: "solid", outlineWidth: ".2em", outlineColor: "#FFA69E", overflowX: "scroll", whiteSpace: "nowrap", backgroundColor: "#FFA69E"}}>
-                        <tbody style={{marginLeft: "auto", marginRight: "auto"}}>
+                    <table className="col-7 card row" style={weatherWindow}>
+                        <tbody style={weatherWindowBody}>
                             <tr >
                                 {allDateLists?.map((dateList) => {
-                                    let weatherCard = <td className="col" key={dateList.date} style={{padding: "1em"}}>
+                                    let weatherCard = <td className="col" key={dateList.date} style={weatherCardStyling}>
                                         <b>{dateList.date.slice(5, 10)}</b> <br/>
-                                        Not Available
+                                        H: NA<br/>
+                                        L: NA<br/>
+                                        &#127783; NA
                                         </td>
                                     if (weatherInfo !== undefined && weatherInfo.daily.time.indexOf(dateList.date) !== -1) {
                                         const index = weatherInfo.daily.time.indexOf(dateList.date)
-                                        weatherCard = <td className="col" key={dateList.date} style={{padding: "1em", outlineStyle: "solid", outlineWidth: ".1em", outlineColor: "#5E6472", outlineOffset: "-5px", borderRadius: "10px", backgroundColor: "white"}}>
+                                        weatherCard = <td className="col" key={dateList.date} style={weatherCardStyling}>
                                             <b>{dateList.date.slice(5, 10)}</b> <br/>
                                             H: {weatherInfo.daily.temperature_2m_max[index]}<span>&#176;</span> <br/>
                                             L: {weatherInfo.daily.temperature_2m_min[index]}<span>&#176;</span> <br/>
@@ -101,7 +145,7 @@ const ListDetail = () => {
                         </tbody>
                     </table>
                 </div>
-                <div style={{fontSize: "1.25em", padding: "4em"}}>
+                <div style={{fontSize: "1.25em", padding: "3em"}}>
                     <table className="card table" style={{display: "block"}}>
                         <thead style={{width: "100%"}}>
                             <tr style={{width: "100%"}}>
@@ -131,8 +175,8 @@ const ListDetail = () => {
                         </tbody>
                     </table>
                 </div>
-                <div className="d-flex justify-content-end" style={{padding: "1em", justifyContent: "right"}}>
-                    <button className="btn btn-secondary" >
+                <div className="d-flex justify-content-end" style={{paddingRight: "4em", paddingBottom: "1em", justifyContent: "right"}}>
+                    <button className="btn btn-primary" >
                         <Link to={`/packinglist/${packingListID}/datelists`} style={{color: "white", textDecoration: "none"}}>Edit List</Link>
                     </button>
                 </div>

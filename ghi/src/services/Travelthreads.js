@@ -51,7 +51,7 @@ export const travelThreadsApi = createApi({
           body: body,
         };
       },
-      invalidatesTags: ["Lists"],
+      invalidatesTags: ["List of PackingLists"],
     }),
     createDateLists: builder.mutation({
       query: (params) => {
@@ -122,18 +122,12 @@ export const travelThreadsApi = createApi({
       providesTags: ["Country"],
       invalidatesTags: ["State", "City"],
     }),
-    // getLists: builder.query({
-    //   query: () => {
-    //     return ("/api/packlist")
-    //   },
-    //   providesTags: ['Lists'],
-    // }),
     deleteList: builder.mutation({
       query: (id) => ({
         url: `/api/packlist/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Lists"],
+      invalidatesTags: ['List of PackingLists']
     }),
     getOneList: builder.query({
       query: (id) => `/api/packlist/${id}`,
@@ -178,7 +172,7 @@ export const travelThreadsApi = createApi({
         }
 
         const packingList = packingListData.data;
-        console.log(packingList);
+
 
         const packingListCityData = await fetchWithBQ(
           `/api/location/city/${packingList.city}`
@@ -190,7 +184,6 @@ export const travelThreadsApi = createApi({
 
         const packingListCity = packingListCityData.data;
 
-        console.log(packingListCity);
 
         const weatherData = await fetchWithBQ(
           `/api/weather/${packingListCity.latitude}/${packingListCity.longitude}`

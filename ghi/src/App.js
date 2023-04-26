@@ -25,7 +25,6 @@ function App() {
       <ErrorNotification error={error} />
       <BrowserRouter>
         <Nav />
-        <div>
           <Routes>
             <Route path="/" element={<Main />} />
             <Route path="/signup" element={<Signup />} />
@@ -39,7 +38,6 @@ function App() {
             <Route path="/packinglist/:packing_list_id/datelists/:date_list_id/additems" element={<CreateItem />} />
             <Route path="/packinglist/:packing_list_id/items/:item_id" element={<UpdateItem />} />
           </Routes>
-        </div>
       </BrowserRouter>
     </div>
   );
