@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, Response
-from models import CountriesOut, StatesOut, CitiesOut
+from models import CountriesOut, StatesOut, CitiesOut, CityOutWithAllInfo
 from authenticator import authenticator
 from queries.location import LocationQueries
 from typing import List, Union, Optional
@@ -39,4 +39,13 @@ def get_city_info(
     repo: LocationQueries = Depends()
 ):
     city = repo.get_one_city(city_id)
+    return city
+
+
+@router.get('/api/location/city/details/{city_id}')
+def get_all_city_info(
+    city_id: int,
+    repo: LocationQueries = Depends()
+):
+    city = repo.get_all_city_info(city_id)
     return city

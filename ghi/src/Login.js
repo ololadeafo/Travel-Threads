@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   handlePasswordChange,
@@ -6,11 +6,23 @@ import {
   reset,
 } from "./features/auth/loginSlice";
 import { useLoginMutation } from "./services/Travelthreads";
+import { useGetAccountQuery } from "./services/Travelthreads";
+import { useNavigate } from "react-router-dom";
+import travelThreads from "./images/Logo/travel_Threads.png";
 
 const Login = () => {
   const dispatch = useDispatch();
   const [login] = useLoginMutation();
   const { fields } = useSelector((state) => state.login);
+  const navigate = useNavigate();
+  const account = useGetAccountQuery();
+  const { data } = account;
+
+  useEffect(() => {
+    if (data !== undefined) {
+      navigate("/packinglists");
+    }
+  }, [account]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,9 +31,17 @@ const Login = () => {
   };
 
   return (
-    <div className="container mt-5">
+    <div
+      className="container"
+      style={{ backgroundColor: "#AED9E0", minHeight: "100vh", minWidth: "100%", marginTop: "0px" }}
+    >
       <div className="row justify-content-center">
-        <div className="col-md-6">
+        <div className="col-md-6 text-center">
+          <img
+            src={travelThreads}
+            alt="Travel Threads"
+            style={{ width: "200px", marginBottom: "1rem" }}
+          />
           <h2 className="mb-3">Login</h2>
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
