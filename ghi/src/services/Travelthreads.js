@@ -172,21 +172,33 @@ export const travelThreadsApi = createApi({
         }
 
         const packingList = packingListData.data;
+        console.log(packingList)
 
+        var locationData = ""
 
-        const packingListCityData = await fetchWithBQ(
-          `/api/location/city/${packingList.city}`
-        );
-
-        if (packingListCityData.error) {
-          return { error: packingListCityData.error };
+        if (packingList.city === "" && packingList.state === ""){
+          locationData = await fetchWithBQ(
+          `/api/location/country/details/${packingList.country}`
+          );
+        } else if (packingList.city === "" && packingList.state !== "") {
+          locationData = await fetchWithBQ(
+          `/api/location/state/details/${packingList.state}`
+          );
+        } else {
+          locationData = await fetchWithBQ(
+          `/api/location/city/details/${packingList.city}`
+          );
         }
 
-        const packingListCity = packingListCityData.data;
+        console.log(locationData.data)
 
+
+        if (locationData.error) {
+          return { error: locationData.error };
+        }
 
         const weatherData = await fetchWithBQ(
-          `/api/weather/${packingListCity.latitude}/${packingListCity.longitude}`
+          `/api/weather/${locationData.data.latitude}/${locationData.data.longitude}`
         );
         if (weatherData.error) {
           return { error: weatherData.error };
@@ -204,11 +216,20 @@ export const travelThreadsApi = createApi({
         }
 
         for (let i = 0; i < packingListsData.data.length; i++) {
-          var packingListCityID = packingListsData.data[i].city;
-          var packingListCityData = await fetchWithBQ(
-            `/api/location/city/details/${packingListCityID}`
-          );
-          packingListsData.data[i]["cityInfo"] = packingListCityData.data;
+          if (packingListsData.data[i].state === "" && packingListsData.data[i].city === "") {
+            console.log()
+            var packingListCountryData = await fetchWithBQ(`/api/location/country/details/${packingListsData.data[i].country}`);
+            packingListsData.data[i]["location_info"] = packingListCountryData.data;
+          }
+          else if (packingListsData.data[i].city === "") {
+            var packingListStateData = await fetchWithBQ(`/api/location/state/details/${packingListsData.data[i].state}`);
+            packingListsData.data[i]["location_info"] = packingListStateData.data
+          }
+          else {
+            var packingListCityID = packingListsData.data[i].city
+            var packingListCityData = await fetchWithBQ(`/api/location/city/details/${packingListCityID}`);
+            packingListsData.data[i]["location_info"] = packingListCityData.data;
+          }
         }
 
         return packingListsData;

@@ -6,10 +6,37 @@ import {
 import { Link } from "react-router-dom";
 
 const PackingLists = () => {
-  const packingLists = useGetListsQuery();
-  const packingListData = packingLists["data"];
-  console.log(packingListData);
   const [deleteList] = useDeleteListMutation();
+  const {data: packingLists, isLoading} = useGetListsQuery();
+  if (isLoading) return <div>Loading...</div>
+
+  console.log(packingLists)
+
+
+  const checkLocationInfo = (input) => {
+    if (input.city === "" && input.state === "") {
+      return (
+        <p>
+          {input.location_info.name}
+        </p>
+      )
+    } else if (input.city === "" && input.state !== ""){
+      return (
+        <p>
+          {input.location_info.name},{" "}
+          {input.location_info.country}
+        </p>
+      )
+    } else {
+      return(
+        <p>
+          {input.location_info.name},{" "}
+          {input.location_info.state},{" "}
+          {input.location_info.country}
+        </p>
+      )
+    }
+  }
 
   const handleDelete = (e, id) => {
     e.preventDefault();
@@ -20,6 +47,8 @@ const PackingLists = () => {
     var newDate = date.split("-");
     return `${newDate[1]}/${newDate[2]}/${newDate[0]}`;
   };
+
+
 
 const cardStyle = {
   width: "300px",
@@ -85,9 +114,9 @@ const noPackingListsStyle = {
         </Link>
       </div>
       <div className="container">
-        {packingListData?.length !== 0 ? (
+        {packingLists?.length !== 0 ? (
           <div className="row justify-content-center align-items-center mt-5">
-            {packingListData?.map((packinglist) => {
+            {packingLists?.map((packinglist) => {
               return (
                 <div
                   key={packinglist.id}
@@ -116,11 +145,9 @@ const noPackingListsStyle = {
                         <p className="card-text text-dark">
                           {changeDateFormat(packinglist.start_date)} -{" "}
                           {changeDateFormat(packinglist.end_date)}
-                          <br />
-                          {packinglist.cityInfo.name},{" "}
-                          {packinglist.cityInfo.state},{" "}
-                          {packinglist.cityInfo.country}
                         </p>
+                          <br />
+                          {checkLocationInfo(packinglist)}
                       </div>
                       <div style={deleteButtonContainerStyle}>
                         <button

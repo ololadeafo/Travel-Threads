@@ -91,3 +91,17 @@ class CityOutWithAllInfo(BaseModel):
     name: str
     state: str | None
     country: str
+
+
+class StateOutWithAllInfo(BaseModel):
+    id: int
+    name: str
+    country: str
+    latitude: float
+    longitude: float
+
+class CountryOutWithAllInfo(BaseModel):
+    id: int
+    name: str
+    latitude: float
+    longitude: float

@@ -28,6 +28,8 @@ const CreateList = () => {
   const { fields } = useSelector((state) => state.createList);
   const [createDateList] = useCreateDateListsMutation();
 
+  console.log({fields})
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const new_list = await createList(fields);
@@ -39,8 +41,9 @@ const CreateList = () => {
     });
     dispatch(reset());
 
-    navigate("/packinglists"); 
+    navigate("/packinglists");
   };
+
 
   const countryData = useGetCountryQuery();
   const countries = countryData["data"];
