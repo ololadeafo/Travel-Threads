@@ -3,3 +3,5 @@
 3/29- Was able to successfully get authentication to work. Creating user accounts and login/logout functionality worked. Started working on the routers and queries for the packing list.
 3/30- Successfully created the routers and queries for the packing list. Will have to use same code for data and items.
 4/3- Successfully created the routers and queries for creating, getting, get one, and updating a date list.
+4/25- Styled the update pages.
+4/26- Styled the date detail page. Made sure the functionality was intact. Went back and editted the get city, state, and country fetches so that we are now able to get the weather for locations without cities or states. Helped make sure all components of the website were functioning as they should.
