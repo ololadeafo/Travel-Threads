@@ -14,13 +14,13 @@ import {
   useGetCountryQuery,
   useGetStateQuery,
   useGetCityQuery,
-  useCreateDateListsMutation
+  useCreateDateListsMutation,
 } from "./services/Travelthreads";
-
+import { useNavigate } from "react-router-dom";
 
 const CreateList = () => {
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
 
   const [createList] = useCreateListMutation();
   const { fields } = useSelector((state) => state.createList);
@@ -29,39 +29,41 @@ const CreateList = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const new_list = await createList(fields);
-    console.log(new_list["data"])
-    await createDateList({"packing_list_id": new_list.data.id, "start_date": fields.start_date, "end_date": fields.end_date })
+    console.log(new_list["data"]);
+    await createDateList({
+      packing_list_id: new_list.data.id,
+      start_date: fields.start_date,
+      end_date: fields.end_date,
+    });
     dispatch(reset());
+
+    navigate("/packinglists"); 
   };
 
   const countryData = useGetCountryQuery();
   const countries = countryData["data"];
 
-  var country_id = fields.country
+  var country_id = fields.country;
   if (country_id === "") {
-    country_id = 0
+    country_id = 0;
   }
   const stateData = useGetStateQuery(country_id);
-  const states = stateData["data"]
+  const states = stateData["data"];
 
-
-  var province_type = "country"
-  var province_id = fields.country
+  var province_type = "country";
+  var province_id = fields.country;
   if (province_id === "") {
-    province_id = 0
+    province_id = 0;
   }
-
 
   if (fields.state !== "") {
-    var province_type = "state"
-    var province_id = fields.state
+    var province_type = "state";
+    var province_id = fields.state;
   }
 
-
-  var params = {"province_type": province_type, "province_id": province_id}
+  var params = { province_type: province_type, province_id: province_id };
   const cityData = useGetCityQuery(params);
-  const cities = cityData["data"]
-
+  const cities = cityData["data"];
 
   return (
     <>
@@ -82,7 +84,11 @@ const CreateList = () => {
             <select
               id="CreateList__country"
               value={fields.country}
-              onChange={(e) => {dispatch(handleCountryChange(e.target.value)); dispatch(handleStateChange("")); dispatch(handleCityChange(""))}}
+              onChange={(e) => {
+                dispatch(handleCountryChange(e.target.value));
+                dispatch(handleStateChange(""));
+                dispatch(handleCityChange(""));
+              }}
             >
               <option value="">Choose a country</option>
               {countries?.map((country) => {
@@ -99,9 +105,12 @@ const CreateList = () => {
             <select
               id="CreateList__state"
               value={fields.state}
-              onChange={(e) => {dispatch(handleStateChange(e.target.value)); dispatch(handleCityChange(""))}}
+              onChange={(e) => {
+                dispatch(handleStateChange(e.target.value));
+                dispatch(handleCityChange(""));
+              }}
             >
-            <option value="">Choose a State</option>
+              <option value="">Choose a State</option>
               {states?.map((state) => {
                 return (
                   <option value={state.id} key={state.id}>
@@ -118,7 +127,7 @@ const CreateList = () => {
               value={fields.city}
               onChange={(e) => dispatch(handleCityChange(e.target.value))}
             >
-            <option value="">Choose a City</option>
+              <option value="">Choose a City</option>
               {cities?.map((city) => {
                 return (
                   <option value={city.id} key={city.id}>

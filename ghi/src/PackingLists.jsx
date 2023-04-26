@@ -69,6 +69,13 @@ const addButtonStyle = {
   marginBottom: "2rem",
 };
 
+const noPackingListsStyle = {
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  minHeight: "50vh",
+};
+
   return (
     <div className="container" style={wrapperStyle}>
       <h1 style={titleStyle}>Your packing lists</h1>
@@ -130,7 +137,7 @@ const addButtonStyle = {
             })}
           </div>
         ) : (
-          <div>No packing lists.</div>
+          <div style={noPackingListsStyle}>No packing lists.</div>
         )}
       </div>
     </div>
