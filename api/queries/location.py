@@ -137,7 +137,6 @@ class LocationQueries:
                     [country_id]
                 )
                 record = result.fetchone()
-                print(record)
                 return CountryOutWithAllInfo(
                     id = country_id,
                     name = record[1],
