@@ -7,6 +7,7 @@ import airplane from "./images/mainPage/airplane.png";
   rel="stylesheet"
   href="https://fonts.googleapis.com/css?family=Righteous&display=swap"
 />;
+
 const Main = () => {
   const { data } = useGetAccountQuery();
   const isLoggedIn = !!data;
