@@ -1,7 +1,14 @@
-from models import CountriesOut, StatesOut, CitiesOut, CityOut, CityOutWithAllInfo, StateOutWithAllInfo, CountryOutWithAllInfo
+from models import (
+    CountriesOut,
+    StatesOut,
+    CitiesOut,
+    CityOut,
+    CityOutWithAllInfo,
+    StateOutWithAllInfo,
+    CountryOutWithAllInfo,
+)
 from queries.pool import pool
-from typing import Union, List, Optional
-from models import Error
+from typing import List
 
 
 class LocationQueries:
@@ -17,7 +24,9 @@ class LocationQueries:
                 )
                 records = result.fetchall()
 
-                return [self.record_to_countries_out(record) for record in records]
+                return [
+                    self.record_to_countries_out(record) for record in records
+                ]
 
     def get_states(self, country_id: int) -> List[StatesOut]:
         with pool.connection() as conn:
@@ -29,13 +38,17 @@ class LocationQueries:
                     WHERE country_id = %s
                     ORDER BY name;
                     """,
-                    [country_id]
+                    [country_id],
                 )
                 records = result.fetchall()
 
-                return [self.record_to_states_out(record) for record in records]
+                return [
+                    self.record_to_states_out(record) for record in records
+                ]
 
-    def get_cities(self, province_type: str, province_id=None) -> List[StatesOut]:
+    def get_cities(
+        self, province_type: str, province_id=None
+    ) -> List[StatesOut]:
         with pool.connection() as conn:
             with conn.cursor() as db:
                 if province_type == "country":
@@ -46,7 +59,7 @@ class LocationQueries:
                         WHERE country_id = %s
                         ORDER BY name;
                         """,
-                        [province_id]
+                        [province_id],
                     )
                     records = result.fetchall()
                 else:
@@ -57,11 +70,13 @@ class LocationQueries:
                         WHERE state_id = %s
                         ORDER BY name;
                         """,
-                        [province_id]
+                        [province_id],
                     )
                     records = result.fetchall()
 
-                return [self.record_to_cities_out(record) for record in records]
+                return [
+                    self.record_to_cities_out(record) for record in records
+                ]
 
     def get_one_city(self, city_id) -> CitiesOut:
         with pool.connection() as conn:
@@ -73,7 +88,7 @@ class LocationQueries:
                     WHERE id = %s
                     ORDER BY name;
                     """,
-                    [city_id]
+                    [city_id],
                 )
                 record = result.fetchone()
 
@@ -93,14 +108,14 @@ class LocationQueries:
                     WHERE ci.id = %s
                     ORDER BY name;
                     """,
-                    [city_id]
+                    [city_id],
                 )
                 record = result.fetchone()
                 return CityOutWithAllInfo(
-                    id = city_id,
-                    name = record[1],
-                    state = record[2],
-                    country = record[3]
+                    id=city_id,
+                    name=record[1],
+                    state=record[2],
+                    country=record[3],
                 )
 
     def get_all_state_info(self, state_id) -> StateOutWithAllInfo:
@@ -114,15 +129,15 @@ class LocationQueries:
                         ON (s.country_id = co.id)
                     WHERE s.id = %s
                     """,
-                    [state_id]
+                    [state_id],
                 )
                 record = result.fetchone()
                 return StateOutWithAllInfo(
-                    id = state_id,
-                    name = record[0],
-                    country = record[2],
-                    latitude = record[3],
-                    longitude = record[4]
+                    id=state_id,
+                    name=record[0],
+                    country=record[2],
+                    latitude=record[3],
+                    longitude=record[4],
                 )
 
     def get_all_country_info(self, country_id) -> CountryOutWithAllInfo:
@@ -134,40 +149,29 @@ class LocationQueries:
                     FROM countries AS c
                     WHERE c.id = %s
                     """,
-                    [country_id]
+                    [country_id],
                 )
                 record = result.fetchone()
                 return CountryOutWithAllInfo(
-                    id = country_id,
-                    name = record[1],
-                    latitude = record[2],
-                    longitude = record[3]
+                    id=country_id,
+                    name=record[1],
+                    latitude=record[2],
+                    longitude=record[3],
                 )
 
-
     def record_to_countries_out(self, record):
-        return CountriesOut(
-            id = record[0],
-            name = record[1],
-            iso3 = record[2]
-        )
+        return CountriesOut(id=record[0], name=record[1], iso3=record[2])
 
     def record_to_states_out(self, record):
-        return StatesOut(
-            id = record[0],
-            name = record[1]
-        )
+        return StatesOut(id=record[0], name=record[1])
 
     def record_to_cities_out(self, record):
-        return CitiesOut(
-            id = record[0],
-            name = record[1]
-        )
+        return CitiesOut(id=record[0], name=record[1])
 
     def record_to_city_out(self, record):
         return CityOut(
-            id = record[0],
-            name = record[1],
-            longitude = record[2],
-            latitude = record[3]
+            id=record[0],
+            name=record[1],
+            longitude=record[2],
+            latitude=record[3],
         )

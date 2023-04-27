@@ -1,4 +1,3 @@
-
 from models import PackListIn, PacklistOut
 from queries.pool import pool
 from typing import Union, List, Optional
@@ -7,7 +6,9 @@ from routers.datelists import create_date_list
 
 
 class PackListQueries:
-    def create(self, pack_list: PackListIn, user_id) -> Union[PacklistOut, Error]:
+    def create(
+        self, pack_list: PackListIn, user_id
+    ) -> Union[PacklistOut, Error]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -26,16 +27,14 @@ class PackListQueries:
                             pack_list.end_date,
                             pack_list.country,
                             pack_list.state,
-                            pack_list.city
-                        ]
+                            pack_list.city,
+                        ],
                     )
 
                     id = result.fetchone()[0]
                     return self.pack_list_in_to_out(id, user_id, pack_list)
         except Exception:
             return {"message": "Could not create packing list"}
-
-
 
     def get_all(self, user_id) -> Union[Error, List[PacklistOut]]:
         try:
@@ -47,14 +46,16 @@ class PackListQueries:
                         FROM packing_list
                         WHERE (user_id = %s)
                         ORDER BY start_date;
-                        """, [user_id]
+                        """,
+                        [user_id],
                     )
 
-                    return [self.record_to_pack_list_out(record[0]) for record in result]
+                    return [
+                        self.record_to_pack_list_out(record[0])
+                        for record in result
+                    ]
         except Exception as e:
             return {"message": "Could not get all packing lists"}
-
-
 
     def get_one(self, id: int, user_id: int) -> Optional[PacklistOut]:
         try:
@@ -66,7 +67,8 @@ class PackListQueries:
                         FROM packing_list
                         WHERE (user_id = %s AND id = %s)
                         ORDER BY start_date;
-                        """, [user_id, id]
+                        """,
+                        [user_id, id],
                     )
                     record = result.fetchone()
                     if record is None:
@@ -75,7 +77,9 @@ class PackListQueries:
         except Exception as e:
             return {"message": "Could not get that packing list"}
 
-    def update(self, id: int, user_id: int, pack_list: PackListIn) -> Union[PacklistOut, Error]:
+    def update(
+        self, id: int, user_id: int, pack_list: PackListIn
+    ) -> Union[PacklistOut, Error]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -98,13 +102,12 @@ class PackListQueries:
                             pack_list.state,
                             pack_list.city,
                             user_id,
-                            id
-                        ]
+                            id,
+                        ],
                     )
                     return self.pack_list_in_to_out(id, user_id, pack_list)
         except Exception:
             return {"message": "Could not update that packing list"}
-
 
     def delete(self, user_id: int, id: int) -> bool:
         try:
@@ -115,19 +118,21 @@ class PackListQueries:
                         DELETE FROM packing_list
                         WHERE (user_id = %s AND id = %s)
                         """,
-                        [user_id, id]
+                        [user_id, id],
                     )
                     return True
         except Exception as e:
             return False
 
-    def pack_list_in_to_out(self, id: int, user_id: int, pack_list: PackListIn):
+    def pack_list_in_to_out(
+        self, id: int, user_id: int, pack_list: PackListIn
+    ):
         old_data = pack_list.dict()
         return PacklistOut(id=id, user_id=user_id, **old_data)
 
     def record_to_pack_list_out(self, record):
         return PacklistOut(
-            id =record[0],
+            id=record[0],
             user_id=record[1],
             name=record[2],
             start_date=record[3],

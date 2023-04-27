@@ -6,7 +6,7 @@ export const travelThreadsApi = createApi({
     baseUrl: `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}`,
     credentials: "include",
   }),
-  tagTypes: ["Account", "Lists", "City", "State", "Country"],
+  tagTypes: ["Account", "List of PackingLists", "City", "State", "Country"],
   endpoints: (builder) => ({
     getAccount: builder.query({
       query: () => "/token",
@@ -21,7 +21,7 @@ export const travelThreadsApi = createApi({
           body,
         };
       },
-      invalidatesTags: ["Account", "Lists"],
+      invalidatesTags: ["Account", "List of PackingLists"],
     }),
     login: builder.mutation({
       query: (body) => {
@@ -34,14 +34,14 @@ export const travelThreadsApi = createApi({
           body: formData,
         };
       },
-      invalidatesTags: ["Account", "Lists"],
+      invalidatesTags: ["Account", "List of PackingLists"],
     }),
     logout: builder.mutation({
       query: () => ({
         url: "/token",
         method: "DELETE",
       }),
-      invalidatesTags: ["Account", "Lists"],
+      invalidatesTags: ["Account", "List of PackingLists"],
     }),
     createList: builder.mutation({
       query: (body) => {
@@ -60,7 +60,7 @@ export const travelThreadsApi = createApi({
           method: "POST",
         };
       },
-      invalidatesTags: ["Datelist", "Lists"],
+      invalidatesTags: ["Datelist", "List of PackingLists"],
     }),
     createItem: builder.mutation({
       query: ({ fields, body }) => {
@@ -127,7 +127,7 @@ export const travelThreadsApi = createApi({
         url: `/api/packlist/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ['List of PackingLists']
+      invalidatesTags: ["List of PackingLists"],
     }),
     getOneList: builder.query({
       query: (id) => `/api/packlist/${id}`,
@@ -173,19 +173,19 @@ export const travelThreadsApi = createApi({
 
         const packingList = packingListData.data;
 
-        var locationData = ""
+        var locationData = "";
 
-        if (packingList.city === "" && packingList.state === ""){
+        if (packingList.city === "" && packingList.state === "") {
           locationData = await fetchWithBQ(
-          `/api/location/country/details/${packingList.country}`
+            `/api/location/country/details/${packingList.country}`
           );
         } else if (packingList.city === "" && packingList.state !== "") {
           locationData = await fetchWithBQ(
-          `/api/location/state/details/${packingList.state}`
+            `/api/location/state/details/${packingList.state}`
           );
         } else {
           locationData = await fetchWithBQ(
-          `/api/location/city/${packingList.city}`
+            `/api/location/city/${packingList.city}`
           );
         }
 
@@ -212,18 +212,28 @@ export const travelThreadsApi = createApi({
         }
 
         for (let i = 0; i < packingListsData.data.length; i++) {
-          if (packingListsData.data[i].state === "" && packingListsData.data[i].city === "") {
-            var packingListCountryData = await fetchWithBQ(`/api/location/country/details/${packingListsData.data[i].country}`);
-            packingListsData.data[i]["location_info"] = packingListCountryData.data;
-          }
-          else if (packingListsData.data[i].city === "") {
-            var packingListStateData = await fetchWithBQ(`/api/location/state/details/${packingListsData.data[i].state}`);
-            packingListsData.data[i]["location_info"] = packingListStateData.data
-          }
-          else {
-            var packingListCityID = packingListsData.data[i].city
-            var packingListCityData = await fetchWithBQ(`/api/location/city/details/${packingListCityID}`);
-            packingListsData.data[i]["location_info"] = packingListCityData.data;
+          if (
+            packingListsData.data[i].state === "" &&
+            packingListsData.data[i].city === ""
+          ) {
+            var packingListCountryData = await fetchWithBQ(
+              `/api/location/country/details/${packingListsData.data[i].country}`
+            );
+            packingListsData.data[i]["location_info"] =
+              packingListCountryData.data;
+          } else if (packingListsData.data[i].city === "") {
+            var packingListStateData = await fetchWithBQ(
+              `/api/location/state/details/${packingListsData.data[i].state}`
+            );
+            packingListsData.data[i]["location_info"] =
+              packingListStateData.data;
+          } else {
+            var packingListCityID = packingListsData.data[i].city;
+            var packingListCityData = await fetchWithBQ(
+              `/api/location/city/details/${packingListCityID}`
+            );
+            packingListsData.data[i]["location_info"] =
+              packingListCityData.data;
           }
         }
 
@@ -232,8 +242,7 @@ export const travelThreadsApi = createApi({
       providesTags: ["List of PackingLists"],
     }),
     getCityStateCountry: builder.query({
-      query: (city_id) =>
-        `/api/location/city/details/${city_id}`,
+      query: (city_id) => `/api/location/city/details/${city_id}`,
       providesTags: ["CityStateCountry"],
     }),
   }),
@@ -261,5 +270,5 @@ export const {
   useGetItemsByIDQuery,
   useUpdateItemMutation,
   useUpdateDescriptionMutation,
-  useGetCityStateCountryQuery
+  useGetCityStateCountryQuery,
 } = travelThreadsApi;
