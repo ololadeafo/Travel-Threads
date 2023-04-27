@@ -22,7 +22,7 @@ class PacklistQueriesMock:
         packlist['id'] = 5
         return PacklistOut(**packlist)
     def get_all(self, user_id: int) -> list[PacklistOut]:
-        return [PacklistOut(name="testing",start_date= "2023-04-27",end_date= "2023-04-29",country= "United States", state= "Florida", city= "Miami", id=5, user_id=10)]
+        return [PacklistOut(name="testing",start_date= "2023-04-27",end_date= "2023-04-29",country= "United States", state= "Florida", city= "Miami", id=5, user_id=user_id)]
     def delete(self, user_id: int, id: int) -> bool:
         return True
 
