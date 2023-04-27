@@ -74,12 +74,13 @@ const UpdateDescription = () => {
             >
               Description:
             </label>
-            <textarea
-              type={"textarea"}
+            <input
+              type={"text"}
               id="UpdateDescription__name"
               value={description}
+              maxLength="25"
               onChange={handleDescriptionChange}
-              style={{ height: "7.5rem", width: "15rem", resize: "none" }}
+              style={{width: "24rem", resize: "none" }}
             />
           </div>
           <button
