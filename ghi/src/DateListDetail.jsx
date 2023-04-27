@@ -60,32 +60,63 @@ const DateDetail = () => {
   };
 
   const cardStyle = {
-    width: "300px",
-    height: "auto",
-    margin: "0 auto",
-    padding: "1rem",
-    marginBottom: "100px",
+    width: "12em",
+    height: "27em",
+    margin: ".5em",
+    padding: "1em",
     boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
     transition: "all 0.3s linear",
     backgroundColor: "#FFA69E",
   };
 
+  const dateListWindow = {
+    overflowX: "scroll",
+    flexWrap: "nowrap",
+    margin: "1em",
+    backgroundColor: "#5E6472",
+    borderRadius: "10px"
+  }
+
+  const miscItemsStyle = {
+    height: "auto",
+    margin: "1em",
+    padding: "1em",
+    backgroundColor: "#FFA69E",
+  }
+
   const cardBodyStyle = {
     display: "flex",
     flexDirection: "column",
-    justifyContent: "space-between",
     alignItems: "center",
     height: "100%",
   };
+
+  const editDelete = {
+    border: "none",
+    backgroundColor: "inherit",
+    padding: "0px",
+    fontSize: ".85em",
+    whiteSpace: "nowrap"
+  }
+
+  const itemTableCard = {
+    height: "100%",
+    width: "100%",
+    overflow: 'auto'
+  }
+
+  const itemTable = {
+    width: "100%",
+    height: "auto",
+  }
 
   return (
     <div
       className="container"
       style={{
         minWidth: "100%",
-        height: "100vh",
-        position: "fixed",
-        overflow: "scroll",
+        minHeight: "100vh",
+        height: "auto",
         backgroundColor: "#AED9E0",
       }}
     >
@@ -95,20 +126,20 @@ const DateDetail = () => {
         style={{
           display: "flex",
           justifyContent: "center",
-          margin: "50px 0px 50px 0px",
+          padddingTop: "1em",
           textDecoration: "none",
           color: "black",
         }}
       >
-        <h1 style={{ fontSize: "50px" }}>{packingListDetail?.name}</h1>
+        <h1>{packingListDetail?.name}</h1>
       </Link>
       <div
-        className="info"
-        style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr" }}
+        className="row"
+        style={dateListWindow}
       >
         {allDateLists?.map((dateList) => {
           let weatherCard = (
-            <div style={{ marginBottom: "25px" }}>
+            <div style={{ paddingLeft: "1em", paddingTop: ".25em", paddingBottom: ".25em" }}>
               Weather information not available
             </div>
           );
@@ -121,17 +152,12 @@ const DateDetail = () => {
             weatherCard = (
               <div
                 key={dateList.date}
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "start",
-                  width: "266px",
-                  marginBottom: "25px",
-                }}
+                className="col card"
+                style={{ width: "10em", border: "solid 1px"}}
               >
-                <div>High: {allInfo.daily.temperature_2m_max[index]}°F</div>
-                <div>Low: {allInfo.daily.temperature_2m_min[index]}°F</div>
-                <div>
+                <div style={{paddingLeft: "1em", paddingTop: ".25em", paddingBottom: ".25em", backgroundColor: ""}}>
+                  High: {allInfo.daily.temperature_2m_max[index]}°F<br/>
+                  Low: {allInfo.daily.temperature_2m_min[index]}°F<br/>
                   Precipitation:{" "}
                   {allInfo.daily.precipitation_probability_max[index]}%
                 </div>
@@ -145,47 +171,31 @@ const DateDetail = () => {
             });
             items = filteredItems.map((item) => {
               return (
-                <div
+                <tr
                   key={item.id}
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    width: "266px",
+                  style={{ borderBottom: "solid 1px"
                   }}
                 >
-                  <div style={{ margin: "0px 0px 15px 0px" }}>
-                    {item.name}: {item.quantity}
-                  </div>
-                  <div className="buttons">
+                  <td style={{ textAlign: "left" }}>
+                    {item.name}
+                  </td>
+                  <td style={{ textAlign: "center" }}>{item.quantity}</td>
+                  <td className="buttons">
                     <Link
                       to={`/packinglist/${packingListID}/items/${item.id}`}
                       state={item}
                     >
                       <button
-                        style={{
-                          height: "26px",
-                          fontSize: "12px",
-                          backgroundColor: "#6c757d",
-                          color: "white",
-                        }}
-                      >
-                        Edit
+                        style={editDelete}
+                      >&#9998;
                       </button>
                     </Link>
-                    <button
-                      value={item.id}
-                      onClick={handleDelete}
-                      style={{
-                        height: "26px",
-                        fontSize: "12px",
-                        backgroundColor: "#6c757d",
-                        color: "white",
-                      }}
-                    >
-                      Delete
+                    <button value={item.id}
+                      onClick={handleDelete} style={editDelete}>
+                      &#x2715;
                     </button>
-                  </div>
-                </div>
+                  </td>
+                </tr>
               );
             });
           }
@@ -198,53 +208,63 @@ const DateDetail = () => {
               style={cardStyle}
             >
               <div style={cardBodyStyle}>
-                <h1 style={{ marginBottom: "15px" }}>
+                <h3 style={{ marginBottom: "15px" }}>
                   {changeDateFormat(dateList.date)}
-                </h1>
+                </h3>
                 {dateList.description !== "" ? (
-                  <div style={{ textAlign: "center", marginBottom: "15px" }}>
+                  <div style={{ textAlign: "center", marginBottom: ".25em" }}>
                     <Link
                       to={`/packinglist/${packingListID}/datelists/${dateList.id}`}
                       state={dateList}
-                      style={{ textDecoration: "none", color: "black" }}
+                      style={{ textDecoration: "none", color: "black", fontSize: ".8em" }}
                     >
                       {dateList.description}
                     </Link>
                   </div>
                 ) : (
-                  <div style={{ textAlign: "center", marginBottom: "15px" }}>
+                  <div style={{ textAlign: "center", marginBottom: ".25em" }}>
                     <Link
                       to={`/packinglist/${packingListID}/datelists/${dateList.id}`}
                       state={dateList}
-                      style={{ textDecoration: "none", color: "black" }}
+                      style={{ textDecoration: "none", color: "black", fontSize: ".8em" }}
                     >
                       Add Description
                     </Link>
                   </div>
                 )}
                 <div>{weatherCard}</div>
-                <div>{items}</div>
+                <div style={itemTableCard}>
+                  <table style={itemTable}>
+                    <thead>
+                      <tr style={{ borderBottom: "solid 1px"
+                  }}>
+                        <th style={{width: "60%"}}>Item</th>
+                        <th>Qty</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {items}
+                    </tbody>
+                  </table>
+                </div>
                 <div className="input-div" style={{ display: "flex" }}>
                   <div>
                     <input
                       onChange={(e) =>
                         dispatch(handleNameChange(e.target.value))
                       }
-                      style={{ height: "26px" }}
+                      style={{ height: "1.25em", width: "7em", borderRadius: "4px" }}
                     ></input>
                   </div>
                   <div>
                     <button
                       value={dateList.id}
                       onClick={handleSubmit}
-                      style={{
-                        height: "26px",
-                        fontSize: "12px",
-                        backgroundColor: "#6c757d",
-                        color: "white",
+                      style={{fontSize: ".75em", height: "1.65em", borderRadius: "3px"
                       }}
                     >
-                      Add Item
+                      Add
                     </button>
                   </div>
                 </div>
@@ -252,77 +272,51 @@ const DateDetail = () => {
             </div>
           );
         })}
-        <div className="card" style={{ ...cardStyle, marginBottom: "150px" }}>
-          <h1 style={{ marginBottom: "15px" }}>Other Items</h1>
+      </div>
+        <div className="card" style={{ ...miscItemsStyle, marginBottom: "150px", display: "inline-block"}}>
+          <h3 style={{ marginBottom: "15px" }}>Other Items</h3>
           {misc_items?.map((item) => {
             return (
               <div
                 key={item.id}
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  width: "266px",
+                style={{ backgroundColor: "white", border: "solid 1px", borderRadius: "5px", display: "inline-block", whiteSpace: "nowrap", marginRight: ".5em", marginBottom: ".5em", padding: ".5em"
                 }}
               >
-                <div key={item.id} style={{ marginBottom: "15px" }}>
-                  {item.name}: {item.quantity}
-                </div>
-                <div className="buttons">
-                  <Link
+                {item.name}: {item.quantity}
+                <Link
                     to={`/packinglist/${packingListID}/items/${item.id}`}
                     state={item}
                   >
-                    <button
-                      style={{
-                        height: "26px",
-                        fontSize: "12px",
-                        backgroundColor: "#6c757d",
-                        color: "white",
-                      }}
-                    >
-                      Edit
-                    </button>
+                    <button style={{...editDelete, marginLeft: "1em"}}> &#9998; </button>
                   </Link>
-                  <button
-                    value={item.id}
-                    onClick={handleDelete}
-                    style={{
-                      height: "26px",
-                      fontSize: "12px",
-                      backgroundColor: "#6c757d",
-                      color: "white",
-                    }}
-                  >
-                    Delete
+                  <button value={item.id}
+                    onClick={handleDelete} style={editDelete}>
+                    &#x2715;
                   </button>
-                </div>
               </div>
             );
           })}
           <div className="input-div" style={{ display: "flex" }}>
             <div>
               <input
-                onChange={(e) => dispatch(handleNameChange(e.target.value))}
-                style={{ height: "26px" }}
+                onChange={(e) =>
+                  dispatch(handleNameChange(e.target.value))
+                }
+                style={{ height: "1.25em", width: "20em", borderRadius: "4px" }}
               ></input>
             </div>
             <div>
               <button
                 value={null}
                 onClick={handleSubmit}
-                style={{
-                  height: "26px",
-                  fontSize: "12px",
-                  backgroundColor: "#6c757d",
-                  color: "white",
+                style={{fontSize: ".75em", height: "1.65em", borderRadius: "3px"
                 }}
               >
-                Add Item
+                Add
               </button>
             </div>
           </div>
         </div>
-      </div>
     </div>
   );
 };
