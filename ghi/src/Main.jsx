@@ -1,5 +1,4 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { useGetAccountQuery } from "./services/Travelthreads";
 import suitcase from "./images/mainPage/suitcase.png";
@@ -20,7 +19,7 @@ const Main = () => {
     boxShadow: "5px 5px 5px rgba(0,0,0,0.2)",
     backgroundColor: "#FFA69E",
     color: "white",
-  }
+  };
 
   const heading = {
     fontFamily: "Righteous, cursive",
@@ -28,16 +27,13 @@ const Main = () => {
     fontWeight: "bold",
     color: "white",
     marginBottom: "-20px",
-  }
+  };
   return (
     <div
       className="d-flex flex-column align-items-center justify-content-center vh-100"
       style={{ backgroundColor: "#AED9E0" }}
     >
-      <h1
-        className="mb-5"
-        style={{heading}}
-      >
+      <h1 className="mb-5" style={{ heading }}>
         Welcome to Travel Threads!
       </h1>
       <div className="d-flex justify-content-center align-items-center">
@@ -48,7 +44,7 @@ const Main = () => {
         <button
           type="button"
           className="btn btn-primary btn-lg mt-5"
-          style={{actionButton}}
+          style={{ actionButton }}
         >
           Get Packin!
         </button>

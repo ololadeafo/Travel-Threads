@@ -2,22 +2,23 @@ from pydantic import BaseModel
 from jwtdown_fastapi.authentication import Token
 from datetime import date
 
+
 class Error(BaseModel):
     message: str
 
 
-class AccountOut(BaseModel): # what the front end will need
+class AccountOut(BaseModel):  # what the front end will need
     id: int
     email: str
 
 
-class AccountOutWithHashedPassword(AccountOut): # internal (FastAPI) use only
-    hashed_password: str # encrypted password
+class AccountOutWithHashedPassword(AccountOut):  # internal (FastAPI) use only
+    hashed_password: str  # encrypted password
 
 
 class AccountIn(BaseModel):
     email: str
-    password: str # user's password
+    password: str  # user's password
 
 
 class AccountForm(BaseModel):
@@ -60,8 +61,10 @@ class ItemsIn(BaseModel):
     packing_list_id: int
     date_list_id: int | None
 
+
 class ItemsOut(ItemsIn):
     id: int
+
 
 class WeatherOut(BaseModel):
     daily: object
@@ -72,19 +75,23 @@ class CountriesOut(BaseModel):
     name: str
     iso3: str
 
+
 class StatesOut(BaseModel):
     id: int
     name: str
 
+
 class CitiesOut(BaseModel):
     id: int
     name: str
+
 
 class CityOut(BaseModel):
     id: int
     name: str
     longitude: float
     latitude: float
+
 
 class CityOutWithAllInfo(BaseModel):
     id: int
@@ -99,6 +106,7 @@ class StateOutWithAllInfo(BaseModel):
     country: str
     latitude: float
     longitude: float
+
 
 class CountryOutWithAllInfo(BaseModel):
     id: int

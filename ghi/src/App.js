@@ -1,8 +1,6 @@
-import { useEffect, useState } from "react";
-import Construct from "./Construct.js";
+import { useState } from "react";
 import ErrorNotification from "./ErrorNotification";
 import "./CSS/App.css";
-// import { AuthProvider } from "@galvanize-inc/jwtdown-for-react"
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Signup from "./Signup.jsx";
 import Login from "./Login.jsx";

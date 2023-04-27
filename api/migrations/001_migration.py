@@ -8,13 +8,11 @@ steps = [
             hashed_password VARCHAR(300) NOT NULL
         );
         """,
-
         # "Down" SQL statement
         """
         DROP TABLE users;
-        """
+        """,
     ],
-
     [
         # "Up" SQL statement
         """
@@ -33,13 +31,11 @@ steps = [
             city VARCHAR(200) NULL
         );
         """,
-
         # "Down" SQL statement
         """
         DROP TABLE packing_list;
-        """
+        """,
     ],
-
     [
         # "Up" SQL statement
         """
@@ -62,9 +58,8 @@ steps = [
         # "Down" SQL statement
         """
         DROP TABLE date_list;
-        """
+        """,
     ],
-
     [
         # "Up" SQL statement
         """
@@ -93,9 +88,8 @@ steps = [
         # "Down" SQL statement
         """
         DROP TABLE items;
-        """
+        """,
     ],
-
     [
         # "Up" SQL statement
         """
@@ -108,13 +102,11 @@ steps = [
 
         );
         """,
-
         # "Down" SQL statement
         """
         DROP TABLE countries;
-        """
+        """,
     ],
-
     [
         # "Up" SQL statement
         """
@@ -131,13 +123,11 @@ steps = [
 
         );
         """,
-
         # "Down" SQL statement
         """
         DROP TABLE states;
-        """
+        """,
     ],
-
     [
         # "Up" SQL statement
         """
@@ -159,11 +149,9 @@ steps = [
 
         );
         """,
-
         # "Down" SQL statement
         """
         DROP TABLE cities;
-        """
-    ]
-
+        """,
+    ],
 ]
