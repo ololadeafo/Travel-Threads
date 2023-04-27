@@ -92,7 +92,6 @@ const PackingLists = () => {
   const addButtonStyle = {
     textAlign: "center",
     marginBottom: "2rem",
-    backgroundColor: "#BAF2E6"
   };
 
   const noPackingListsStyle = {
