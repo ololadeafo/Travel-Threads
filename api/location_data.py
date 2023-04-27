@@ -1,8 +1,9 @@
 import requests
 from queries.pool import pool
 
+
 def add_locations():
-    url = 'https://raw.githubusercontent.com/dr5hn/countries-states-cities-database/master/countries%2Bstates%2Bcities.json'
+    url = "https://raw.githubusercontent.com/dr5hn/countries-states-cities-database/master/countries%2Bstates%2Bcities.json"
     res = requests.get(url)
     data = res.json()
     for country in data:
@@ -20,8 +21,8 @@ def add_locations():
                         country["name"],
                         country["iso3"],
                         country["latitude"],
-                        country["longitude"]
-                    ]
+                        country["longitude"],
+                    ],
                 )
                 id = result.fetchone()[0]
                 print(id)
@@ -41,8 +42,8 @@ def add_locations():
                                 state["name"],
                                 state["latitude"],
                                 state["longitude"],
-                                id
-                            ]
+                                id,
+                            ],
                         )
                         state_id = result.fetchone()[0]
                 if len(state["cities"]) > 0:
@@ -61,8 +62,8 @@ def add_locations():
                                         city["latitude"],
                                         city["longitude"],
                                         id,
-                                        state_id
-                                    ]
+                                        state_id,
+                                    ],
                                 )
 
 

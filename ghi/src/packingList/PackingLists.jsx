@@ -7,34 +7,27 @@ import { Link } from "react-router-dom";
 
 const PackingLists = () => {
   const [deleteList] = useDeleteListMutation();
-  const {data: packingLists, isLoading} = useGetListsQuery();
-  if (isLoading) return <div>Loading...</div>
-
+  const { data: packingLists, isLoading } = useGetListsQuery();
+  if (isLoading) return <div>Loading...</div>;
 
   const checkLocationInfo = (input) => {
     if (input.city === "" && input.state === "") {
+      return <p>{input.location_info.name}</p>;
+    } else if (input.city === "" && input.state !== "") {
       return (
         <p>
-          {input.location_info.name}
+          {input.location_info.name}, {input.location_info.country}
         </p>
-      )
-    } else if (input.city === "" && input.state !== ""){
-      return (
-        <p>
-          {input.location_info.name},{" "}
-          {input.location_info.country}
-        </p>
-      )
+      );
     } else {
-      return(
+      return (
         <p>
-          {input.location_info.name},{" "}
-          {input.location_info.state},{" "}
+          {input.location_info.name}, {input.location_info.state},{" "}
           {input.location_info.country}
         </p>
-      )
+      );
     }
-  }
+  };
 
   const handleDelete = (e, id) => {
     e.preventDefault();
@@ -142,8 +135,8 @@ const PackingLists = () => {
                           {changeDateFormat(packinglist.start_date)} -{" "}
                           {changeDateFormat(packinglist.end_date)}
                         </p>
-                          <br />
-                          {checkLocationInfo(packinglist)}
+                        <br />
+                        {checkLocationInfo(packinglist)}
                       </div>
                       <div style={deleteButtonContainerStyle}>
                         <button
