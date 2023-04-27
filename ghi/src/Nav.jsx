@@ -7,10 +7,17 @@ import { useLogoutMutation } from "./services/Travelthreads";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Dropdown from "react-bootstrap/Dropdown";
 import Navbar from "react-bootstrap/Navbar";
+import { useNavigate } from "react-router-dom";
 
 function Nav({ handleShowLoginModal, handleShowSignUpModal }) {
   const account = useGetAccountQuery();
   const [logout] = useLogoutMutation();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await logout();
+    navigate("/");
+  };
 
   return (
     <Navbar bg="dark" variant="dark">
@@ -41,20 +48,14 @@ function Nav({ handleShowLoginModal, handleShowSignUpModal }) {
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
-              <Dropdown.Item>
-                <Link to="/" className="nav-link" onClick={logout}>
-                  Logout
-                </Link>
+              <Dropdown.Item as={Link} to="/" onClick={handleLogout}>
+                Logout
               </Dropdown.Item>
-              <Dropdown.Item>
-                <Link to="/packinglists" className="nav-link">
-                  My Packing Lists
-                </Link>
+              <Dropdown.Item as={Link} to="/packinglists">
+                My Packing Lists
               </Dropdown.Item>
-              <Dropdown.Item>
-                <Link to="/createlist" className="nav-link">
-                  Create Packing List
-                </Link>
+              <Dropdown.Item as={Link} to="/createlist">
+                Create Packing List
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
