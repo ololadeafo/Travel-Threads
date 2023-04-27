@@ -1,9 +1,9 @@
 from main import app
 from fastapi.testclient import TestClient
 from queries.packlists import PackListQueries
-from models import PackListIn, PacklistOut
+from models import PackListIn, PacklistOut, Error
 from authenticator import authenticator
-from typing import Optional
+from typing import Optional, Union
 # from datetime import date
 
 
@@ -28,7 +28,11 @@ class PacklistQueriesMock:
         return True
     def get_one(self, id: int, user_id: int) -> Optional[PacklistOut]:
         return PacklistOut(name="testing",start_date= "2023-04-27",end_date= "2023-04-29",country= "United States", state= "Florida", city= "Miami", id=5, user_id=user_id)
-
+    def update(self, id:int, user_id: int, params: PackListIn) -> Union[PacklistOut, Error]:
+        packlist = params.dict()
+        packlist['user_id'] = user_id
+        packlist['id'] = id
+        return PacklistOut(**packlist)
 
 
 def test_create_packlist():
@@ -80,3 +84,21 @@ def test_get_one_packlist():
     assert data["id"] == 5
     app.dependency_overrides = {}
 
+def test_update_packlist():
+    app.dependency_overrides[PackListQueries] = PacklistQueriesMock
+    app.dependency_overrides[authenticator.get_current_account_data] = fake_get_current_account_data
+
+    packlist = {
+        "name": "testing",
+        "start_date": "2023-05-01",
+        "end_date": "2023-05-09",
+        "country": "United States",
+        "state": "New York",
+        "city": "Brooklyn"
+    }
+
+    res = client.put('/api/packlist/5', json=packlist)
+    data = res.json()
+    assert data["user_id"] == 10
+    assert data["id"] == 5
+    app.dependency_overrides = {}
