@@ -17,13 +17,10 @@ const ListDetail = () => {
   const { data: packingList } = useGetOneListQuery(packingListID);
 
   const { data: allInfo } = useGetLatLonQuery(packingListID);
-  console.log(allInfo);
 
   const weatherIcon = allInfo["time"];
-  console.log(weatherIcon);
 
   const precipitation = allInfo["precipitation_sum"];
-  console.log(precipitation);
 
   return (
     <div className="container">

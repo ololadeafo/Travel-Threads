@@ -8,7 +8,6 @@ import { Link } from "react-router-dom";
 const PackingLists = () => {
   const packingLists = useGetListsQuery();
   const packingListData = packingLists["data"];
-  console.log(packingListData);
   const [deleteList] = useDeleteListMutation();
 
   const handleDelete = (e, id) => {

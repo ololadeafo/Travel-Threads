@@ -46,7 +46,6 @@ const UpdateItem = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(state.id);
     const body = {
       name: formData.name,
       quantity: formData.quantity,

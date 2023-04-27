@@ -22,7 +22,6 @@ const ListDetail = () => {
   const { data: packingList } = useGetOneListQuery(packingListID);
 
   const { data: allDateLists } = useGetDatesQuery(packingListID);
-  console.log(allDateLists);
 
   const { data: weatherInfo } = useGetWeatherInfoQuery(packingListID);
 
@@ -39,7 +38,6 @@ const ListDetail = () => {
 
     if (locationResponse.ok) {
       const data = await locationResponse.json();
-      console.log(data);
       setLocation({
         city: data.name,
         state: data.state,
@@ -49,10 +47,7 @@ const ListDetail = () => {
   };
 
   const handleChange = async (e, object) => {
-    console.log(e);
-    console.log(object);
     let is_packed = object.is_packed ? false : true;
-    console.log(is_packed);
     const body = {
       name: object.name,
       quantity: object.quantity,
@@ -62,7 +57,6 @@ const ListDetail = () => {
       id: object.id,
     };
     const updatedItem = await updateItem(body);
-    console.log(updatedItem);
   };
 
   useEffect(() => {

@@ -125,7 +125,6 @@ class ItemsQueries:
                             user_id
                         ]
                     )
-                    print("Items after function:", self.items_in_to_out(items_id, items))
                     return self.items_in_to_out(items_id, items)
         except Exception:
             return {"message": "Could not update the item list"}

@@ -52,7 +52,6 @@ class PackListQueries:
 
                     return [self.record_to_pack_list_out(record[0]) for record in result]
         except Exception as e:
-            print(e)
             return {"message": "Could not get all packing lists"}
 
 
@@ -70,12 +69,10 @@ class PackListQueries:
                         """, [user_id, id]
                     )
                     record = result.fetchone()
-                    print(record)
                     if record is None:
                         return None
                     return self.record_to_pack_list_out(record[0])
         except Exception as e:
-            print(e)
             return {"message": "Could not get that packing list"}
 
     def update(self, id: int, user_id: int, pack_list: PackListIn) -> Union[PacklistOut, Error]:

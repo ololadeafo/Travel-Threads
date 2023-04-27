@@ -60,7 +60,6 @@ class LocationQueries:
                         [province_id]
                     )
                     records = result.fetchall()
-                    print(records)
 
                 return [self.record_to_cities_out(record) for record in records]
 

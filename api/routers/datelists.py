@@ -22,7 +22,6 @@ def create_date_list(
     end = end_date
     difference = (end + timedelta(days=1)) - start
     day_diff = difference.days
-    print(day_diff)
     new_dates = []
 
     for i in range(day_diff):
@@ -30,7 +29,6 @@ def create_date_list(
         new_date_formatted = new_date.isoformat()
         new_date_list = repo.create(user_id, packing_list_id, new_date_formatted)
         new_dates.append(new_date_list)
-        print(new_dates)
         if new_date_list is None:
                 response.status_code = 400
 
