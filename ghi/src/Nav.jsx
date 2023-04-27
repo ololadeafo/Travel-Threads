@@ -8,7 +8,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Dropdown from "react-bootstrap/Dropdown";
 import Navbar from "react-bootstrap/Navbar";
 
-function Nav({ handleShow }) {
+function Nav({ handleShowLoginModal, handleShowSignUpModal }) {
   const account = useGetAccountQuery();
   const [logout] = useLogoutMutation();
 
@@ -26,11 +26,11 @@ function Nav({ handleShow }) {
               Options
             </Dropdown.Toggle>
             <Dropdown.Menu>
-              <Dropdown.Item onClick={() => handleShow()}>Login</Dropdown.Item>
-              <Dropdown.Item>
-                <Link to="/signup" className="nav-link">
-                  Sign Up
-                </Link>
+              <Dropdown.Item onClick={() => handleShowLoginModal()}>
+                Login
+              </Dropdown.Item>
+              <Dropdown.Item onClick={() => handleShowSignUpModal()}>
+                Sign Up
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>

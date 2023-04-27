@@ -14,10 +14,10 @@ import {
   useLoginMutation,
 } from "../services/Travelthreads";
 
-function LoginModal({ show, handleClose }) {
+function LoginModal({ showLoginModal, handleCloseLoginModal }) {
   const dispatch = useDispatch();
   const [login] = useLoginMutation();
-  const { fields } = useSelector((state) => state.login);
+  const { fields: loginFields } = useSelector((state) => state.login);
   const navigate = useNavigate();
   const account = useGetAccountQuery();
   const { data } = account;
@@ -30,24 +30,25 @@ function LoginModal({ show, handleClose }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await login(fields);
+    await login(loginFields);
     dispatch(reset());
   };
 
   return (
-    <Modal show={show} onHide={handleClose}>
+    <Modal show={showLoginModal} onHide={handleCloseLoginModal}>
       <Modal.Header closeButton>
         <Modal.Title>Login</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Group className="mb-3">
             <Form.Label>Email address</Form.Label>
-            <Form.Control
+            <input
               type="text"
               className="form-control"
-              value={fields.email}
+              id="email"
+              value={loginFields.email}
               onChange={(e) => dispatch(handleEmailChange(e.target.value))}
             />
             <Form.Text className="text-muted">
@@ -55,17 +56,21 @@ function LoginModal({ show, handleClose }) {
             </Form.Text>
           </Form.Group>
 
-          <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Group className="mb-3">
             <Form.Label>Password</Form.Label>
-            <Form.Control
+            <input
               type="password"
               className="form-control"
               id="password"
-              value={fields.password}
+              value={loginFields.password}
               onChange={(e) => dispatch(handlePasswordChange(e.target.value))}
             />
           </Form.Group>
-          <Button variant="primary" type="submit" onClick={handleClose}>
+          <Button
+            variant="primary"
+            type="submit"
+            onClick={handleCloseLoginModal}
+          >
             Submit
           </Button>
         </Form>
