@@ -74,8 +74,8 @@ const CreateList = () => {
                   onChange={(e) => dispatch(handleNameChange(e.target.value))}
                 />
               </div>
-              <div class="row g-3">
-                <div class="col-md-6">
+              <div className="row g-3">
+                <div className="col-md-6">
                 <label htmlFor="CreateList__country" className="form-group">Country</label>
                 <select
                   className="form-control w-100"
@@ -93,7 +93,7 @@ const CreateList = () => {
                   })}
                 </select>
                 </div>
-                  <div class="col-md-4">
+                  <div className="col-md-4">
                     <label htmlFor="CreateList__state" className="form-group">State</label>
                     <select
                       className="form-control w-100"
@@ -111,7 +111,7 @@ const CreateList = () => {
                     })}
                     </select>
                   </div>
-                  <div class="col-md-2">
+                  <div className="col-md-2">
                     <label htmlFor="CreateList__city" className="form-group">City</label>
                     <select
                       className="form-control w-100"
@@ -130,9 +130,9 @@ const CreateList = () => {
                     </select>
                   </div>
               </div>
-              <div class="container overflow-hidden">
-                <div class="row gx-5">
-                  <div class="col-md" style={{width: "100%", padding: "16px"}}>
+              <div className="container overflow-hidden">
+                <div className="row gx-5">
+                  <div className="col-md" style={{width: "100%", padding: "16px"}}>
                     <label htmlFor="CreateList__startDate" className="form-group">Start Date</label>
                     <input
                       type={"date"}
@@ -142,7 +142,7 @@ const CreateList = () => {
                       onChange={(e) => dispatch(handleStartDateChange(e.target.value))}
                     />
                   </div>
-                  <div class="col-md" style={{width: "100%", padding: "16px"}}>
+                  <div className="col-md" style={{width: "100%", padding: "16px"}}>
                     <label htmlFor="CreateList__endDate" className="form-group">End Date</label>
                     <input
                       type={"date"}

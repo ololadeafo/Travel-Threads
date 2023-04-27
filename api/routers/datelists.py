@@ -4,7 +4,7 @@ from authenticator import authenticator
 from queries.datelists import DateListQueries
 from typing import List, Union, Optional
 from models import Error
-from datetime import datetime, timedelta, date
+from datetime import timedelta, date
 
 router = APIRouter()
 

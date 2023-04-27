@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, Response
+from fastapi import APIRouter, Depends
 from queries.weather import WeatherQueries
 from models import WeatherOut
 

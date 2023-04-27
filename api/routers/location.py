@@ -1,9 +1,8 @@
-from fastapi import APIRouter, Depends, Response
-from models import CountriesOut, StatesOut, CitiesOut, CityOutWithAllInfo
-from authenticator import authenticator
+from fastapi import APIRouter, Depends
+from models import CountriesOut, StatesOut, CitiesOut
 from queries.location import LocationQueries
-from typing import List, Union, Optional
-from models import Error
+from typing import List
+
 
 
 router = APIRouter()

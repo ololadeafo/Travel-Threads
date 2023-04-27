@@ -1,7 +1,6 @@
 from models import CountriesOut, StatesOut, CitiesOut, CityOut, CityOutWithAllInfo, StateOutWithAllInfo, CountryOutWithAllInfo
 from queries.pool import pool
-from typing import Union, List, Optional
-from models import Error
+from typing import List
 
 
 class LocationQueries:
