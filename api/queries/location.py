@@ -1,4 +1,4 @@
-from models import CountriesOut, StatesOut, CitiesOut, CityOut, CityOutWithAllInfo
+from models import CountriesOut, StatesOut, CitiesOut, CityOut, CityOutWithAllInfo, StateOutWithAllInfo, CountryOutWithAllInfo
 from queries.pool import pool
 from typing import Union, List, Optional
 from models import Error
@@ -101,6 +101,48 @@ class LocationQueries:
                     name = record[1],
                     state = record[2],
                     country = record[3]
+                )
+
+    def get_all_state_info(self, state_id) -> StateOutWithAllInfo:
+        with pool.connection() as conn:
+            with conn.cursor() as db:
+                result = db.execute(
+                    """
+                    SELECT s.name AS state, s.id AS state_id, co.name AS country, s.latitude AS latitude, s.longitude AS longitude
+                    FROM states AS s
+                    LEFT OUTER JOIN countries co
+                        ON (s.country_id = co.id)
+                    WHERE s.id = %s
+                    """,
+                    [state_id]
+                )
+                record = result.fetchone()
+                return StateOutWithAllInfo(
+                    id = state_id,
+                    name = record[0],
+                    country = record[2],
+                    latitude = record[3],
+                    longitude = record[4]
+                )
+
+    def get_all_country_info(self, country_id) -> CountryOutWithAllInfo:
+        with pool.connection() as conn:
+            with conn.cursor() as db:
+                result = db.execute(
+                    """
+                    SELECT c.id AS id, c.name AS name, c.latitude AS latitude, c.longitude AS longitude
+                    FROM countries AS c
+                    WHERE c.id = %s
+                    """,
+                    [country_id]
+                )
+                record = result.fetchone()
+                print(record)
+                return CountryOutWithAllInfo(
+                    id = country_id,
+                    name = record[1],
+                    latitude = record[2],
+                    longitude = record[3]
                 )
 
 

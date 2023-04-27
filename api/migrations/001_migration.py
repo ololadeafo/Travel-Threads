@@ -30,7 +30,7 @@ steps = [
             end_date DATE NOT NULL,
             country VARCHAR(200) NOT NULL,
             state VARCHAR(200) NULL,
-            city VARCHAR(200) NOT NULL
+            city VARCHAR(200) NULL
         );
         """,
 
@@ -102,7 +102,10 @@ steps = [
         CREATE TABLE countries (
             id SERIAL PRIMARY KEY NOT NULL,
             name VARCHAR(100) NOT NULL,
-            iso3 VARCHAR(3) NOT NULL
+            iso3 VARCHAR(3) NOT NULL,
+            latitude NUMERIC NOT NULL,
+            longitude NUMERIC NOT NULL
+
         );
         """,
 
@@ -119,6 +122,8 @@ steps = [
             id SERIAL PRIMARY KEY NOT NULL,
             name VARCHAR(100) NOT NULL,
             country_id INTEGER NOT NULL,
+            latitude NUMERIC,
+            longitude NUMERIC,
             CONSTRAINT fk_country_id
                 FOREIGN KEY(country_id)
                     REFERENCES countries(id)

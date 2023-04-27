@@ -49,3 +49,21 @@ def get_all_city_info(
 ):
     city = repo.get_all_city_info(city_id)
     return city
+
+
+@router.get('/api/location/state/details/{state_id}')
+def get_all_state_info(
+    state_id: int,
+    repo: LocationQueries = Depends()
+):
+    state = repo.get_all_state_info(state_id)
+    return state
+
+
+@router.get('/api/location/country/details/{country_id}')
+def get_all_country_info(
+    country_id: int,
+    repo: LocationQueries = Depends()
+):
+    country = repo.get_all_country_info(country_id)
+    return country
