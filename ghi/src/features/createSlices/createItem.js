@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   fields: {
     name: "New Item",
-    quantity: 0,
+    quantity: 1,
     is_packed: false,
   },
 };
