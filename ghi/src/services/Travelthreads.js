@@ -172,7 +172,6 @@ export const travelThreadsApi = createApi({
         }
 
         const packingList = packingListData.data;
-        console.log(packingList)
 
         var locationData = ""
 
@@ -189,9 +188,6 @@ export const travelThreadsApi = createApi({
           `/api/location/city/${packingList.city}`
           );
         }
-
-        console.log("Location Data:", locationData.data)
-
 
         if (locationData.error) {
           return { error: locationData.error };
@@ -217,7 +213,6 @@ export const travelThreadsApi = createApi({
 
         for (let i = 0; i < packingListsData.data.length; i++) {
           if (packingListsData.data[i].state === "" && packingListsData.data[i].city === "") {
-            console.log()
             var packingListCountryData = await fetchWithBQ(`/api/location/country/details/${packingListsData.data[i].country}`);
             packingListsData.data[i]["location_info"] = packingListCountryData.data;
           }
