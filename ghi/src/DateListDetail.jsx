@@ -10,10 +10,8 @@ import {
   useDeleteItemMutation,
   useGetOneListQuery,
 } from "./services/Travelthreads";
-import { handleNameChange } from "./features/createSlices/createItem";
 
 const DateDetail = () => {
-  const dispatch = useDispatch();
   const [createItem] = useCreateItemMutation();
   const [deleteItem] = useDeleteItemMutation();
   const { fields } = useSelector((state) => state.createItem);
