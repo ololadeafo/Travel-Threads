@@ -28,7 +28,7 @@ After a user is logged in, they are redirected to the packing lists page. On thi
 
 On this page, users can create a packing list. They can add the name of the list, the location of their trip(country, state, city), and the start and end date of the trip.
 
-![Create List Page](wireframe/createlist.png)
+![Create List Page](wireframes/createlist.png)
 
 ## Packing List Page
 
@@ -39,7 +39,7 @@ This page shows the details of a specific packing list. Weather information for 
 - Edit button to a datelist detail page.
 - Contains a short message with the trip destination(Location API integration)
 
-![Packing Lists Page](wireframe/packing-list.png)
+![Packing Lists Page](wireframes/packing-list.png)
 
 ## Date List Detail Page
 
@@ -51,4 +51,4 @@ This page contains the details of each day of the trip.
 - A delete button that deletes the item
 - An add item button that allows users add an item to their list.
 
-![Date List Detail Page](wireframe/datelists.png)
+![Date List Detail Page](wireframes/datelists.png)

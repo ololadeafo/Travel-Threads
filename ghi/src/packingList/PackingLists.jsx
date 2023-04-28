@@ -72,7 +72,7 @@ const PackingLists = () => {
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
-    backgroundColor: "#AED9E0",
+    backgroundImage: "linear-gradient(to bottom right, #AED9E0, #FFA69E)",
     backgroundSize: "cover",
     minWidth: "100%",
   };

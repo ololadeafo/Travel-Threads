@@ -130,7 +130,7 @@ const ListDetail = () => {
     const background = {
         minHeight: "100vh",
         height: "100%",
-        backgroundColor: "#AED9E0",
+        backgroundImage: "linear-gradient(to bottom right, #AED9E0, #FFA69E)",
         backgroundSizing: "cover",
         padding:"3em",
 

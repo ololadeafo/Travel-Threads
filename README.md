@@ -1,147 +1,57 @@
-# Module3 Project Gamma
+# Travel Threads
 
-## Getting started
+- Hayden Dunlap
+- Kyle McGinley
+- Lola Afolabi
+- Nina Kapanadze
+- Ross Appelbaum
 
-You have a project repository, now what? The next section
-lists all of the deliverables that are due at the end of the
-week. Below is some guidance for getting started on the
-tasks for this week.
+---
 
-## Install Extensions
+Travel Threads- Have you ever been planning a vacation and forgotten what to pack? Well travel threads is here to save the day!
 
-* Prettier: <https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode>
-* Black Formatter: <https://marketplace.visualstudio.com/items?itemName=ms-python.black-formatter>
+Travel Threads- Catch flights not feelings.
 
-## Deliverables
+Travel Threads: Pack Smart, Weather-Wise, Adventure-ready!
 
-* [ ] Wire-frame diagrams
-* [ ] API documentation
-* [ ] Project is deployed to Render.com/GitLab-pages
-* [ ] GitLab issue board is setup and in use
-* [ ] Journals
+# Design
+- [API design](./docs/APIs.md)
+- [GHI](./docs/ghi.md)
+- [Integration](./docs/integrations.md)
+# Intended Market
 
-## Project layout
+Our target consumer is anyone in need of an app to organize and keep track of their packing lists. With an easy to use interface, consumers of all ages will be able to use and enjoy the app.
 
-The layout of the project is just like all of the projects
-you did with `docker-compose` in module #2. You will create
-a directory in the root of the repository for each service
-that you add to your project just like those previous
-projects were setup.
+# Functionality
 
-### Directories
+- Visitors will be directed to the home page welcoming them to Travel Threads.
+- There will be an interactive drop down in the nav bar
+  - There are login/signup options in the nav bar if the user is logged out
+  - There will be navlinks to packing lists page, create packing list, and log out action in the nav bar if the user is logged in.
+- There will be a "Get Packin!" call to action.
+  - If the user is logged out, the "Get Packin!" button will direct the visitor to the login page
+  - If the user is logged in, the "Get Packin!" button will direct the visitor to the list of packing lists page
+- The user will be able to see a list of all packing lists associated with their account.
+- Each packing list will be displayed on a card with the name of the event, date range of the event, and the location of the event.
+  - Users can delete a packing list from using the "delete" button on the card
+- There will be a "Add a Packing List" button above the list of packing lists to create a new packing list.
+  - Users will be able to create a packing list
+  - Submission will redirect the user to the list of packing lists page
+- Users will be able to view a detail page for the packing list by clicking on the card
+  - Page will display all items associated with the packing list to check off
+  - Will display the weather data on cards for each day.
+- Users will be able to view a detailed date page. Each date within the packing list date range will have a description, weather data, and items
+  - A user can add/edit/delete items for each date.
+  - A user can edit the description
 
-Several directories have been added to your project. The
-directories `docs` and `journals` are places for you and
-your team-mates to, respectively, put any documentation
-about your project that you create and to put your
-project-journal entries. See the _README.md_ file in each
-directory for more info.
+# Project Initialization
 
-The other directories, `ghi` and `sample_service`, are
-sample services, that you can start building off of or use
-as a reference point.
-
-Inside of `ghi` is a minimal React app that has an "under
-construction" page. It is setup similarly to all of the
-other React projects that you have worked on.
-
-Inside of `sample_service` is a minimal FastAPI application.
-"Where are all the files?" you might ask? Well, the
-`main.py` file is the whole thing, and go take look inside
-of it... There's not even much in there..., hmm? That is
-FastAPI, we'll learn more about it in the coming days. Can
-you figure out what this little web-application does even
-though you haven't learned about FastAPI yet?
-
-Also in `sample_service` is a directory for your migrations.
-If you choose to use PostgreSQL, then you'll want to use
-migrations to control your database. Unlike Django, where
-migrations were automatically created for you, you'll write
-yours by hand using DDL. Don't worry about not knowing what
-DDL means; we have you covered. There's a sample migration
-in there that creates two tables so you can see what they
-look like.
-
-The sample Dockerfile and Dockerfile.dev run your migrations
-for you automatically.
-
-### Other files
-
-The following project files have been created as a minimal
-starting point. Please follow the guidance for each one for
-a most successful project.
-
-* `docker-compose.yaml`: there isn't much in here, just a
-  **really** simple UI and FastAPI service. Add services
-  (like a database) to this file as you did with previous
-  projects in module #2.
-* `.gitlab-ci.yml`: This is your "ci/cd" file where you will
-  configure automated unit tests, code quality checks, and
-  the building and deployment of your production system.
-  Currently, all it does is deploy an "under construction"
-  page to your production UI on GitLab and a sample backend
-  to Render.com. We will learn much more about this file.
-* `.gitignore`: This is a file that prevents unwanted files
-  from getting added to your repository, files like
-  `pyc` files, `__pycache__`, etc. We've set it up so that
-  it has a good default configuration for Python projects.
-
-## How to complete the initial deploy
-
-There will be further guidance on completing the initial
-deployment, but it just consists of these steps:
-
-### Setup GitLab repo/project
-
-* make sure this project is in a group. If it isn't, stop
-  now and move it to a GitLab group
-* remove the fork relationship: In GitLab go to:
-
-  Settings -> General -> Advanced -> Remove fork relationship
-
-* add these GitLab CI/CD variables:
-  * PUBLIC_URL : this is your gitlab pages URL
-  * SAMPLE_SERVICE_API_HOST: enter "blank" for now
-
-#### Your GitLab pages URL
-
-You can't find this in GitLab until after you've done a deploy
-but you can figure it out yourself from your GitLab project URL.
-
-If this is your project URL
-
-https://gitlab.com/GROUP_NAME/PROJECT_NAME
-
-then your GitLab pages URL will be
-
-https://GROUP_NAME.gitlab.io/PROJECT_NAME
-
-### Create render.com account and application
-
-* create account on render.com
-* one person create a group and invite all other members
-* create a new "Web Service"
-  * authenticate with GitLab and choose your project
-  * Enter fields:
-    * Name: name of your service
-    * Root Directory: the directory of your service in your git repo.
-      For this example use "sample_service".
-    * Environment: Docker
-    * Plan Type: Free
-  * click the "Create Web Service" button to create it
-  * the build will succeed and it will look like the server is running,
-    most likely, in 6-10 minutes, it will fail.
-  * click "Manual Deploy" -> "Deploy latest commit" and the service
-    should deploy successfully.
-
-### Update GitLab CI/CD variables
-
-Copy the service URL for your new render.com service and then paste
-that into the value for the SAMPLE_SERVICE_API_HOST CI/CD variable
-in GitLab.
-
-### Deploy it
-
-Merge a change into main to kick off the initial deploy. Once the build pipeline
-finishes you should be able to see an "under construction" page on your GitLab
-pages site.
+1. Clone the repository down to your local machine
+2. CD into the new project directory
+3. Run docker volume create fastapi-travel-threads-data
+4. Run docker-compose build
+5. Run docker-compose up
+6. Run docker exec -it travel-threads-fastapi-1 bash
+7. Run python location_data.py (File is finished running when the number hits 250)
+8. Exit the container's command line
+9. Get packin!

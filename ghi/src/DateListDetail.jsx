@@ -131,7 +131,7 @@ const DateDetail = () => {
         minWidth: "100%",
         minHeight: "100vh",
         height: "auto",
-        backgroundColor: "#AED9E0",
+        backgroundImage: "linear-gradient(to bottom right, #AED9E0, #FFA69E)",
       }}
     >
       <h1
