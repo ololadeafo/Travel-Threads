@@ -31,7 +31,7 @@ const Main = () => {
   return (
     <div
       className="d-flex flex-column align-items-center justify-content-center vh-100"
-      style={{ backgroundColor: "#AED9E0" }}
+      style={{ backgroundImage: "linear-gradient(to bottom right, #AED9E0, #FFA69E)" }}
     >
       <h1 className="mb-5" style={{ heading }}>
         Welcome to Travel Threads!

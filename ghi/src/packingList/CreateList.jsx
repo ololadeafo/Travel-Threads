@@ -59,7 +59,7 @@ const CreateList = () => {
   return (
     <div
       className="container"
-      style={{ backgroundColor: "#AED9E0", minWidth: "100%", height: "100vh" }}
+      style={{ backgroundImage: "linear-gradient(to bottom right, #AED9E0, #FFA69E)", minWidth: "100%", height: "100vh" }}
     >
       <div className="row h-100 justify-content-center align-items-center">
         <div className="col-10 col-md-8 col-lg-6">

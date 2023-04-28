@@ -15,3 +15,5 @@ Friday April 21st- Today was similar to Thursday, we're so close to being done b
 Monday April 24th- We finally decided to split up so Hayden and Kyle with finish up with the logic and Lola, Nina and I will be working on styling. We made a decent amount of progress today, we finished styling our first page. We also decided to go with bootstrap over plain CSS because we're so behind right now.
 Tuesday April 25th- Today was our breakthrough. Hayden and Kyle finished up the logic and we were able to fire on all cylinders for styling today. I was able to finish the styling for 3 pages today! Signup, Login, and the main page. I will sleep easy tonight knowing we are without a doubt back on track.
 Wednesday April 26th- We started this week with no styling done on our front end and we're ending today with 99% of our front end styling done! Tommorow will bring unit tests and writing our readme and documentation and we will be done!
+Thursday April 27th - Today was very productive. The project itself is done and now we are all working on formatting the code and cleaning it up. As well as completing the readme.
+Friday April 28th - 

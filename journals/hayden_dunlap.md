@@ -45,3 +45,8 @@ Today we each took a page and began working on our styling. I am responsible for
 
 ---04/26/2023---
 Today I spent most of the day getting the weather information to display on the packlist page. It was more difficult than I anticipated but I was able to get it working. I took most of the inline styling I had and put it into variables to be used inline to clean things up a bit.
+
+---04/27/2023---
+Today I restyled the datelist page to be closer to our original excalidraw. We also completed our unit tests.
+
+

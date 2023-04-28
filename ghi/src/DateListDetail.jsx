@@ -131,22 +131,28 @@ const DateDetail = () => {
         minWidth: "100%",
         minHeight: "100vh",
         height: "auto",
-        backgroundColor: "#AED9E0",
+        backgroundImage: "linear-gradient(to bottom right, #AED9E0, #FFA69E)",
       }}
     >
-      <Link
-        to={`/packinglist/${packingListID}`}
+      <h1
         className="header"
         style={{
           display: "flex",
           justifyContent: "center",
           padddingTop: "1em",
-          textDecoration: "none",
-          color: "black",
         }}
       >
-        <h1>{packingListDetail?.name}</h1>
-      </Link>
+        <Link
+          to={`/packinglist/${packingListID}`}
+          style={{
+            textDecoration: "none",
+            color: "black",
+            textDecorationLine: "underline",
+          }}
+        >
+          {packingListDetail?.name}
+        </Link>
+      </h1>
       <div className="row" style={dateListWindow}>
         {allDateLists?.map((dateList) => {
           let weatherCard = (
