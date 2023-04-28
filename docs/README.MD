@@ -1,7 +1,5 @@
 # Travel Threads
 
----
-
 *Hayden Dunlap
 *Kyle McGinley
 *Lola Afolabi
@@ -18,17 +16,11 @@ Travel Threads: Pack Smart, Weather-Wise, Adventure-ready!
 
 # Design
 
----
-
 # Intended Market
-
----
 
 Our target consumer is anyone in need of an app to organize and keep track of their packing lists. With an easy to use interface, consumers of all ages will be able to use and enjoy the app.
 
 # Functionality
-
----
 
 *Visitors will be directed to the home page welcoming them to Travel Threads.
 *There are login/signup options in the nav bar if the user is logged out
@@ -49,8 +41,6 @@ Our target consumer is anyone in need of an app to organize and keep track of th
 \*A user can add/edit/delete items for each date.
 \*A user can edit the description
 
----
-
 # Project Initialization
 
 1. Clone the repository down to your local machine
@@ -61,3 +51,4 @@ Our target consumer is anyone in need of an app to organize and keep track of th
 6. Run docker exec -it travel-threads-fastapi-1 bash
 7. Run python location_data.py (File is finished running when the number hits 250)
 8. Exit the container's command line
+9. Get packin!
