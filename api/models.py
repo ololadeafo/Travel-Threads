@@ -7,18 +7,18 @@ class Error(BaseModel):
     message: str
 
 
-class AccountOut(BaseModel):  # what the front end will need
+class AccountOut(BaseModel):
     id: int
     email: str
 
 
-class AccountOutWithHashedPassword(AccountOut):  # internal (FastAPI) use only
-    hashed_password: str  # encrypted password
+class AccountOutWithHashedPassword(AccountOut):
+    hashed_password: str
 
 
 class AccountIn(BaseModel):
     email: str
-    password: str  # user's password
+    password: str
 
 
 class AccountForm(BaseModel):

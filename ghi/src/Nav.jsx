@@ -23,7 +23,7 @@ function Nav({ handleShowLoginModal, handleShowSignUpModal }) {
     <Navbar bg="dark" variant="dark">
       <Navbar.Brand>
         <NavLink className="navbar-brand" to="/">
-          <img className="logo" src={travel_Threads} alt="" width={"60px"} />
+          <img className="logo" src={travel_Threads} alt="" style={{height: "2.5em", marginLeft: ".5em"}} />
         </NavLink>
       </Navbar.Brand>
       <div className="justified-content-end">
