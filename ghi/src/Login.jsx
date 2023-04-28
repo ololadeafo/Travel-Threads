@@ -46,7 +46,7 @@ const Login = () => {
           <img
             src={travelThreads}
             alt="Travel Threads"
-            style={{ width: "200px", marginBottom: "1rem" }}
+            style={{ width: "200px", marginBottom: "1rem", marginTop: "1em" }}
           />
           <h2 className="mb-3">Login</h2>
           <form onSubmit={handleSubmit}>
