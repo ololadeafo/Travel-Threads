@@ -50,8 +50,8 @@ const CreateList = () => {
     province_id = 0;
   }
   if (fields.state !== "") {
-    var province_type = "state";
-    var province_id = fields.state;
+    province_type = "state";
+    province_id = fields.state;
   }
   var params = { province_type: province_type, province_id: province_id };
   const cityData = useGetCityQuery(params);

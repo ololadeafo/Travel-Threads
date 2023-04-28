@@ -46,7 +46,7 @@ const DateDetail = () => {
 
     var body = { packing_list_id: packingListID, date_list_id: dateListID };
 
-    const item = createItem({ fields, body });
+    createItem({ fields, body });
   };
 
   const handleDelete = (e) => {
