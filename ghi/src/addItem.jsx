@@ -17,7 +17,7 @@ const CreateItem = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const newItem = await createItem({ params, fields });
+    createItem({ params, fields });
     dispatch(reset());
   };
 

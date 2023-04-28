@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   handlePasswordChange,
@@ -78,6 +79,12 @@ const Login = () => {
               Login
             </button>
           </form>
+          <p className="mt-3">
+            Don't have an account?{" "}
+            <Link to="/signup" className="text-decoration-none">
+              Click here to signup!
+            </Link>
+          </p>
         </div>
       </div>
     </div>

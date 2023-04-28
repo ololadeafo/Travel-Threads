@@ -63,16 +63,16 @@ export const travelThreadsApi = createApi({
       invalidatesTags: ["Datelist", "List of PackingLists"],
     }),
     createItem: builder.mutation({
-      query: ({ fields, body }) => {
+      query: ({ data, body }) => {
         return {
           url: `/api/packlist/items`,
           method: "POST",
           body: {
             packing_list_id: body.packing_list_id,
             date_list_id: body.date_list_id,
-            name: fields.name,
-            quantity: fields.quantity,
-            is_packed: fields.is_packed,
+            name: data.name,
+            quantity: data.quantity,
+            is_packed: data.is_packed,
           },
         };
       },
