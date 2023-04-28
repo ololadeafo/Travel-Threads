@@ -39,6 +39,20 @@ const DateDetail = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    const parent = e.target.parentNode;
+    const container = parent.parentNode;
+    var input = container.children[0].children[0].value;
+
+    if (input === "") {
+      input = "New Item";
+    }
+
+    var data = {
+      name: input,
+      quantity: fields.quantity,
+      is_packed: fields.is_packed,
+    };
+
     var dateListID = e.target.value;
     if (dateListID === "") {
       dateListID = null;
@@ -46,7 +60,7 @@ const DateDetail = () => {
 
     var body = { packing_list_id: packingListID, date_list_id: dateListID };
 
-    createItem({ fields, body });
+    createItem({ data, body });
   };
 
   const handleDelete = (e) => {
@@ -74,15 +88,15 @@ const DateDetail = () => {
     flexWrap: "nowrap",
     margin: "1em",
     backgroundColor: "#5E6472",
-    borderRadius: "10px"
-  }
+    borderRadius: "10px",
+  };
 
   const miscItemsStyle = {
     height: "auto",
     margin: "1em",
     padding: "1em",
     backgroundColor: "#FFA69E",
-  }
+  };
 
   const cardBodyStyle = {
     display: "flex",
@@ -96,19 +110,19 @@ const DateDetail = () => {
     backgroundColor: "inherit",
     padding: "0px",
     fontSize: ".85em",
-    whiteSpace: "nowrap"
-  }
+    whiteSpace: "nowrap",
+  };
 
   const itemTableCard = {
     height: "100%",
     width: "100%",
-    overflow: 'auto'
-  }
+    overflow: "auto",
+  };
 
   const itemTable = {
     width: "100%",
     height: "auto",
-  }
+  };
 
   return (
     <div
@@ -133,13 +147,16 @@ const DateDetail = () => {
       >
         <h1>{packingListDetail?.name}</h1>
       </Link>
-      <div
-        className="row"
-        style={dateListWindow}
-      >
+      <div className="row" style={dateListWindow}>
         {allDateLists?.map((dateList) => {
           let weatherCard = (
-            <div style={{ paddingLeft: "1em", paddingTop: ".25em", paddingBottom: ".25em" }}>
+            <div
+              style={{
+                paddingLeft: "1em",
+                paddingTop: ".25em",
+                paddingBottom: ".25em",
+              }}
+            >
               Weather information not available
             </div>
           );
@@ -153,11 +170,20 @@ const DateDetail = () => {
               <div
                 key={dateList.date}
                 className="col card"
-                style={{ width: "10em", border: "solid 1px"}}
+                style={{ width: "10em", border: "solid 1px" }}
               >
-                <div style={{paddingLeft: "1em", paddingTop: ".25em", paddingBottom: ".25em", backgroundColor: ""}}>
-                  High: {allInfo.daily.temperature_2m_max[index]}°F<br/>
-                  Low: {allInfo.daily.temperature_2m_min[index]}°F<br/>
+                <div
+                  style={{
+                    paddingLeft: "1em",
+                    paddingTop: ".25em",
+                    paddingBottom: ".25em",
+                    backgroundColor: "",
+                  }}
+                >
+                  High: {allInfo.daily.temperature_2m_max[index]}°F
+                  <br />
+                  Low: {allInfo.daily.temperature_2m_min[index]}°F
+                  <br />
                   Precipitation:{" "}
                   {allInfo.daily.precipitation_probability_max[index]}%
                 </div>
@@ -171,27 +197,21 @@ const DateDetail = () => {
             });
             items = filteredItems.map((item) => {
               return (
-                <tr
-                  key={item.id}
-                  style={{ borderBottom: "solid 1px"
-                  }}
-                >
-                  <td style={{ textAlign: "left" }}>
-                    {item.name}
-                  </td>
+                <tr key={item.id} style={{ borderBottom: "solid 1px" }}>
+                  <td style={{ textAlign: "left" }}>{item.name}</td>
                   <td style={{ textAlign: "center" }}>{item.quantity}</td>
                   <td className="buttons">
                     <Link
                       to={`/packinglist/${packingListID}/items/${item.id}`}
                       state={item}
                     >
-                      <button
-                        style={editDelete}
-                      >&#9998;
-                      </button>
+                      <button style={editDelete}>&#9998;</button>
                     </Link>
-                    <button value={item.id}
-                      onClick={handleDelete} style={editDelete}>
+                    <button
+                      value={item.id}
+                      onClick={handleDelete}
+                      style={editDelete}
+                    >
                       &#x2715;
                     </button>
                   </td>
@@ -216,7 +236,11 @@ const DateDetail = () => {
                     <Link
                       to={`/packinglist/${packingListID}/datelists/${dateList.id}`}
                       state={dateList}
-                      style={{ textDecoration: "none", color: "black", fontSize: ".8em" }}
+                      style={{
+                        textDecoration: "none",
+                        color: "black",
+                        fontSize: ".8em",
+                      }}
                     >
                       {dateList.description}
                     </Link>
@@ -226,7 +250,11 @@ const DateDetail = () => {
                     <Link
                       to={`/packinglist/${packingListID}/datelists/${dateList.id}`}
                       state={dateList}
-                      style={{ textDecoration: "none", color: "black", fontSize: ".8em" }}
+                      style={{
+                        textDecoration: "none",
+                        color: "black",
+                        fontSize: ".8em",
+                      }}
                     >
                       Add Description
                     </Link>
@@ -236,32 +264,33 @@ const DateDetail = () => {
                 <div style={itemTableCard}>
                   <table style={itemTable}>
                     <thead>
-                      <tr style={{ borderBottom: "solid 1px"
-                  }}>
-                        <th style={{width: "60%"}}>Item</th>
+                      <tr style={{ borderBottom: "solid 1px" }}>
+                        <th style={{ width: "60%" }}>Item</th>
                         <th>Qty</th>
                         <th></th>
                       </tr>
                     </thead>
-                    <tbody>
-                      {items}
-                    </tbody>
+                    <tbody>{items}</tbody>
                   </table>
                 </div>
                 <div className="input-div" style={{ display: "flex" }}>
                   <div>
                     <input
-                      onChange={(e) =>
-                        dispatch(handleNameChange(e.target.value))
-                      }
-                      style={{ height: "1.25em", width: "7em", borderRadius: "4px" }}
+                      style={{
+                        height: "1.25em",
+                        width: "7em",
+                        borderRadius: "4px",
+                      }}
                     ></input>
                   </div>
                   <div>
                     <button
                       value={dateList.id}
                       onClick={handleSubmit}
-                      style={{fontSize: ".75em", height: "1.65em", borderRadius: "3px"
+                      style={{
+                        fontSize: ".75em",
+                        height: "1.65em",
+                        borderRadius: "3px",
                       }}
                     >
                       Add
@@ -273,50 +302,67 @@ const DateDetail = () => {
           );
         })}
       </div>
-        <div className="card" style={{ ...miscItemsStyle, marginBottom: "150px", display: "inline-block"}}>
-          <h3 style={{ marginBottom: "15px" }}>Other Items</h3>
-          {misc_items?.map((item) => {
-            return (
-              <div
-                key={item.id}
-                style={{ backgroundColor: "white", border: "solid 1px", borderRadius: "5px", display: "inline-block", whiteSpace: "nowrap", marginRight: ".5em", marginBottom: ".5em", padding: ".5em"
-                }}
+      <div
+        className="card"
+        style={{
+          ...miscItemsStyle,
+          marginBottom: "150px",
+          display: "inline-block",
+        }}
+      >
+        <h3 style={{ marginBottom: "15px" }}>Other Items</h3>
+        {misc_items?.map((item) => {
+          return (
+            <div
+              key={item.id}
+              style={{
+                backgroundColor: "white",
+                border: "solid 1px",
+                borderRadius: "5px",
+                display: "inline-block",
+                whiteSpace: "nowrap",
+                marginRight: ".5em",
+                marginBottom: ".5em",
+                padding: ".5em",
+              }}
+            >
+              {item.name}: {item.quantity}
+              <Link
+                to={`/packinglist/${packingListID}/items/${item.id}`}
+                state={item}
               >
-                {item.name}: {item.quantity}
-                <Link
-                    to={`/packinglist/${packingListID}/items/${item.id}`}
-                    state={item}
-                  >
-                    <button style={{...editDelete, marginLeft: "1em"}}> &#9998; </button>
-                  </Link>
-                  <button value={item.id}
-                    onClick={handleDelete} style={editDelete}>
-                    &#x2715;
-                  </button>
-              </div>
-            );
-          })}
-          <div className="input-div" style={{ display: "flex" }}>
-            <div>
-              <input
-                onChange={(e) =>
-                  dispatch(handleNameChange(e.target.value))
-                }
-                style={{ height: "1.25em", width: "20em", borderRadius: "4px" }}
-              ></input>
-            </div>
-            <div>
-              <button
-                value={null}
-                onClick={handleSubmit}
-                style={{fontSize: ".75em", height: "1.65em", borderRadius: "3px"
-                }}
-              >
-                Add
+                <button style={{ ...editDelete, marginLeft: "1em" }}>
+                  {" "}
+                  &#9998;{" "}
+                </button>
+              </Link>
+              <button value={item.id} onClick={handleDelete} style={editDelete}>
+                &#x2715;
               </button>
             </div>
+          );
+        })}
+        <div className="input-div" style={{ display: "flex" }}>
+          <div>
+            <input
+              style={{ height: "1.25em", width: "20em", borderRadius: "4px" }}
+            ></input>
+          </div>
+          <div>
+            <button
+              value={null}
+              onClick={handleSubmit}
+              style={{
+                fontSize: ".75em",
+                height: "1.65em",
+                borderRadius: "3px",
+              }}
+            >
+              Add
+            </button>
           </div>
         </div>
+      </div>
     </div>
   );
 };
