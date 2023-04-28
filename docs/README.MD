@@ -18,12 +18,21 @@ Travel Threads: Pack Smart, Weather-Wise, Adventure-ready!
 
 # Design
 
+---
+
+# Intended Market
+
+---
+
+Our target consumer is anyone in need of an app to organize and keep track of their packing lists. With an easy to use interface, consumers of all ages will be able to use and enjoy the app.
+
 # Functionality
 
 ---
 
 *Visitors will be directed to the home page welcoming them to Travel Threads.
-*There are login/signup/logout options in the nav bar
+*There are login/signup options in the nav bar if the user is logged out
+*There will be navlinks to packing lists page, create packing list, and log out action in the nav bar if the user is logged in.
 *There will be a "Get Packin!" call to action.
 *If the user is logged out, the "Get Packin!" button will direct the visitor to the login page
 *If the user is logged in, the "Get Packin!" button will direct the visitor to the list of packing lists page
@@ -37,7 +46,18 @@ Travel Threads: Pack Smart, Weather-Wise, Adventure-ready!
 *Page will display all items associated with the packing list to check off
 *Will display the weather data on cards for each day.
 *Users will be able to view a detailed date page. Each date within the packing list date range will have a description, weather data, and items
-*A user can add/edit/delete items for each date.
+\*A user can add/edit/delete items for each date.
 \*A user can edit the description
 
 ---
+
+# Project Initialization
+
+1. Clone the repository down to your local machine
+2. CD into the new project directory
+3. Run docker volume create fastapi-travel-threads-data
+4. Run docker-compose build
+5. Run docker-compose up
+6. Run docker exec -it travel-threads-fastapi-1 bash
+7. Run python location_data.py (File is finished running when the number hits 250)
+8. Exit the container's command line
