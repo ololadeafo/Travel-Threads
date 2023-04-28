@@ -13,3 +13,5 @@
 4/24/23- We started working on the styling for our pages. Kyle and Hayden were still working on the backend of our code where users can add an item, edit item and delete items as needed. Me, Ross andd Nina styled the main page, Create pasck list page, and Nina figured out the log in and signup modals.
 4/25/2023- We are almost at the finished line with our project. we continued on the front end portion of our pages. i realized i don't like boostrap as much as i thought lol.
 4/26/2023 - I had some issues with getting the start date and end date columns to align on the same row, but i figured it out by taking out the margin bottom. Me, Ross and Kyle also worked on styling the datelist page and getting all the functionalities to work, which was awesome.
+4/27/2023 - we started working on our readme file. i worked on the ghi and wireframes, explaining what each page of our application was and it's functionality, as well as adding the pictures of our wireframes.
+4/28/2023 - We came across a bug on our datelist page where when a user adds an item, to a specific date, the last item that was added is what appears on the rest of the dates.
