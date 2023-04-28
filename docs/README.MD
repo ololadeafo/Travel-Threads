@@ -16,6 +16,7 @@ Travel Threads: Pack Smart, Weather-Wise, Adventure-ready!
 
 # Design
 - [API design](./APIs.md)
+- [GHI](./ghi.md)
 # Intended Market
 
 Our target consumer is anyone in need of an app to organize and keep track of their packing lists. With an easy to use interface, consumers of all ages will be able to use and enjoy the app.
