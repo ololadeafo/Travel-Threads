@@ -28,6 +28,7 @@ Created a packing list page which is where users are redirected when logged in. 
 04/19/23
 Created a packing list detail page which returns all the items added for all the dates, the quantity and if it has been packed or not. Created a query for get items by packing list and get one list query which upon clicking on the packing list, it takes us to the packing list detail page.
 04/20/23
+Worked on some bugs like provide tags, invalidate tags werent functioning. Refactored some code on the backend to make it functional on front end.
 
 Week Four:
 04/24/23
@@ -37,4 +38,6 @@ Created a reducer for modal, saved it in store. Used bootstrap for the login pag
 04/26/23
 Working on creating a dropdowwn nav bar. Created a dropdown reducer and in the nav.jsx, we've imported useDispatch, useSelector to get the state. The button is however unresponsive.
 04/27/23
+Switched to using react bootstrap. Integrated the navbar bootstrap with the nav.jsx file. Dropdown is now responsive. Git rid of a console error when clicking dropdown. Also used react bootstrap to create the login signup modal. Registered it in the store for global usage. The modals are now responsive. Was running into an error where the signup modal was rendering to the login. I changed it so the fields for login and signup have different names.
 04/28/23
+Working on the Data Models readme.md. Running through everything to make sure there are no errors in the console.

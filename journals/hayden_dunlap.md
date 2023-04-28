@@ -49,4 +49,5 @@ Today I spent most of the day getting the weather information to display on the 
 ---04/27/2023---
 Today I restyled the datelist page to be closer to our original excalidraw. We also completed our unit tests.
 
-
+---04/28/2023---
+Today I restyled some of the front end and we completed our docs and readme.
