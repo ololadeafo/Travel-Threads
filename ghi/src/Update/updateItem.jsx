@@ -66,7 +66,7 @@ const UpdateItem = () => {
       style={{
         display: "flex",
         justifyContent: "center",
-        backgroundColor: "#AED9E0",
+        backgroundImage: "linear-gradient(to bottom right, #AED9E0, #FFA69E)",
         minWidth: "100%",
         height: "100vh",
       }}
