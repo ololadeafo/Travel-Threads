@@ -25,6 +25,7 @@ const Signup = () => {
     if (data !== undefined) {
       navigate("/packinglists");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [account]);
 
   const handleSubmit = (e) => {

@@ -74,7 +74,7 @@ const ListDetail = () => {
         date_list_id: object.date_list_id,
         id: object.id,
         };
-        const updatedItem = await updateItem(body);
+        await updateItem(body);
     };
 
 
@@ -94,10 +94,12 @@ const ListDetail = () => {
         }
     }
 
+
     useEffect(() => {
         if (packingList) {
-            getData();
+        getData();
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [packingList]);
 
     const weatherCardStyling = {

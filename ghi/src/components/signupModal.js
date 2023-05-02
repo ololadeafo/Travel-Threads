@@ -24,10 +24,12 @@ function SignUpModal({ showSignUpModal, handleCloseSignUpModal }) {
   const account = useGetAccountQuery();
   const { data } = account;
 
+
   useEffect(() => {
     if (data !== undefined) {
       navigate("/packinglists");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [account]);
 
   const handleSubmit = (e) => {
