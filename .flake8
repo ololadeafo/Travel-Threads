@@ -1,2 +1,3 @@
 [flake8]
 exclude = ghi,docs,journals,travel_threads/migrations
+max-line-length= 300
