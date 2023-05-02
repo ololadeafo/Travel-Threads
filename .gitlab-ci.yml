@@ -88,5 +88,6 @@ build-travel-threads: # RENAME THIS <this name is arbitrary and will be associat
     - echo "Deploying on CapRover..."
     - docker run caprover/cli-caprover:v2.1.1 caprover deploy --caproverUrl $CAPROVER_URL --caproverPassword $CAPROVER_PASSWORD --caproverApp $CAPROVER_APP --imageName $CONTAINER_FULL_IMAGE_NAME_WITH_TAG
     #only - this should be updated with the default branch {master, main}
-    only:
+
+  only:
     - main
