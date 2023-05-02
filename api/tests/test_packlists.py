@@ -5,7 +5,6 @@ from models import PackListIn, PacklistOut, Error
 from authenticator import authenticator
 from typing import Optional, Union
 
-# from datetime import date
 
 
 client = TestClient(app)

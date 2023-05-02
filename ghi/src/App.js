@@ -28,10 +28,14 @@ function App() {
   const handleCloseSignUpModal = () => setShowSignUpModal(false);
   const handleShowSignUpModal = () => setShowSignUpModal(true);
 
+  const domain = /https:\/\/[^/]+/;
+  const basename = process.env.PUBLIC_URL.replace(domain, "");
+
+
   return (
     <div>
       <ErrorNotification error={error} />
-      <BrowserRouter>
+      <BrowserRouter basename={basename}>
         <Nav
           handleShowLoginModal={handleShowLoginModal}
           handleShowSignUpModal={handleShowSignUpModal}

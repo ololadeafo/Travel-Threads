@@ -13,6 +13,7 @@ app.include_router(datelists.router, tags=["Date Lists"])
 app.include_router(items.router, tags=["Items"])
 app.include_router(location.router, tags=["Location"])
 
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[os.environ.get("CORS_HOST", "http://localhost:3000")],
