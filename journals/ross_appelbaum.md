@@ -17,4 +17,4 @@ Tuesday April 25th- Today was our breakthrough. Hayden and Kyle finished up the 
 Wednesday April 26th- We started this week with no styling done on our front end and we're ending today with 99% of our front end styling done! Tommorow will bring unit tests and writing our readme and documentation and we will be done!
 Thursday April 27th - Today was very productive. The project itself is done and now we are all working on formatting the code and cleaning it up. As well as completing the readme.
 Friday April 28th - Last day! We put the finishing touches on the project readme and cleaned up the code but we are officially done! We wrote our first full stack application from scratch! It's been quite the journey and I couldn't have asked for better group mates.
-5/2- "**"
+5/2- "789"
