@@ -2,7 +2,6 @@ from models import PackListIn, PacklistOut
 from queries.pool import pool
 from typing import Union, List, Optional
 from models import Error
-from routers.datelists import create_date_list
 
 
 class PackListQueries:
@@ -33,8 +32,8 @@ class PackListQueries:
 
                     id = result.fetchone()[0]
                     return self.pack_list_in_to_out(id, user_id, pack_list)
-        except Exception:
-            return {"message": "Could not create packing list"}
+        except Exception as e:
+            return {"message": "Could not create packing list", "Error": e}
 
     def get_all(self, user_id) -> Union[Error, List[PacklistOut]]:
         try:
@@ -55,7 +54,7 @@ class PackListQueries:
                         for record in result
                     ]
         except Exception as e:
-            return {"message": "Could not get all packing lists"}
+            return {"message": "Could not get all packing lists", "Error": e}
 
     def get_one(self, id: int, user_id: int) -> Optional[PacklistOut]:
         try:
@@ -75,7 +74,7 @@ class PackListQueries:
                         return None
                     return self.record_to_pack_list_out(record[0])
         except Exception as e:
-            return {"message": "Could not get that packing list"}
+            return {"message": "Could not get that packing list", "Error": e}
 
     def update(
         self, id: int, user_id: int, pack_list: PackListIn
@@ -106,8 +105,8 @@ class PackListQueries:
                         ],
                     )
                     return self.pack_list_in_to_out(id, user_id, pack_list)
-        except Exception:
-            return {"message": "Could not update that packing list"}
+        except Exception as e:
+            return {"message": "Could not update that packing list", "Error": e}
 
     def delete(self, user_id: int, id: int) -> bool:
         try:
@@ -121,7 +120,7 @@ class PackListQueries:
                         [user_id, id],
                     )
                     return True
-        except Exception as e:
+        except Exception:
             return False
 
     def pack_list_in_to_out(

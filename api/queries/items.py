@@ -50,8 +50,8 @@ class ItemsQueries:
                         )
                         id = result.fetchone()[0]
                         return self.items_in_to_out(id, items)
-        except Exception:
-            return {"message": "Could not create items list"}
+        except Exception as e:
+            return {"message": "Could not create items list", "Error": e}
 
     def get_all(
         self, packing_list_id: int, date_list_id: int, user_id: int
@@ -73,7 +73,7 @@ class ItemsQueries:
                         for record in result
                     ]
         except Exception as e:
-            return {"message": "Could not get all items"}
+            return {"message": "Could not get all items", "Error": e}
 
     def get_all_by_packlist(
         self, packing_list_id: int, user_id: int
@@ -95,7 +95,7 @@ class ItemsQueries:
                         for record in result
                     ]
         except Exception as e:
-            return {"message": "Could not get all items"}
+            return {"message": "Could not get all items", "Error": e}
 
     def get_one(self, items_id: int, user_id: int) -> Optional[ItemsOut]:
         try:
@@ -115,7 +115,7 @@ class ItemsQueries:
                         return None
                     return self.record_to_items_out(record[0])
         except Exception as e:
-            return {"message": "Could not get that item"}
+            return {"message": "Could not get that item", "error": e}
 
     def update(
         self, items_id: int, user_id: int, items: ItemsIn
@@ -138,8 +138,8 @@ class ItemsQueries:
                         ],
                     )
                     return self.items_in_to_out(items_id, items)
-        except Exception:
-            return {"message": "Could not update the item list"}
+        except Exception as e:
+            return {"message": "Could not update the item list", "Error": e}
 
     def delete(self, user_id: int, items_id: int) -> bool:
         try:
@@ -153,7 +153,7 @@ class ItemsQueries:
                         [user_id, items_id],
                     )
                     return True
-        except Exception as e:
+        except Exception:
             return False
 
     def items_in_to_out(self, id: int, items: ItemsIn):

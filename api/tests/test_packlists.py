@@ -6,7 +6,6 @@ from authenticator import authenticator
 from typing import Optional, Union
 
 
-
 client = TestClient(app)
 
 

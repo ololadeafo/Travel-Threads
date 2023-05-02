@@ -4,8 +4,7 @@ from queries.pool import pool
 
 def add_locations():
     url = (
-        "https://raw.githubusercontent.com/dr5hn" \
-            +"/countries-states-cities-database/master/countries%2Bstates%2Bcities.json"
+        "https://raw.githubusercontent.com/dr5hn/countries-states-cities-database/master/countries%2Bstates%2Bcities.json"
         )
     res = requests.get(url)
     data = res.json()

@@ -42,9 +42,9 @@ class DateListQueries:
                             "packing_list_id": packing_list_id,
                         }
                         return date_list
-        except Exception:
+        except Exception as e:
             return {
-                "message": "Could not create packing list associated with this date"
+                "message": "Could not create packing list associated with this date", "error": e
             }
 
     def get_all(
@@ -67,7 +67,7 @@ class DateListQueries:
                         for record in result
                     ]
         except Exception as e:
-            return {"message": "Could not get all date lists"}
+            return {"message": "Could not get all date lists", "Error": e}
 
     def get_one(
         self, date_list_id: int, user_id: int, packing_list_id: int
@@ -89,7 +89,7 @@ class DateListQueries:
                         return None
                     return self.record_to_date_list_out(record[0])
         except Exception as e:
-            return {"message": "Could not get that date list"}
+            return {"message": "Could not get that date list", "Error": e}
 
     def update(
         self,
@@ -119,8 +119,8 @@ class DateListQueries:
                     return self.date_list_in_to_out(
                         date_list_id, packing_list_id, date_list
                     )
-        except Exception:
-            return {"message": "Could not update that date list"}
+        except Exception as e:
+            return {"message": "Could not update that date list", "Error": e}
 
     def date_list_in_to_out(
         self, id: int, packing_list_id: int, date_list: DateListIn
