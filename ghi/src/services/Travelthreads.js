@@ -139,7 +139,7 @@ export const travelThreadsApi = createApi({
     }),
     getOneDate: builder.query({
       query: (params) =>
-        `/api/packlist/${params.packing_list_id}/datelist/${params.date_list_id}/`,
+        `/api/packlist/${params.packing_list_id}/datelist/${params.date_list_id}`,
       providesTags: ["Datelist"],
     }),
     getItemsByPacklist: builder.query({
