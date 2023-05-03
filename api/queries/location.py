@@ -26,8 +26,6 @@ class LocationQueries:
                 records = result.fetchall()
                 if records == []:
                     add_locations()
-                    return self.get_countries()
-
                 return [
                     self.record_to_countries_out(record) for record in records
                 ]

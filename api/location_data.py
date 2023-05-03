@@ -63,6 +63,3 @@ def add_locations():
                                         state_id,
                                     ],
                                 )
-
-
-add_locations()
