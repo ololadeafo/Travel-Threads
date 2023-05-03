@@ -34,6 +34,7 @@ function App() {
 
   return (
     <div>
+      <title>Travel Threads</title>
       <ErrorNotification error={error} />
       <BrowserRouter basename={basename}>
         <Nav

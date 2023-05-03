@@ -13,7 +13,7 @@ def add_locations():
                 """
             )
             records = result.fetchall()
-
+            print(records)
     if records != []:
         return
 
