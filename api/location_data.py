@@ -2,8 +2,8 @@ import requests
 from queries.pool import pool
 
 
-def add_locations():
-    with pool.connection() as conn:
+async def add_locations():
+    with await pool.connection() as conn:
         with conn.cursor() as db:
             result = db.execute(
                 """
