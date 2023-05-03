@@ -4,7 +4,7 @@ import asyncio
 
 
 async def add_locations():
-    with await pool.connection() as conn:
+    async with pool.connection() as conn:
         with conn.cursor() as db:
             result = db.execute(
                 """
