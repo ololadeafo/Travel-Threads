@@ -26,7 +26,7 @@ build-front-end-job:
   needs:
     - lint-test-job
   variables:
-    PUBLIC_URL: https:///team124532813.gitlab.io/travel-threads
+    PUBLIC_URL: https://team124532813.gitlab.io/travel-threads
     REACT_APP_SAMPLE_SERVICE_API_HOST: http://travel-threads.dec-ct-12.mod3projects.com
   script:
     - cd ghi
