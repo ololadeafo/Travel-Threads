@@ -35,7 +35,9 @@ const ListDetail = () => {
         var locationResponse = ""
 
         if (packingList.city === "" && packingList.state === ""){
-            locationResponse = await fetch(`http://localhost:8000/api/location/country/details/${packingList.country}`)
+            locationResponse = await fetch(
+                `https://travel-threads.dec-ct-12.mod3projects.com/api/location/country/details/${packingList.country}`
+            );
             if (locationResponse.ok) {
             const data = await locationResponse.json()
             setLocation({
@@ -43,7 +45,9 @@ const ListDetail = () => {
             })
         }
         } else if (packingList.city === "" && packingList.state !== "") {
-            locationResponse = await fetch(`http://localhost:8000/api/location/state/details/${packingList.state}`)
+            locationResponse = await fetch(
+                `https://travel-threads.dec-ct-12.mod3projects.com/api/location/state/details/${packingList.state}`
+            );
             if (locationResponse.ok) {
             const data = await locationResponse.json()
             setLocation({
@@ -52,7 +56,9 @@ const ListDetail = () => {
             })
         }
         } else {
-            locationResponse = await fetch(`http://localhost:8000/api/location/city/details/${packingList.city}`)
+            locationResponse = await fetch(
+                `https://travel-threads.dec-ct-12.mod3projects.com/api/location/city/details/${packingList.city}`
+            );
             if (locationResponse.ok) {
             const data = await locationResponse.json()
             setLocation({
