@@ -9,6 +9,7 @@ COPY main.py main.py
 COPY models.py models.py
 COPY location_data.py location_data.py
 COPY authenticator.py authenticator.py
+COPY locations.json locations.json
 
 # Copy all of the subdirectories in your service's directory
 # Modify these instructions to do that
@@ -30,4 +31,3 @@ COPY migrations migrations
 
 # # !! PORT env var needs to match with exposed port in caprover dashboard
 CMD python -m migrations up && uvicorn main:app --host 0.0.0.0 --port 80
-
