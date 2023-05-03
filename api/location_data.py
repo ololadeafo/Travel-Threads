@@ -1,7 +1,5 @@
-import requests
 from queries.pool import pool
 import json
-
 
 
 def add_locations():
