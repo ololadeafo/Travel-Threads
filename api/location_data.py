@@ -1,28 +1,11 @@
 import requests
 from queries.pool import pool
-import asyncio
+import json
 
 
-async def add_locations():
-    async with pool.connection() as conn:
-        with conn.cursor() as db:
-            result = db.execute(
-                """
-                SELECT id, name, iso3
-                FROM countries
-                ORDER BY name;
-                """
-            )
-            records = result.fetchall()
-            print(records)
-    if records != []:
-        return
 
-    url = (
-        "https://raw.githubusercontent.com/dr5hn/countries-states-cities-database/master/countries%2Bstates%2Bcities.json"
-        )
-    res = requests.get(url)
-    data = res.json()
+def add_locations():
+    data = json.load(open("locations.json"))
     for country in data:
         with pool.connection() as conn:
             with conn.cursor() as db:
@@ -84,4 +67,4 @@ async def add_locations():
                                 )
 
 
-asyncio.run(add_locations())
+add_locations()

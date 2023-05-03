@@ -9,6 +9,7 @@ from models import (
 )
 from queries.pool import pool
 from typing import List
+from location_data import add_locations
 
 
 class LocationQueries:
@@ -23,6 +24,9 @@ class LocationQueries:
                     """
                 )
                 records = result.fetchall()
+                if records == []:
+                    add_locations()
+                    return self.get_countries()
 
                 return [
                     self.record_to_countries_out(record) for record in records
