@@ -1,8 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useGetAccountQuery } from "./services/Travelthreads";
-import suitcase from "./images/mainPage/suitcase.png";
-import airplane from "./images/mainPage/airplane.png";
 
 const Main = () => {
   const { data } = useGetAccountQuery();
