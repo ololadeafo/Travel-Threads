@@ -1,5 +1,6 @@
 import requests
 from queries.pool import pool
+import asyncio
 
 
 async def add_locations():
@@ -83,4 +84,4 @@ async def add_locations():
                                 )
 
 
-add_locations()
+asyncio.run(add_locations())
