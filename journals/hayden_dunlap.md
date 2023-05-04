@@ -51,3 +51,4 @@ Today I restyled the datelist page to be closer to our original excalidraw. We a
 
 ---04/28/2023---
 Today I restyled some of the front end and we completed our docs and readme.
+*
