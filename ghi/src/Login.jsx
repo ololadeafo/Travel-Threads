@@ -36,7 +36,7 @@ const Login = () => {
     <div
       className="container"
       style={{
-        backgroundColor: "#AED9E0",
+        backgroundImage: "linear-gradient(to bottom right, #AED9E0, #FFA69E)",
         minHeight: "100vh",
         minWidth: "100%",
         marginTop: "0px",
